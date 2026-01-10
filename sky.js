@@ -1,6 +1,6 @@
 // Sky Configuration
 const SKY_CONFIG = {
-  cloudSpeed: 0.3,
+  cloudSpeed: 0.15,
   cloudDensity: 0.6,
   cloudScale: 1.5,
   colorTint: { r: 1.0, g: 1.0, b: 1.0 },
@@ -186,10 +186,10 @@ class SkyRenderer {
         cloudNoise = smoothstep(-uCloudDensity, uCloudDensity, cloudNoise);
         
         // Add multiple cloud layers for depth
-        float cloudLayer1 = fbm(st * 1.5 + vec2(uTime * 0.02, 0.0), uTime);
+        float cloudLayer1 = fbm(st * 1.5 + vec2(uTime * 0.01, 0.0), uTime);
         cloudLayer1 = smoothstep(-0.3, 0.7, cloudLayer1) * 0.8;
         
-        float cloudLayer2 = fbm(st * 3.0 + vec2(uTime * 0.015, 0.0), uTime);
+        float cloudLayer2 = fbm(st * 3.0 + vec2(uTime * 0.0075, 0.0), uTime);
         cloudLayer2 = smoothstep(-0.2, 0.5, cloudLayer2) * 0.6;
         
         // Combine cloud layers
