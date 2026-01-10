@@ -427,16 +427,16 @@ body {
 
 .about-image-container {
   display: flex;
-  justify-content: center;
+  justify-content: left;
   width: 100%;
-  padding: 30px 0;
+  padding: 8px 0;
   overflow: visible;
 }
 
 .about-image {
   display: block;
   width: 100%;
-  max-width: 200px;
+  max-width: 60px;
   height: auto;
   object-fit: contain;
   transform: rotate(5deg) translateZ(0);
