@@ -1,0 +1,2560 @@
+/* PP Neue Montreal Font Faces */
+@font-face {
+  font-family: 'PP Neue Montreal';
+  src: url('fonts/PPNeueMontreal-Book.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PP Neue Montreal';
+  src: url('fonts/PPNeueMontreal-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PP Neue Montreal';
+  src: url('fonts/PPNeueMontreal-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PP Neue Montreal';
+  src: url('fonts/PPNeueMontreal-Italic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PP Neue Montreal';
+  src: url('fonts/PPNeueMontreal-Thin.otf') format('opentype');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  width: 100%;
+  overflow-x: hidden;
+  min-height: 100%;
+  scroll-behavior: smooth;
+  /* Gradient background: Blue at top (overscroll), fading to pure white quickly */
+  background: linear-gradient(180deg, #5ba3d9 0%, #6eb5e5 200px, #ffffff 500px);
+}
+
+/* iOS Safari edge-to-edge: fill the safe area behind the notch with sky color */
+@supports (padding-top: env(safe-area-inset-top)) {
+  html::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: env(safe-area-inset-top, 0px);
+    background: linear-gradient(180deg, #5ba3d9 0%, #6eb5e5 100%);
+    z-index: 999; /* Ensure it sits above standard content but below navbar */
+    pointer-events: none;
+  }
+}
+
+body {
+  font-family: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background-color: transparent;
+  color: var(--text-primary);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+  min-height: 100vh;
+  position: relative; /* allow #skyCanvas absolute positioning to scroll with page */
+}
+
+/* Cross-page fade (used for home <-> about navigation) */
+.page-root {
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+
+.page-root.page-ready {
+  opacity: 1;
+}
+
+.page-root.page-leave {
+  opacity: 0;
+}
+
+/* Global sky canvas behind all content */
+#skyCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: min(148svh, 1070px); /* Cap height on large screens */
+  display: block;
+  z-index: -1; /* above gradient (-3), below content */
+  pointer-events: none; /* Don't block clicks */
+  /* Fade out near bottom of viewport to reveal page gradient */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 1) 80%,
+    rgba(0, 0, 0, 0) 94%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 1) 80%,
+    rgba(0, 0, 0, 0) 94%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+/* Ensure main content sits above the canvas */
+.content-root {
+  position: relative;
+  z-index: 1;
+}
+
+/* Animation classes for smooth loading */
+.fade-blur-up {
+  opacity: 0;
+  transform: translateY(20px);
+  filter: blur(8px);
+  transition: opacity 0.8s cubic-bezier(0.34, 1.56, 0.64, 1),
+    transform 0.9s cubic-bezier(0.34, 1.56, 0.64, 1),
+    filter 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.fade-blur-up.animate {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0px);
+}
+
+/* Initial state - all sections hidden by default */
+.navbar,
+.about-panel,
+.hero,
+.video-intro,
+.case-studies,
+.my-products-section,
+.writing-section,
+.articles-section,
+.testimonials-section,
+.final-illustration-section,
+.footer-section {
+  opacity: 0;
+  transform: translateY(20px);
+  filter: blur(8px);
+}
+
+/* Container for staggered animations */
+.stagger-container {
+  opacity: 0;
+  filter: blur(8px);
+  transform: translateY(12px);
+  transition: opacity 0.7s cubic-bezier(0.34, 1.56, 0.64, 1),
+    filter 0.7s cubic-bezier(0.34, 1.56, 0.64, 1),
+    transform 1.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.stagger-container.animate {
+  opacity: 1;
+  filter: blur(0px);
+  transform: translateY(0);
+}
+
+/* Spring animation delays for staggered loading */
+.stagger-delay-1 {
+  animation-delay: 0.06s;
+}
+.stagger-delay-2 {
+  animation-delay: 0.12s;
+}
+.stagger-delay-3 {
+  animation-delay: 0.18s;
+}
+.stagger-delay-4 {
+  animation-delay: 0.24s;
+}
+.stagger-delay-5 {
+  animation-delay: 0.3s;
+}
+.stagger-delay-6 {
+  animation-delay: 0.36s;
+}
+.stagger-delay-7 {
+  animation-delay: 0.42s;
+}
+.stagger-delay-8 {
+  animation-delay: 0.48s;
+}
+
+/* Enhanced transitions for interactive elements */
+.smooth-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Design System Variables */
+:root {
+  --text-primary: #303030;
+  --text-muted: #36394a;
+  --text-subdued: #818898;
+  --text-normal: #666d80;
+  --bg-normal: #f6f8fa;
+  --bg-pressed: #dfe1e7;
+  --bg-white: #fefefe;
+  --gradient-from: #949494;
+  --gradient-to: #b3b3b399;
+  --navbar-bg: rgba(254, 254, 254, 0.8);
+  --navbar-bg-scrolled: rgba(254, 254, 254, 0.85);
+  --hero-bg: #f6f8fa;
+  --hero-border: #eceff3;
+  --video-intro-bg: rgba(254, 255, 255, 0.95);
+  --video-intro-border: #eceff3;
+  --modal-overlay: rgba(0, 0, 0, 0.8);
+  --card-border: #eceff3;
+  --border-regular: #eceff3;
+  --card-role-text: rgba(0, 0, 0, 0.6);
+  --article-title: var(--text-muted);
+  --article-button-bg: #fefefe;
+  --article-button-border: rgba(18, 55, 105, 0.08);
+  --article-button-shadow: rgba(164, 172, 185, 0.24);
+  --article-button-hover: #f8f9fa;
+  --article-divider: #eceff3;
+  --testimonial-bg: #fefefe;
+  --testimonial-name: #000000;
+  --testimonial-border: #eceff3;
+}
+
+.text-muted {
+  color: var(--text-muted);
+}
+
+/* Layout */
+.home {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+  padding-top: 0; /* navbar is not fixed */
+}
+
+/* About page layout */
+.about {
+  position: relative;
+  width: 100%;
+  overflow: hidden; /* only the inner panel scrolls */
+  min-height: 100vh;
+}
+
+.about-html,
+.about-page {
+  height: 100%;
+  overflow: hidden;
+}
+
+/* About: ensure the content panel is always above sky + glare layers */
+.about-page .intro-stack {
+  z-index: 1; /* create a clear stacking context above background layers */
+}
+
+.about-page .about-panel {
+  z-index: 2; /* keep the panel above any intro-stack overlays */
+}
+
+/* Keep the sky fixed on About since the body itself doesn't scroll */
+.about-page #skyCanvas {
+  position: fixed;
+  height: 100svh;
+  /* About doesn't scroll like the homepage, so don't fade the sky out to white */
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+@supports (height: 100dvh) {
+  .about-page #skyCanvas {
+    height: 100dvh;
+  }
+}
+
+/* Match the homepage sky gradient layer */
+.about::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 100svh;
+  pointer-events: none;
+  z-index: -3;
+  background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0) 80%,
+      rgba(255, 255, 255, 0.7) 90%,
+      #ffffff 100%
+    ),
+    radial-gradient(
+      313% 100% at 50% 0%,
+      rgb(58, 128, 196) 0%,
+      rgb(80, 150, 210) 60%,
+      rgb(120, 180, 225) 88%,
+      rgb(160, 200, 235) 98%,
+      rgb(255, 255, 255) 100%
+    );
+}
+
+@supports (height: 100dvh) {
+  .about::before {
+    height: 100dvh;
+  }
+}
+
+/* White content container that matches hero width + top radius and starts in same vertical spot */
+.about-panel {
+  margin: 0 auto;
+  width: 720px;
+  max-width: 90%;
+  /* About: white reading surface, with subtle "glassy" border/highlight */
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.92) 0%,
+    rgba(255, 255, 255, 0.86) 100%
+  );
+  border-radius: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.62);
+  backdrop-filter: saturate(120%) blur(18px);
+  -webkit-backdrop-filter: saturate(120%) blur(18px);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.82);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative; /* needed for lens flare overlay */
+  /* Force Safari to respect border-radius clipping for animated children */
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  mask-image: radial-gradient(white, black);
+  isolation: isolate;
+  /* Fill the rest of the viewport under the navbar */
+  height: calc(100vh - var(--navbar-height, 0px));
+}
+
+@supports (height: 100dvh) {
+  .about-panel {
+    height: calc(100dvh - var(--navbar-height, 0px));
+  }
+}
+
+/* About panel lens flare overlay - same as hero glass reflection */
+.about-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  /* Keep the "glass" feel, but make it subtle (better for long-form reading) */
+  background-image: radial-gradient(
+      circle at 85% 10%,
+      rgba(255, 255, 255, 0.75) 0%,
+      rgba(255, 255, 255, 0.22) 22%,
+      rgba(255, 255, 255, 0) 55%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.55) 0%,
+      rgba(255, 255, 255, 0) 40%
+    );
+  opacity: 0.55;
+  filter: blur(0.5px);
+  animation: none;
+  z-index: 0;
+}
+
+.about-panel-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.about-panel-inner {
+  padding: 35px 32px 48px 32px; /* align with hero padding, plus a bit more bottom */
+  position: relative;
+  z-index: 1; /* ensure text sits above the flare */
+}
+
+.about-title {
+  font-family: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 32px;
+  color: var(--text-muted);
+  margin: 0 0 12px 0;
+  letter-spacing: -0.01em;
+}
+
+.about-body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 26px;
+  color: var(--text-normal);
+  margin: 0;
+}
+
+/* Stack wrapper for hero + video intro + case studies */
+.intro-stack {
+  position: relative;
+  z-index: 0;
+  min-height: min(140vh, 1000px); /* Content + fixed sky padding below cards */
+}
+
+/* Top-of-page dreamy sky gradient behind hero (fills initial viewport) */
+.home::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: min(148svh, 1070px); /* Cap height on large screens */
+  pointer-events: none;
+  z-index: -3; /* Behind WebGL sky and all content */
+  /* Larger white ramp at the bottom for a smoother transition */
+  background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0) 80%,
+      rgba(255, 255, 255, 0.7) 90%,
+      #ffffff 100%
+    ),
+    radial-gradient(
+      313% 100% at 50% 0%,
+      rgb(58, 128, 196) 0%,
+      rgb(80, 150, 210) 60%,
+      rgb(120, 180, 225) 88%,
+      rgb(160, 200, 235) 98%,
+      rgb(255, 255, 255) 100%
+    );
+}
+
+/* Removed old cloud image layer and related styles (replaced by WebGL sky) */
+
+/* Navbar */
+.navbar {
+  position: relative;
+  width: 100%;
+  z-index: 100;
+  background-color: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  transition: color 0.3s ease;
+  /* iOS Safari: push content below the notch/Dynamic Island */
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+.navbar-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 0;
+  max-width: 656px;
+  margin: 0 auto;
+  width: 90%;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.logo-link:hover {
+  opacity: 0.8;
+}
+
+.logo-link:active {
+  opacity: 0.6;
+}
+
+.logo-circle {
+  width: 24px;
+  height: 24px;
+  background-color: #bc002d;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.logo-image {
+  height: 24px;
+  width: auto;
+  max-width: 100px;
+  object-fit: contain;
+  filter: brightness(0) invert(1); /* Make logo white-toned */
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.nav-link {
+  font-size: 16px;
+  line-height: 24px;
+  text-decoration: none;
+  color: #ffffff !important;
+  font-weight: 400;
+  transition: color 0.2s ease;
+}
+
+.nav-link.active {
+  color: #ffffff !important;
+  font-weight: 500;
+}
+
+.nav-link:hover {
+  color: #ffffff !important;
+}
+
+/* Mobile Menu */
+.mobile-menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  padding: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.mobile-menu-toggle:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.mobile-menu-toggle.active {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.mobile-menu-toggle img {
+  display: block;
+}
+
+.mobile-menu-overlay {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-8px);
+  width: 354px;
+  background: rgb(12, 18, 28); /* fully opaque */
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: saturate(130%) blur(22px);
+  -webkit-backdrop-filter: saturate(130%) blur(22px);
+  border-radius: 12px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.28);
+  margin-top: 8px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+/* Removed scrolled navbar background behavior */
+
+.mobile-menu-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+.mobile-nav-links {
+  display: flex;
+  flex-direction: column;
+  padding: 4px;
+  gap: 0;
+}
+
+.mobile-nav-link {
+  font-size: 16px;
+  line-height: 24px;
+  text-decoration: none;
+  color: #ffffff; /* ensure white text on frosted background */
+  font-weight: 400;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.mobile-nav-link.active {
+  color: #ffffff;
+  font-weight: 500;
+  border-radius: 6px;
+}
+
+.mobile-nav-link:hover {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+/* Hero Section */
+.hero {
+  margin: 0 auto 32px;
+  width: 720px;
+  max-width: 90%;
+  background: rgba(255, 255, 255, 0.035); /* softer, blends more */
+  border-radius: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: saturate(120%) blur(26px);
+  -webkit-backdrop-filter: saturate(120%) blur(26px);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.22);
+  position: relative; /* needed for lens flare overlay */
+  overflow: hidden; /* keep flare neatly inside rounded corners */
+  /* Force Safari to respect border-radius clipping for animated children */
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  mask-image: radial-gradient(white, black);
+  isolation: isolate;
+}
+
+
+.hero-content {
+  padding: 35px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.hero-title {
+  font-size: 32px;
+  line-height: 38px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+  font-family: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Force precise two-line layout for hero title on desktop */
+.hero-line {
+  white-space: nowrap;
+}
+
+.highlighted-text {
+  color: rgba(255, 255, 255, 1);
+}
+
+.hero-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.body-text {
+  font-size: 16px;
+  line-height: 26px;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 400;
+}
+
+.highlight-text {
+  color: #ffffff;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Hero lens flare overlay - simulates sunlight hitting the frosted glass from top-right */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: -40% -10% 10% 40%; /* bias towards top-right, extend slightly outside card */
+  pointer-events: none;
+  background-image: radial-gradient(
+      circle at 110% -10%,
+      rgba(255, 255, 255, 0.75) 0%,
+      rgba(255, 255, 255, 0.45) 8%,
+      rgba(255, 255, 255, 0.12) 18%,
+      rgba(255, 255, 255, 0) 40%
+    ),
+    radial-gradient(
+      circle at 80% 10%,
+      rgba(203, 221, 255, 0.55) 0%,
+      rgba(203, 221, 255, 0.08) 18%,
+      rgba(203, 221, 255, 0) 40%
+    ),
+    linear-gradient(
+      225deg,
+      rgba(255, 255, 255, 0.22) 0%,
+      rgba(255, 255, 255, 0.02) 32%,
+      rgba(255, 255, 255, 0) 55%
+    );
+  mix-blend-mode: screen;
+  opacity: 0.9;
+  filter: blur(1.5px);
+  transform-origin: top right;
+  animation: heroFlareDrift 26s ease-in-out infinite alternate;
+  z-index: 0;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1; /* ensure text sits crisply above flare */
+}
+
+/* Global lens flare in intro stack - subtle streaks from top-right "sun" */
+.intro-stack::before {
+  content: '';
+  position: absolute;
+  /* Extend well beyond the viewport so there are no visible hard edges */
+  top: -40vh;
+  right: -35vw;
+  bottom: 20vh;
+  left: 10vw;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  /* Main sun glow + soft beam coming in from the top-right */
+  background-image: radial-gradient(
+      160% 160% at 115% -15%,
+      rgba(255, 255, 255, 0.95) 0%,
+      rgba(255, 255, 255, 0.5) 8%,
+      rgba(255, 255, 255, 0.18) 18%,
+      rgba(255, 255, 255, 0) 40%
+    ),
+    radial-gradient(
+      220% 160% at 88% 0%,
+      rgba(175, 207, 255, 0.45) 0%,
+      rgba(175, 207, 255, 0.16) 20%,
+      rgba(175, 207, 255, 0.02) 40%,
+      rgba(175, 207, 255, 0) 60%
+    ),
+    /* Long diagonal cone of light */
+      linear-gradient(
+        225deg,
+        rgba(255, 255, 255, 0.28) 0%,
+        rgba(255, 255, 255, 0.12) 10%,
+        rgba(255, 255, 255, 0.05) 24%,
+        rgba(255, 255, 255, 0) 50%
+      );
+  mix-blend-mode: screen;
+  opacity: 0.62;
+  filter: blur(1.8px);
+  transform-origin: top right;
+  animation: globalFlareDrift 40s ease-in-out infinite alternate;
+  z-index: -1; /* sits above sky but below hero/video cards */
+}
+
+/* Additional small circular artifacts along the flare path */
+.intro-stack::after {
+  content: '';
+  position: absolute;
+  top: -30vh;
+  right: -25vw;
+  bottom: 25vh;
+  left: 15vw;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  /* Chain of circular lens artifacts travelling diagonally across the sky */
+  background-image: radial-gradient(
+      32% 32% at 82% 18%,
+      rgba(255, 255, 255, 0.9) 0%,
+      rgba(255, 255, 255, 0.55) 18%,
+      rgba(255, 255, 255, 0.08) 40%,
+      rgba(255, 255, 255, 0) 65%
+    ),
+    radial-gradient(
+      28% 28% at 75% 30%,
+      rgba(245, 248, 255, 0.85) 0%,
+      rgba(245, 248, 255, 0.45) 18%,
+      rgba(245, 248, 255, 0.08) 38%,
+      rgba(245, 248, 255, 0) 60%
+    ),
+    radial-gradient(
+      26% 26% at 67% 42%,
+      rgba(214, 228, 255, 0.85) 0%,
+      rgba(214, 228, 255, 0.45) 18%,
+      rgba(214, 228, 255, 0.08) 38%,
+      rgba(214, 228, 255, 0) 60%
+    ),
+    radial-gradient(
+      22% 22% at 60% 54%,
+      rgba(188, 208, 255, 0.8) 0%,
+      rgba(188, 208, 255, 0.4) 18%,
+      rgba(188, 208, 255, 0.08) 36%,
+      rgba(188, 208, 255, 0) 58%
+    ),
+    radial-gradient(
+      18% 18% at 53% 66%,
+      rgba(255, 244, 228, 0.9) 0%,
+      rgba(255, 244, 228, 0.45) 18%,
+      rgba(255, 244, 228, 0.08) 36%,
+      rgba(255, 244, 228, 0) 56%
+    );
+  mix-blend-mode: screen;
+  opacity: 0.55;
+  filter: blur(0.9px);
+  transform-origin: top right;
+  animation: flareArtifactsDrift 42s ease-in-out infinite alternate;
+  z-index: -1;
+}
+
+@keyframes heroFlareDrift {
+  0% {
+    transform: translate3d(0px, 0px, 0) scale(1);
+    opacity: 0.86;
+  }
+  50% {
+    transform: translate3d(-8px, 4px, 0) scale(1.02);
+    opacity: 0.96;
+  }
+  100% {
+    transform: translate3d(-16px, 10px, 0) scale(1.03);
+    opacity: 0.88;
+  }
+}
+
+@keyframes globalFlareDrift {
+  0% {
+    transform: translate3d(0px, 0px, 0) scale(1);
+  }
+  100% {
+    transform: translate3d(-18px, 14px, 0) scale(1.02);
+  }
+}
+
+@keyframes flareArtifactsDrift {
+  0% {
+    transform: translate3d(0px, 0px, 0);
+  }
+  100% {
+    transform: translate3d(-10px, 8px, 0);
+  }
+}
+
+/* Video Intro Section */
+.video-intro {
+  margin: 0 auto 32px;
+  width: 720px;
+  max-width: 90%;
+  background: rgba(255, 255, 255, 0.035);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: saturate(120%) blur(22px);
+  -webkit-backdrop-filter: saturate(120%) blur(22px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.video-content {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  gap: 16px;
+}
+
+.video-thumbnail {
+  width: 58px;
+  height: 40px;
+  background: url('assets/video-icon.png') center/cover no-repeat;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+@media (min-width: 769px) {
+  .video-thumbnail:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+  }
+
+  .video-thumbnail:active {
+    transform: translateY(0);
+  }
+}
+
+.video-info {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.video-title {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  color: #ffffff;
+  margin: 0;
+}
+
+.video-description {
+  font-size: 14px;
+  line-height: 20px;
+  color: #ffffff;
+  margin: 0;
+}
+
+.watch-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 8px;
+  padding: 6px 16px;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  color: #ffffff;
+  cursor: pointer;
+  backdrop-filter: saturate(140%) blur(14px);
+  -webkit-backdrop-filter: saturate(140%) blur(14px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease,
+    transform 0.1s ease;
+  position: relative;
+  z-index: 10;
+}
+
+.watch-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.22);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.16);
+}
+
+.watch-btn:active {
+  transform: translateY(0.5px);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.watch-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.35),
+    0 8px 22px rgba(0, 0, 0, 0.16);
+}
+
+/* Video Modal Styles */
+.video-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.video-modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--modal-overlay);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.video-modal-content {
+  position: relative;
+  width: 90%;
+  max-width: 800px;
+  max-height: 90vh;
+  background: #fefefe;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  z-index: 10001;
+  animation: slideUp 0.3s ease-out;
+}
+
+.video-modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10002;
+  transition: background 0.2s ease;
+}
+
+.video-modal-close:hover {
+  background: rgba(0, 0, 0, 0.9);
+}
+
+.video-modal-container {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 62.5%; /* 16:10 aspect ratio for Loom */
+}
+
+.video-modal-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Case Study Modal Styles */
+.case-study-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10000;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 24px;
+  padding-bottom: 80px;
+  animation: fadeIn 0.3s ease-out;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.case-study-modal-overlay {
+  position: fixed;
+  inset: 0;
+  /* Avoid iOS Safari `vh` viewport bugs by pinning edges */
+  background-color: rgba(37, 37, 37, 0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 9999;
+  pointer-events: auto;
+}
+
+.case-study-modal-content {
+  position: relative;
+  width: 640px;
+  max-width: 90%;
+  background: #fefefe;
+  border-radius: 32px;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  z-index: 10001;
+  animation: slideUp 0.3s ease-out;
+  margin-bottom: 24px;
+  pointer-events: auto;
+  /* Fallback first; overridden below when `dvh` is supported */
+  max-height: calc(100vh - 48px);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Prefer dynamic viewport units where supported (fixes iOS Safari address-bar `vh` issues) */
+@supports (height: 100dvh) {
+  .case-study-modal-content {
+    max-height: calc(100dvh - 48px);
+  }
+}
+
+.case-study-modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 28px;
+  height: 28px;
+  background: #666d80;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10002;
+  transition: background 0.2s ease;
+}
+
+.case-study-modal-close:hover {
+  background: rgba(0, 0, 0, 0.9);
+}
+
+.case-study-modal-container {
+  padding: 32px 24px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  flex: 1;
+  min-height: 0;
+}
+
+.case-study-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 132px;
+}
+
+.case-study-logo {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+
+.case-study-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.case-study-company {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.case-study-role {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: var(--text-subdued);
+  margin: 0;
+}
+
+.case-study-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.case-study-text-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.case-study-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.case-study-title {
+  font-family: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 32px;
+  letter-spacing: -0.28px;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.case-study-intro-paragraph {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 26px;
+  color: var(--text-normal);
+  margin: 0;
+}
+
+.case-study-featured-image {
+  width: 100%;
+  margin: 0;
+}
+
+.case-study-featured-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  cursor: zoom-in;
+  transition: opacity 0.2s ease;
+}
+
+.case-study-featured-image img:hover {
+  opacity: 0.9;
+}
+
+.case-study-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.case-study-section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.case-study-body-heading {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 26px;
+  color: var(--text-subdued);
+  margin: 4px 0 0 0;
+}
+
+.case-study-section-text {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 26px;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.case-study-section-text ul {
+  list-style-type: disc;
+  margin-left: 20px;
+  margin-top: 8px;
+}
+
+.case-study-section-text li {
+  margin-bottom: 8px;
+}
+
+.case-study-section-text p:last-child,
+.case-study-section-text ul:last-child,
+.case-study-description p:last-child {
+  margin-bottom: 0 !important;
+}
+
+.case-study-divider {
+  width: 100%;
+  height: 2px;
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--border-regular) 0px,
+    var(--border-regular) 8px,
+    transparent 8px,
+    transparent 12px
+  );
+  margin: 0;
+}
+
+.case-study-subheading {
+  font-family: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 30px;
+  color: #666d80;
+  margin: 0;
+}
+
+.case-study-description {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 26px;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.case-study-images {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  margin: 32px 0 0 0;
+}
+
+.case-study-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  cursor: zoom-in;
+  transition: opacity 0.2s ease;
+}
+
+.case-study-image:hover {
+  opacity: 0.9;
+}
+
+.case-study-more-content {
+  font-family: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: var(--text-normal);
+  margin: 0;
+}
+
+/* Responsive styles for case study modal on larger desktops */
+@media (min-width: 1440px) {
+  /* width and padding unified in base styles */
+
+  .case-study-images {
+    margin: 32px 0 0 0;
+  }
+}
+
+@media (min-width: 1920px) {
+  /* width and padding unified in base styles */
+
+  .case-study-images {
+    margin: 32px 0 0 0;
+  }
+}
+
+/* Image Popup Modal Styles */
+.image-popup-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.image-popup-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(37, 37, 37, 0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.image-popup-close {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 32px;
+  height: 32px;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10002;
+  transition: background 0.2s ease;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.image-popup-close:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.popup-image {
+  position: relative;
+  max-width: 90%;
+  max-height: 90vh;
+  object-fit: contain;
+  cursor: zoom-in;
+  transition: transform 0.3s ease;
+  z-index: 10001;
+  /* Prevent browser from interfering with zoom */
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  /* Ensure transform origin is centered for better zoom experience */
+  transform-origin: center center;
+}
+
+.popup-image.zoomed {
+  cursor: zoom-out;
+  /* Remove transition when zoomed to prevent interference with pinch gestures */
+  transition: none;
+}
+
+/* Make images clickable */
+.bento-img {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.bento-img:hover {
+  transform: scale(1.02);
+}
+
+/* Case Studies Section */
+.case-studies {
+  margin: 0 auto 96px;
+  max-width: 90%;
+}
+
+.cards-container {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+}
+
+.case-card {
+  width: 250px;
+  background: rgba(255, 255, 255, 0.035);
+  border-radius: 24px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: saturate(120%) blur(22px);
+  -webkit-backdrop-filter: saturate(120%) blur(22px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.card-role {
+  font-size: 16px;
+  color: #ffffff;
+  font-weight: 400;
+}
+
+.card-logo {
+  width: 48px;
+  height: 48px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+}
+
+img.card-logo {
+  object-fit: cover;
+  background-color: transparent;
+}
+
+.card-link {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.card-title {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  color: #ffffff;
+  margin: 0;
+}
+
+.card-cta {
+  font-size: 16px;
+  line-height: 24px;
+  color: #ffffff;
+  margin: 0;
+  position: relative;
+  display: inline-block;
+}
+
+.card-cta::after {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-top: 1.5px solid currentColor;
+  border-right: 1.5px solid currentColor;
+  transform: rotate(45deg);
+  margin-left: 4px;
+  vertical-align: middle;
+  transition: transform 0.2s ease;
+}
+
+/* Arrow animation on card hover */
+.case-card:hover .card-cta::after {
+  transform: rotate(45deg) translate(2px, -2px);
+}
+
+/* My Products Section */
+.my-products-section {
+  margin: 12px auto 48px;
+  max-width: 90%;
+}
+
+.my-products-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.my-products-icon {
+  width: 50px;
+  height: 50px;
+  position: relative;
+}
+
+.my-products-icon-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.my-products-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+
+.my-products-title {
+  font-family: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  color: #818898;
+  text-align: center;
+  margin: 0;
+  width: 450px;
+  max-width: 100%;
+}
+
+.products-cards-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 720px;
+  margin-top: 8px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.product-card {
+  background-color: #f6f8fa;
+  border: 1px solid #eceff3;
+  border-radius: 14px;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+}
+
+@media (min-width: 769px) {
+  .product-card {
+    width: 492px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.product-card-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+
+.product-logo-wrapper {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.product-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
+}
+
+.product-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.product-name {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.product-description {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+  color: #666d80;
+  margin: 0;
+}
+
+.product-button-secondary {
+  background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(193, 199, 208, 0.02) 100%
+    ),
+    linear-gradient(90deg, rgb(255, 255, 255) 0%, rgb(255, 255, 255) 100%);
+  border: 1px solid rgba(18, 55, 105, 0.08);
+  border-radius: 60px;
+  padding: 6px 8px;
+  box-shadow: 0px 1px 2px 0px rgba(164, 172, 185, 0.24),
+    0px 0px 0px 1px rgba(18, 55, 105, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  text-decoration: none;
+  color: inherit;
+}
+
+.product-button-secondary:hover {
+  background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(193, 199, 208, 0.04) 100%
+    ),
+    linear-gradient(90deg, rgb(248, 249, 250) 0%, rgb(248, 249, 250) 100%);
+}
+
+.product-button-secondary:active {
+  transform: translateY(0.5px);
+}
+
+.product-button-text {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.product-button-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  display: block;
+}
+
+.product-button-disabled {
+  background-color: #eceff3;
+  border: none;
+  border-radius: 60px;
+  padding: 6px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: not-allowed;
+  flex-shrink: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+}
+
+.product-button-disabled .product-button-text {
+  color: #a4acb9;
+}
+
+/* Writing Section */
+.writing-section {
+  margin: 0 auto 48px;
+  max-width: 90%;
+}
+
+.writing-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.notebook-image {
+  width: 108px;
+  height: 108px;
+  border-radius: 0;
+}
+
+.notebook-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0;
+}
+
+.writing-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+
+.writing-title {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.writing-description {
+  font-size: 16px;
+  line-height: 24px;
+  color: #818898;
+  margin: 0;
+  width: 320px; /* Added fixed width */
+}
+
+/* Articles Section */
+.articles-section {
+  margin: 0 auto 124px;
+  width: 720px;
+  max-width: 90%;
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 16px; /* 2xl in Tailwind */
+  border: 1px solid #eceff3;
+  padding: 16px; /* py-4 (gap-4 implies padding around content) */
+  box-sizing: border-box;
+}
+
+.articles-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* gap-4 from Figma */
+}
+
+.article-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.article-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.article-title {
+  font-family: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 500; /* Medium */
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--article-title);
+  margin: 0;
+}
+
+.article-read-time {
+  font-family: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 400; /* Regular */
+  font-size: 14px;
+  line-height: 20px;
+  color: #666d80; /* Text/Normal [500] */
+  margin: 0;
+}
+
+.read-article-btn {
+  font-family: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 500; /* Medium */
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--article-title);
+  background-color: var(--article-button-bg);
+  border: 1px solid var(--article-button-border);
+  box-shadow: 0px 1px 2px 0px var(--article-button-shadow);
+  border-radius: 6px; /* rounded-md */
+  padding: 4px 14px; /* py-1 px-3.5 */
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease; /* Added transition */
+}
+
+.read-article-btn:hover {
+  background-color: var(--article-button-hover);
+}
+
+.article-divider {
+  border: none;
+  height: 1px;
+  background-color: var(--article-divider);
+  margin: 0; /* Reset margin */
+}
+
+/* Testimonials Section */
+.testimonials-section {
+  margin: 0 auto 48px;
+  max-width: 720px;
+  width: 90%;
+}
+
+.testimonials-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.envelope-image {
+  width: 108px;
+  height: 108px;
+  border-radius: 0;
+}
+
+.envelope-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0;
+}
+
+.testimonials-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+
+.testimonials-title {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.testimonials-description {
+  font-size: 16px;
+  line-height: 24px;
+  color: #818898;
+  margin: 0;
+  width: 320px; /* Added fixed width */
+}
+
+.testimonial-cards {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-top: 2rem;
+}
+
+.testimonial-card {
+  background-color: var(--testimonial-bg);
+  border-radius: 15px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 730px;
+}
+
+.testimonial-card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.testimonial-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.testimonial-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+}
+
+.testimonial-author {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.testimonial-name {
+  font-family: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: var(--testimonial-name);
+}
+
+.testimonial-role {
+  font-family: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  color: #666d80;
+}
+
+.testimonial-quote {
+  font-family: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 16px;
+  line-height: 28px;
+  color: var(--text-normal);
+  border: 1px solid var(--testimonial-border);
+  padding: 1.5rem;
+  border-radius: 24px;
+  max-width: 560px;
+}
+
+.testimonial-quote p {
+  margin: 0;
+}
+
+/* Final Illustration Section */
+.final-illustration-section {
+  margin-top: 100px;
+  margin-bottom: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.final-illustration-img {
+  width: 146px;
+  height: 146px;
+  border-radius: 24px;
+}
+
+/* Footer Section */
+.footer-section {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 64px;
+  margin-bottom: 80px;
+  /* iOS Safari safe area support for home indicator */
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+.footer-thankyou {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  color: #666d80;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 0;
+  font-weight: 400;
+}
+.footer-credit {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  color: #666d80;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 0;
+  font-weight: 400;
+  max-width: 666px;
+}
+.footer-nav {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+}
+.footer-link {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  color: #666d80;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  transition: color 0.2s;
+}
+.footer-link:hover {
+  color: var(--text-muted);
+}
+.footer-copyright {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  color: #666d80;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+@media (max-width: 600px) {
+  .footer-credit {
+    max-width: 90vw;
+  }
+  .footer-section {
+    margin-top: 40px;
+    margin-bottom: 16px;
+    /* iOS Safari safe area support for home indicator */
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  .footer-content {
+    gap: 16px;
+  }
+  .footer-nav {
+    gap: 12px;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  /* Container adjustments */
+  .home {
+    min-height: auto;
+    padding-bottom: 40px;
+    padding-top: 0; /* no fixed navbar */
+  }
+
+  /* Sky heights for stacked cards on mobile */
+  .intro-stack {
+    min-height: min(220vh, 1500px); /* Taller for vertically stacked cards */
+  }
+
+  #skyCanvas {
+    height: min(
+      250svh,
+      1800px
+    ); /* Extended further to go well below last case study card */
+    /* Adjust fade to allow sky to be visible longer */
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 1) 88%,
+      rgba(0, 0, 0, 0) 97%,
+      rgba(0, 0, 0, 0) 100%
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 1) 88%,
+      rgba(0, 0, 0, 0) 97%,
+      rgba(0, 0, 0, 0) 100%
+    );
+  }
+
+  .home::before {
+    height: min(250svh, 1800px); /* Match sky canvas */
+  }
+
+  .navbar,
+  .hero,
+  .video-intro,
+  .case-studies,
+  .my-products-section,
+  .writing-section,
+  .articles-section,
+  .testimonials-section,
+  .final-illustration-section {
+    width: 90% !important;
+    max-width: 720px !important;
+  }
+
+  /* Reduce margins on mobile */
+  .hero {
+    margin-bottom: 32px;
+    background: rgba(
+      255,
+      255,
+      255,
+      0.045
+    ) !important; /* ensure frosted look remains on mobile */
+    border: 1px solid rgba(255, 255, 255, 0.14) !important;
+    backdrop-filter: saturate(120%) blur(22px) !important; /* match case-card */
+    -webkit-backdrop-filter: saturate(120%) blur(22px) !important;
+  }
+
+  /* Remove lens flare effects on mobile only */
+  .hero::before {
+    display: none !important;
+  }
+
+  .intro-stack::before {
+    display: none !important;
+  }
+
+  .intro-stack::after {
+    display: none !important;
+  }
+
+  /* About: match hero mobile behavior (no glare; slightly adjusted glass tuning) */
+  .about-panel {
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.94) 0%,
+      rgba(255, 255, 255, 0.9) 100%
+    ) !important;
+    border: 1px solid rgba(255, 255, 255, 0.72) !important;
+    backdrop-filter: saturate(120%) blur(14px) !important;
+    -webkit-backdrop-filter: saturate(120%) blur(14px) !important;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.82) !important;
+  }
+
+  .about-panel::before {
+    display: none !important;
+  }
+
+  .about-panel-inner {
+    padding: 24px 20px 48px 20px !important;
+  }
+
+  .video-intro {
+    margin-bottom: 32px;
+    background: rgba(255, 255, 255, 0.035) !important; /* align with cards */
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    backdrop-filter: saturate(120%) blur(22px) !important; /* match case-card */
+    -webkit-backdrop-filter: saturate(120%) blur(22px) !important;
+  }
+
+  .case-studies {
+    margin-bottom: 72px;
+  }
+
+  .my-products-section {
+    margin-bottom: 32px;
+  }
+
+  .my-products-title {
+    width: 100% !important;
+    padding: 0 16px;
+    box-sizing: border-box;
+  }
+
+  .products-cards-container {
+    width: 100vw;
+    max-width: none;
+    margin-left: calc(50% - 50vw);
+    padding: 0 5%;
+    box-sizing: border-box;
+  }
+
+  .product-card {
+    padding: 8px;
+  }
+
+  .product-card-content {
+    gap: 12px;
+  }
+
+  .product-logo-wrapper {
+    width: 60px;
+    height: 60px;
+  }
+
+  .product-details {
+    gap: 4px;
+  }
+
+  .product-name,
+  .product-description {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .product-button-secondary {
+    padding: 6px 8px;
+    gap: 6px;
+  }
+
+  .product-button-text {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .product-button-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .writing-section {
+    margin-bottom: 32px;
+  }
+
+  .articles-section {
+    margin-bottom: 72px;
+  }
+
+  .testimonials-section {
+    margin-bottom: 32px;
+  }
+
+  .final-illustration-section {
+    margin-top: 60px;
+    margin-bottom: 32px;
+    width: 100% !important;
+    max-width: none !important;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cards-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .case-card {
+    width: 100% !important;
+    max-width: none !important;
+  }
+
+  .hero-title {
+    font-size: 28px;
+    line-height: 36px;
+    letter-spacing: -0.02em;
+    font-family: 'PP Neue Montreal', 'Inter', -apple-system, BlinkMacSystemFont,
+      'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  }
+
+  /* Allow wrapping on smaller screens */
+  .hero-line {
+    white-space: normal;
+  }
+
+  .hero-content {
+    padding: 24px; /* Reduce padding on mobile */
+  }
+
+  /* Mobile navbar adjustments: no fixed behavior */
+  .navbar {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    width: 100% !important;
+    transform: none !important;
+    background-color: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    margin-bottom: 0 !important;
+  }
+
+  .navbar-content {
+    padding: 16px 0; /* Reduce navbar padding */
+  }
+
+  /* Hide desktop nav links and show mobile menu on mobile */
+  .nav-links {
+    display: none !important;
+  }
+
+  .mobile-menu-toggle {
+    display: block !important;
+  }
+  /* Make hamburger icon white on mobile */
+  .mobile-menu-toggle img {
+    filter: brightness(0) invert(1);
+  }
+
+  /* Mobile video section layout adjustments */
+  .video-content {
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 16px !important;
+    padding: 16px !important;
+  }
+
+  .video-thumbnail {
+    width: 58px !important;
+    height: 40px !important;
+    border-radius: 12px !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    background: url('assets/video-icon.png') center/cover no-repeat !important;
+    position: relative !important;
+    overflow: hidden !important;
+    flex-shrink: 0 !important;
+  }
+
+  .video-thumbnail:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
+  }
+
+  .video-thumbnail:active {
+    transform: translateY(0) !important;
+  }
+
+  .video-info {
+    flex: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+  }
+
+  .video-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+  }
+
+  .video-title {
+    display: block !important;
+    font-size: 16px !important;
+    line-height: 22px !important;
+    font-weight: 500 !important;
+    color: #ffffff !important;
+    margin: 0 !important;
+  }
+
+  .video-description {
+    display: none !important;
+  }
+
+  .watch-btn {
+    display: none !important; /* hide button on mobile per spec */
+  }
+
+  /* Mobile text adjustments */
+  .hero .body-text {
+    font-size: 17px;
+    line-height: 28px;
+  }
+
+  /* Mobile video modal adjustments */
+  .video-modal-content {
+    width: 95% !important;
+    margin: 16px !important;
+    border-radius: 12px !important;
+  }
+
+  .video-modal-close {
+    top: 12px !important;
+    right: 12px !important;
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 16px !important;
+  }
+
+  /* Mobile case study modal adjustments (iOS-style bottom sheet) */
+  .case-study-modal {
+    /* Increase top breathing room while keeping iOS Safari viewport stability */
+    --case-study-sheet-top-gap: 24px;
+    align-items: flex-end !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    padding-top: calc(
+      var(--case-study-sheet-top-gap) + env(safe-area-inset-top, 0px)
+    ) !important;
+  }
+
+  .case-study-modal-content {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    border-radius: 24px 24px 0 0 !important;
+    /* Fallback first; overridden below when `dvh` is supported */
+    max-height: calc(
+      100vh - (var(--case-study-sheet-top-gap) + env(safe-area-inset-top, 0px))
+    ) !important;
+    animation: caseStudySheetUp 0.28s ease-out !important;
+  }
+
+  @supports (height: 100dvh) {
+    .case-study-modal-content {
+      max-height: calc(
+        100dvh -
+          (var(--case-study-sheet-top-gap) + env(safe-area-inset-top, 0px))
+      ) !important;
+    }
+  }
+
+  .case-study-modal-container {
+    padding: 24px 20px calc(20px + env(safe-area-inset-bottom, 0px)) 20px !important;
+    gap: 20px !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  @keyframes caseStudySheetUp {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .case-study-title {
+    font-size: 24px !important;
+    line-height: 32px !important;
+    letter-spacing: -0.24px !important;
+  }
+
+  .case-study-body-heading {
+    font-size: 16px !important;
+    line-height: 28px !important;
+  }
+
+  .case-study-section-text {
+    font-size: 16px !important;
+    line-height: 28px !important;
+  }
+
+  .case-study-description {
+    font-size: 16px !important;
+    line-height: 28px !important;
+  }
+
+  .case-study-featured-image {
+    margin: 0 0 20px 0 !important;
+  }
+
+  .case-study-featured-image img {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  .case-study-images {
+    margin: 24px 0 0 0 !important;
+    gap: 24px !important;
+  }
+
+  .case-study-modal-close {
+    top: 12px !important;
+    right: 12px !important;
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 16px !important;
+  }
+
+  /* Mobile image popup adjustments */
+  .popup-image {
+    max-width: 95% !important;
+    max-height: 90vh !important;
+  }
+
+  .image-popup-close {
+    top: 16px !important;
+    right: 16px !important;
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 18px !important;
+  }
+}
+
+/* Interactive elements */
+.case-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  user-select: none;
+}
+
+.case-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.case-card:active {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Enhanced button animations */

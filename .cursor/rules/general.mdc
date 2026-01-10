@@ -1,0 +1,23 @@
+---
+alwaysApply: true
+---
+
+## General Principles
+
+- **Do not break existing functionality**  
+  New features or code changes must never break current behavior of the portfolio. Implement the new changes in a way that it won't break or change the other elements.
+
+- **Scalable code**  
+  Any new component or UI element must be written with future extensibility in mind (e.g., easy theming, flexible layout, maintainable CSS).
+
+- **No hallucinations**  
+  Never invent components, icons, sections, or layouts. Always stick exactly to the user-provided instructions.
+
+  - **brief summary**  
+    after completing a task do not explain what you did in detail. just give a brief one or two sentence summary. only the important changes.
+
+  - **Keep responsiveness in mind**  
+    When you add or edit elements make sure they are added in a way that it will look good in all desktop sizes and mobile reponsiveness is done accordingly.
+
+  - **Should work both on safari and chrome**  
+    Make sure any new additions or changes doesn't break the site in particular browsers. it should work on both safari and chrome. on mobile, safari is given priority.
