@@ -630,12 +630,6 @@ document.addEventListener('DOMContentLoaded', function () {
         
         <div class="case-study-images">
           <img src="assets/docswell-exports/docswell-export-dashboard.png" alt="Docswell dashboard" class="case-study-image" data-image-popup="assets/docswell-exports/docswell-export-dashboard.png" />
-          <img src="assets/docswell-exports/docswell-export-inbox.png" alt="Docswell inbox" class="case-study-image" data-image-popup="assets/docswell-exports/docswell-export-inbox.png" />
-          <img src="assets/docswell-exports/docswell-export-inbox-general.png" alt="Docswell inbox general" class="case-study-image" data-image-popup="assets/docswell-exports/docswell-export-inbox-general.png" />
-          <img src="assets/docswell-exports/docswell-export-calendar-event.png" alt="Docswell calendar event" class="case-study-image" data-image-popup="assets/docswell-exports/docswell-export-calendar-event.png" />
-          <img src="assets/docswell-exports/docswell-export-calendar-modal.png" alt="Docswell calendar modal" class="case-study-image" data-image-popup="assets/docswell-exports/docswell-export-calendar-modal.png" />
-          <img src="assets/docswell-exports/docswell-export-profile-activity.png" alt="Docswell profile activity" class="case-study-image" data-image-popup="assets/docswell-exports/docswell-export-profile-activity.png" />
-          <img src="assets/docswell-exports/docswell-export-profile-note.png" alt="Docswell profile note" class="case-study-image" data-image-popup="assets/docswell-exports/docswell-export-profile-note.png" />
         </div>
       `,
       outcome: `
@@ -648,7 +642,10 @@ document.addEventListener('DOMContentLoaded', function () {
       `,
       solutionHeading: 'Inbox',
       solutionText:
-        'The inbox was designed as a centralised communication hub for medical practices, allowing practitioners to manage all patient interactions in one place. From a single interface, administrators could assign patients to specific practitioners, handle direct messaging, and create or manage appointments, reducing the need to switch between multiple tools. This approach streamlined day to day workflows and helped practices respond to patients more efficiently.',
+        'A centralised place to manage all patient interactions, including assigning patients, messaging, and appointment management. This reduced tool switching, streamlined day-to-day workflows, and enabled faster responses to patients.',
+      solutionImage: 'assets/docswell-exports/inbox-general.png',
+      solutionTextAfterImage: 'Message templates allow practitioners to quickly send recurring messages with pre-attached documents, forms, and images, reducing repetitive actions and saving time.',
+      solutionImageAfterText: 'assets/docswell-exports/inbox-message-template.png',
     },
     rememberly: {
       logo: '',
@@ -818,6 +815,42 @@ document.addEventListener('DOMContentLoaded', function () {
         solutionText;
     }
 
+    // Set solution image if exists
+    const solutionImageContainer = document.getElementById(
+      'case-study-solution-image'
+    );
+    if (data.solutionImage) {
+      solutionImageContainer.innerHTML = `<img src="${data.solutionImage}" alt="${
+        data.solutionHeading || 'Solution'
+      } image" data-image-popup="${data.solutionImage}" />`;
+    } else {
+      solutionImageContainer.innerHTML = '';
+    }
+
+    // Set solution text after image if exists
+    const solutionTextAfterContainer = document.getElementById(
+      'case-study-solution-text-after'
+    );
+    if (data.solutionTextAfterImage) {
+      solutionTextAfterContainer.textContent = data.solutionTextAfterImage;
+      solutionTextAfterContainer.style.display = 'block';
+    } else {
+      solutionTextAfterContainer.style.display = 'none';
+    }
+
+    // Set solution image after text if exists
+    const solutionImageAfterContainer = document.getElementById(
+      'case-study-solution-image-after'
+    );
+    if (data.solutionImageAfterText) {
+      solutionImageAfterContainer.innerHTML = `<img src="${data.solutionImageAfterText}" alt="${
+        data.solutionHeading || 'Solution'
+      } image" data-image-popup="${data.solutionImageAfterText}" />`;
+      solutionImageAfterContainer.style.display = 'block';
+    } else {
+      solutionImageAfterContainer.style.display = 'none';
+    }
+
     // Set the remaining content (other paragraphs and images) in description
     document.getElementById('case-study-description').innerHTML =
       tempDiv.innerHTML;
@@ -827,6 +860,26 @@ document.addEventListener('DOMContentLoaded', function () {
       featuredImageContainer.querySelector('[data-image-popup]');
     if (featuredImage) {
       featuredImage.addEventListener('click', function () {
+        const imageSrc = this.getAttribute('data-image-popup');
+        const imageAlt = this.getAttribute('alt') || '';
+        openImagePopup(imageSrc, imageAlt);
+      });
+    }
+
+    const solutionImage =
+      solutionImageContainer.querySelector('[data-image-popup]');
+    if (solutionImage) {
+      solutionImage.addEventListener('click', function () {
+        const imageSrc = this.getAttribute('data-image-popup');
+        const imageAlt = this.getAttribute('alt') || '';
+        openImagePopup(imageSrc, imageAlt);
+      });
+    }
+
+    const solutionImageAfter =
+      solutionImageAfterContainer.querySelector('[data-image-popup]');
+    if (solutionImageAfter) {
+      solutionImageAfter.addEventListener('click', function () {
         const imageSrc = this.getAttribute('data-image-popup');
         const imageAlt = this.getAttribute('alt') || '';
         openImagePopup(imageSrc, imageAlt);

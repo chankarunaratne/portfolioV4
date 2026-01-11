@@ -1261,6 +1261,10 @@ body {
   margin: 0;
 }
 
+.case-study-section .case-study-featured-image {
+  margin-top: 12px;
+}
+
 .case-study-featured-image img {
   width: 100%;
   height: auto;
