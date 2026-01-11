@@ -439,18 +439,6 @@ body {
   max-width: 60px;
   height: auto;
   object-fit: contain;
-  transform: rotate(5deg) translateZ(0);
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.12));
-  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
-    filter 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  background: transparent;
-}
-
-.about-image:hover {
-  transform: rotate(4deg) scale(1.06) translateZ(0);
-  filter: drop-shadow(0 18px 36px rgba(0, 0, 0, 0.16));
 }
 
 /* Stack wrapper for hero + video intro + case studies */
@@ -1263,6 +1251,7 @@ body {
 
 .case-study-section .case-study-featured-image {
   margin-top: 12px;
+  margin-bottom: 8px;
 }
 
 .case-study-featured-image img {
@@ -1371,6 +1360,7 @@ body {
   display: block;
   cursor: zoom-in;
   transition: opacity 0.2s ease;
+  margin-bottom: 8px;
 }
 
 .case-study-image:hover {
@@ -2543,12 +2533,14 @@ img.card-logo {
   /* Body images inside sections get 12px top margin */
   .case-study-section .case-study-featured-image {
     margin-top: 12px !important;
+    margin-bottom: 8px !important;
   }
 
   /* Images in the description text also get 12px top margin */
   .case-study-description img,
   .case-study-images .case-study-image {
     margin-top: 12px !important;
+    margin-bottom: 8px !important;
   }
 
   .case-study-featured-image img {

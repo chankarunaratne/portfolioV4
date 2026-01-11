@@ -621,13 +621,14 @@ document.addEventListener('DOMContentLoaded', function () {
         'Docswell is a UK-based medtech company that helps medical practices completely digitise their workflow.',
       subheading:
         'Worked on both patient and practitioner portals and prepared them for public release.',
-      description: `
-        <p style="margin-bottom: 16px;">At the time, medical practitioners in the UK relied on multiple disconnected tools to manage a patient’s end to end journey, for appointments, records, and communication. This setup made daily workflows tedious and time consuming, especially for smaller practices with limited administrative support. As a result, clinicians were spending unnecessary time switching between systems rather than focusing on patient care.</p>
-        
-        <p style="margin-bottom: 16px;">When I joined the company, an early MVP design was already in place, but the business was shifting its strategy to focus on therapist led medical practices. With new functional requirements and limitations in the current experience, the team decided to revamp both the practitioner and patient portals to prepare the platoform for the first public release.</p>
-
+      background: `
+        <p style="margin-bottom: 16px;">At the time, UK medical practitioners relied on multiple disconnected tools for appointments, records, and communication, creating time-consuming workflows that pulled focus away from patient care.</p>
+        <p style="margin-bottom: 16px;">When I joined, there was already an early MVP, but as the company shifted its focus to therapist-led practices, we redesigned both the practitioner and patient portals to better support new needs and prepare the platform for its first public release.</p>
+      `,
+      roleText: `
         <p style="margin-bottom: 16px;">I was the sole designer on the team and wore multiple hats. I led user research, design system, and end-to-end UI design. I also played a pivotal role in product decisions while collaborating closely with the Founder and COO.</p>
-        
+      `,
+      description: `
         <div class="case-study-images">
           <img src="assets/docswell-exports/docswell-export-dashboard.png" alt="Docswell dashboard" class="case-study-image" data-image-popup="assets/docswell-exports/docswell-export-dashboard.png" />
         </div>
@@ -646,6 +647,13 @@ document.addEventListener('DOMContentLoaded', function () {
       solutionImage: 'assets/docswell-exports/inbox-general.png',
       solutionTextAfterImage: 'Message templates allow practitioners to quickly send recurring messages with pre-attached documents, forms, and images, reducing repetitive actions and saving time.',
       solutionImageAfterText: 'assets/docswell-exports/inbox-message-template.png',
+      calendarHeading: 'Calendar',
+      calendarText: 'A centralised calendar to manage all appointments and practitioner schedules across the practice.',
+      calendarImages: [
+        'assets/docswell-exports/calendar-general.png',
+        'assets/docswell-exports/calendar-modal.png',
+        'assets/docswell-exports/calendar-event.png'
+      ],
     },
     rememberly: {
       logo: '',
@@ -657,11 +665,13 @@ document.addEventListener('DOMContentLoaded', function () {
         'This is a placeholder sentence for the Rememberly case study.',
       subheading:
         'Worked on the full cycle from concept to development as Im working on launching my first iPhone app',
-      description: `
+      background: `
         <p style="margin-bottom: 16px;">(AI-generated placeholder) The original experience for Rememberly, a mobile app designed to save highlights from physical books using a phone camera, was fragmented and unreliable. Early users struggled with inconsistent scan quality, unclear feedback during capture, and a confusing transition between scanning, editing, and saving highlights. Many felt the process interrupted their reading flow, making the app feel heavier than simply jotting notes. Feedback consistently pointed to friction at the exact moment users wanted speed and focus.</p>
-        
+      `,
+      roleText: `
         <p style="margin-bottom: 16px;">I worked as the sole product designer, collaborating closely with a solo iOS developer and an OCR-focused engineer. I led the end-to-end design process, including problem definition, user interviews, journey mapping, wireframing, and high-fidelity prototyping, while supporting developer handoff. Given tight timelines and limited resources, we followed a lean, iterative approach with short design sprints and frequent validation using real books in real-world reading conditions.</p>
-        
+      `,
+      description: `
         <p>We started by observing how readers naturally highlight and revisit content in physical books, followed by interviews with 5 active readers and 3 students. The main pain points were clear: too much camera friction, low confidence in OCR accuracy, and excessive manual cleanup after scanning. These insights drove a redesigned capture flow that prioritised speed, clear visual feedback, and minimal correction — enabling users to scan, review, and save a highlight in seconds without breaking their reading momentum.</p>
       `,
     },
@@ -673,11 +683,13 @@ document.addEventListener('DOMContentLoaded', function () {
       introParagraph:
         'This is a placeholder sentence for the Jiffyhive case study.',
       subheading: 'Led design while working closely with the co-founders',
-      description: `
+      background: `
         <p style="margin-bottom: 16px;">(AI-generated placeholder) The original hiring flow for Jiffyhive, an AI-powered employee hiring platform, was overwhelming for both employers and candidates. Recruiters struggled with long setup times, noisy candidate lists, and little clarity on why certain matches were recommended. Candidates, on the other hand, found the application process repetitive and impersonal, with unclear expectations around role fit and response timelines. As a result, drop-off rates were high and hiring teams relied heavily on manual screening despite the presence of AI.</p>
-        
+      `,
+      roleText: `
         <p style="margin-bottom: 16px;">I worked as the sole product designer, partnering closely with the founder and a small engineering team. I led discovery, UX research, flow redesign, wireframing, and high-fidelity prototyping, and supported implementation through ongoing design reviews. We followed a lean, outcome-driven process, shipping in small increments and validating assumptions through weekly usability tests with recruiters and job seekers across different company sizes.</p>
-        
+      `,
+      description: `
         <p>We began by mapping the end-to-end hiring journey and interviewing 6 hiring managers and 8 job seekers. The key pain points were clear: too many steps to post a role, low trust in AI recommendations, and poor feedback loops for candidates. These insights informed a redesigned experience that focused on fast role setup, transparent AI matching signals, and clear next-step communication — allowing employers to reach qualified candidates in minutes while giving applicants confidence that their profiles were being evaluated fairly and efficiently.</p>
       `,
     },
@@ -732,31 +744,27 @@ document.addEventListener('DOMContentLoaded', function () {
       featuredImageContainer.innerHTML = '';
     }
 
-    if (paragraphs.length > 0) {
-      if (caseStudyType === 'docswell') {
-        // Docswell uses first two paragraphs for Background
-        const backgroundParagraphs = Array.from(paragraphs).slice(0, 2);
-        document.getElementById('case-study-background-text').innerHTML =
-          backgroundParagraphs.map((p) => p.outerHTML).join('');
-        backgroundParagraphs.forEach((p) => p.remove());
-      } else {
-        // Others use first paragraph for Background
-        document.getElementById('case-study-background-text').innerHTML =
-          paragraphs[0].outerHTML;
-        paragraphs[0].remove();
-      }
+    if (data.background) {
+      document.getElementById('case-study-background-text').innerHTML = data.background;
+    } else if (paragraphs.length > 0) {
+      // Fallback: Use first paragraph for Background
+      document.getElementById('case-study-background-text').innerHTML =
+        paragraphs[0].outerHTML;
+      paragraphs[0].remove();
     } else {
       document.getElementById('case-study-background-text').innerHTML = '';
     }
 
     // Refresh paragraphs list after removals
-    const remainingParagraphs = tempDiv.querySelectorAll('p');
+    const remainingParasAfterBackground = tempDiv.querySelectorAll('p');
 
-    if (remainingParagraphs.length > 0) {
-      // Set role text to next paragraph's text content
+    if (data.roleText) {
+      document.getElementById('case-study-role-text').innerHTML = data.roleText;
+    } else if (remainingParasAfterBackground.length > 0) {
+      // Fallback: Set role text to next paragraph's text content
       document.getElementById('case-study-role-text').innerHTML =
-        remainingParagraphs[0].outerHTML;
-      remainingParagraphs[0].remove();
+        remainingParasAfterBackground[0].outerHTML;
+      remainingParasAfterBackground[0].remove();
     } else {
       // Use placeholder if no more paragraphs
       document.getElementById('case-study-role-text').innerHTML =
@@ -851,45 +859,34 @@ document.addEventListener('DOMContentLoaded', function () {
       solutionImageAfterContainer.style.display = 'none';
     }
 
+    // Show and populate Calendar section if exists in data
+    const calendarSection = document.getElementById('case-study-calendar-section');
+    if (data.calendarHeading) {
+      calendarSection.style.display = 'flex';
+      document.getElementById('case-study-calendar-heading').textContent = data.calendarHeading;
+      document.getElementById('case-study-calendar-text').textContent = data.calendarText;
+      
+      const calendarImagesContainer = document.getElementById('case-study-calendar-images');
+      if (data.calendarImages && data.calendarImages.length > 0) {
+        calendarImagesContainer.innerHTML = data.calendarImages.map(imgSrc => 
+          `<img src="${imgSrc}" alt="Calendar image" class="case-study-image" data-image-popup="${imgSrc}" />`
+        ).join('');
+      } else {
+        calendarImagesContainer.innerHTML = '';
+      }
+    } else {
+      calendarSection.style.display = 'none';
+    }
+
     // Set the remaining content (other paragraphs and images) in description
     document.getElementById('case-study-description').innerHTML =
       tempDiv.innerHTML;
 
-    // Re-attach image popup handlers for dynamically added images (featured image and description images)
-    const featuredImage =
-      featuredImageContainer.querySelector('[data-image-popup]');
-    if (featuredImage) {
-      featuredImage.addEventListener('click', function () {
-        const imageSrc = this.getAttribute('data-image-popup');
-        const imageAlt = this.getAttribute('alt') || '';
-        openImagePopup(imageSrc, imageAlt);
-      });
-    }
-
-    const solutionImage =
-      solutionImageContainer.querySelector('[data-image-popup]');
-    if (solutionImage) {
-      solutionImage.addEventListener('click', function () {
-        const imageSrc = this.getAttribute('data-image-popup');
-        const imageAlt = this.getAttribute('alt') || '';
-        openImagePopup(imageSrc, imageAlt);
-      });
-    }
-
-    const solutionImageAfter =
-      solutionImageAfterContainer.querySelector('[data-image-popup]');
-    if (solutionImageAfter) {
-      solutionImageAfter.addEventListener('click', function () {
-        const imageSrc = this.getAttribute('data-image-popup');
-        const imageAlt = this.getAttribute('alt') || '';
-        openImagePopup(imageSrc, imageAlt);
-      });
-    }
-
-    const caseStudyImages = document.querySelectorAll(
-      '#case-study-description [data-image-popup]'
-    );
-    caseStudyImages.forEach((img) => {
+    // Attach image popup handlers for ALL images in the modal that have data-image-popup
+    const allPopupImages = caseStudyModal.querySelectorAll('[data-image-popup]');
+    allPopupImages.forEach((img) => {
+      // Small cleanup: remove old listeners if any (though they are usually new elements)
+      img.onclick = null; 
       img.addEventListener('click', function () {
         const imageSrc = this.getAttribute('data-image-popup');
         const imageAlt = this.getAttribute('alt') || '';
