@@ -2539,6 +2539,10 @@ img.card-logo {
     margin: 0 0 20px 0 !important;
   }
 
+  .case-study-section .case-study-featured-image {
+    margin-top: 12px !important;
+  }
+
   .case-study-featured-image img {
     width: 100% !important;
     height: auto !important;
