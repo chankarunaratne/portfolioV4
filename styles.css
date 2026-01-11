@@ -2536,10 +2536,18 @@ img.card-logo {
   }
 
   .case-study-featured-image {
+    /* Base margin for featured image at top */
     margin: 0 0 20px 0 !important;
   }
 
+  /* Body images inside sections get 12px top margin */
   .case-study-section .case-study-featured-image {
+    margin-top: 12px !important;
+  }
+
+  /* Images in the description text also get 12px top margin */
+  .case-study-description img,
+  .case-study-images .case-study-image {
     margin-top: 12px !important;
   }
 
