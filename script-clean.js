@@ -664,9 +664,9 @@ document.addEventListener('DOMContentLoaded', function () {
       company: 'Rememberly',
       role: 'Founder + Maker',
       title:
-        'Designing and developing a mobile app that saves highlights from physical books',
+        'Rememberly: Save highlights from physical books',
       introParagraph:
-        'This is a placeholder sentence for the Rememberly case study.',
+        'Worked on the full cycle from concept to development as Im working on launching my first iPhone app with the help of AI tools like Cursor',
       subheading:
         'Worked on the full cycle from concept to development as Im working on launching my first iPhone app',
       background: `
