@@ -631,6 +631,7 @@ document.addEventListener('DOMContentLoaded', function () {
       description: `
         <div class="case-study-images">
           <img src="assets/docswell-exports/docswell-export-dashboard.png" alt="Docswell dashboard" class="case-study-image" data-image-popup="assets/docswell-exports/docswell-export-dashboard.png" />
+          <img src="assets/docswell-exports/settings-general.png" alt="Docswell settings" class="case-study-image" data-image-popup="assets/docswell-exports/settings-general.png" />
         </div>
       `,
       outcome: `
