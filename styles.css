@@ -1244,7 +1244,7 @@ body {
   margin: 0;
 }
 
-.case-study-intro-paragraph {
+.case-study-subheading {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
     'Helvetica Neue', Arial, sans-serif;
   font-size: 16px;
@@ -1338,15 +1338,6 @@ body {
   margin: 0;
 }
 
-.case-study-subheading {
-  font-family: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, sans-serif;
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 30px;
-  color: #666d80;
-  margin: 0;
-}
 
 .case-study-description {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,

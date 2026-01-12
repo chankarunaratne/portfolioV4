@@ -617,10 +617,8 @@ document.addEventListener('DOMContentLoaded', function () {
       role: 'Product Designer',
       title:
         'Leading design at Docswell to help them go from MVP to public launch',
-      introParagraph:
-        'Docswell is a UK-based medtech company that helps medical practices completely digitise their workflow.',
       subheading:
-        'Worked on both patient and practitioner portals and prepared them for public release.',
+        'Docswell is a UK-based medtech company that helps medical practices completely digitise their workflow.',
       background: `
         <p style="margin-bottom: 16px;">At the time, UK medical practitioners relied on multiple disconnected tools for appointments, records, and communication, creating time-consuming workflows that pulled focus away from patient care.</p>
         <p style="margin-bottom: 16px;">When I joined, there was already an early MVP, but as the company shifted its focus to therapist-led practices, we redesigned both the practitioner and patient portals to better support new needs and prepare the platform for its first public release.</p>
@@ -665,10 +663,8 @@ document.addEventListener('DOMContentLoaded', function () {
       role: 'Founder + Maker',
       title:
         'Rememberly: Save highlights from physical books',
-      introParagraph:
-        'Worked on the full cycle from concept to development as Im working on launching my first iPhone app with the help of AI tools like Cursor',
       subheading:
-        'Worked on the full cycle from concept to development as Im working on launching my first iPhone app',
+        'Worked on the full cycle from concept to development as Im working on launching my first iPhone app with the help of AI tools like Cursor',
       background: `
         <p style="margin-bottom: 16px;">(AI-generated placeholder) The original experience for Rememberly, a mobile app designed to save highlights from physical books using a phone camera, was fragmented and unreliable. Early users struggled with inconsistent scan quality, unclear feedback during capture, and a confusing transition between scanning, editing, and saving highlights. Many felt the process interrupted their reading flow, making the app feel heavier than simply jotting notes. Feedback consistently pointed to friction at the exact moment users wanted speed and focus.</p>
       `,
@@ -686,9 +682,8 @@ document.addEventListener('DOMContentLoaded', function () {
       company: 'Jiffyhive',
       role: 'Founding Designer',
       title: 'Jiffyhive: AI-powered employee hiring platform',
-      introParagraph:
+      subheading:
         'This is a placeholder sentence for the Jiffyhive case study.',
-      subheading: 'Led design while working closely with the co-founders',
       background: `
         <p style="margin-bottom: 16px;">(AI-generated placeholder) The original hiring flow for Jiffyhive, an AI-powered employee hiring platform, was overwhelming for both employers and candidates. Recruiters struggled with long setup times, noisy candidate lists, and little clarity on why certain matches were recommended. Candidates, on the other hand, found the application process repetitive and impersonal, with unclear expectations around role fit and response timelines. As a result, drop-off rates were high and hiring teams relied heavily on manual screening despite the presence of AI.</p>
       `,
@@ -719,8 +714,8 @@ document.addEventListener('DOMContentLoaded', function () {
       data.company;
     document.getElementById('case-study-role').textContent = data.role;
     document.getElementById('case-study-title').textContent = data.title;
-    document.getElementById('case-study-intro-paragraph').textContent =
-      data.introParagraph || '';
+    document.getElementById('case-study-subheading').textContent =
+      data.subheading || '';
 
     // Extract paragraphs for Background and Role sections
     const tempDiv = document.createElement('div');
