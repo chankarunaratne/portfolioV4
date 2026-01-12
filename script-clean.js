@@ -659,7 +659,8 @@ document.addEventListener('DOMContentLoaded', function () {
       settingsImage: 'assets/docswell-case-study/settings-general.png',
     },
     rememberly: {
-      logo: '',
+      logo: 'assets/rememberly-case-study/rememberly-company-logo.png',
+      featuredImage: 'assets/rememberly-case-study/rememberly-featured.png',
       company: 'Rememberly',
       role: 'Founder + Maker',
       title:
@@ -677,6 +678,8 @@ document.addEventListener('DOMContentLoaded', function () {
       description: `
         <p>We started by observing how readers naturally highlight and revisit content in physical books, followed by interviews with 5 active readers and 3 students. The main pain points were clear: too much camera friction, low confidence in OCR accuracy, and excessive manual cleanup after scanning. These insights drove a redesigned capture flow that prioritised speed, clear visual feedback, and minimal correction — enabling users to scan, review, and save a highlight in seconds without breaking their reading momentum.</p>
       `,
+      solutionHeading: 'The Capture Flow',
+      solutionText: 'The redesigned capture flow allows users to quickly scan text from books with real-time OCR feedback, ensuring high accuracy while maintaining the reading momentum.',
     },
     jiffyhive: {
       logo: '',
@@ -728,7 +731,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const featuredImageContainer = document.getElementById(
       'case-study-featured-image'
     );
-    if (caseStudyType === 'docswell') {
+    if (data.featuredImage) {
+      featuredImageContainer.innerHTML = `<img src="${data.featuredImage}" alt="${data.company} featured image" data-image-popup="${data.featuredImage}" />`;
+    } else if (caseStudyType === 'docswell') {
       const imagesContainer = tempDiv.querySelector('.case-study-images');
       if (imagesContainer) {
         const firstImage = imagesContainer.querySelector(
