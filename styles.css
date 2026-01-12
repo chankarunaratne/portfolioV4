@@ -1269,6 +1269,7 @@ body {
   height: auto;
   display: block;
   cursor: zoom-in;
+  border-radius: 8px;
   transition: opacity 0.2s ease;
 }
 
@@ -1357,6 +1358,10 @@ body {
   margin: 0;
 }
 
+.case-study-description img {
+  border-radius: 8px;
+}
+
 .case-study-images {
   display: flex;
   flex-direction: column;
@@ -1369,6 +1374,7 @@ body {
   height: auto;
   display: block;
   cursor: zoom-in;
+  border-radius: 8px;
   transition: opacity 0.2s ease;
   margin-bottom: 8px;
 }
@@ -1462,7 +1468,7 @@ body {
   max-width: 90%;
   max-height: 90vh;
   object-fit: contain;
-  cursor: zoom-in;
+  border-radius: 8px;
   transition: transform 0.3s ease;
   z-index: 10001;
   /* Prevent browser from interfering with zoom */
@@ -1473,12 +1479,6 @@ body {
   user-select: none;
   /* Ensure transform origin is centered for better zoom experience */
   transform-origin: center center;
-}
-
-.popup-image.zoomed {
-  cursor: zoom-out;
-  /* Remove transition when zoomed to prevent interference with pinch gestures */
-  transition: none;
 }
 
 /* Make images clickable */

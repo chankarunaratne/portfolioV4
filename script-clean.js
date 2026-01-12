@@ -612,7 +612,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // Case study data for each card
   const caseStudyData = {
     docswell: {
-      logo: 'assets/docswell-exports/product-logo.png',
+      logo: 'assets/docswell-case-study/product-logo.png',
       company: 'Docswell',
       role: 'Product Designer',
       title:
@@ -630,8 +630,7 @@ document.addEventListener('DOMContentLoaded', function () {
       `,
       description: `
         <div class="case-study-images">
-          <img src="assets/docswell-exports/docswell-export-dashboard.png" alt="Docswell dashboard" class="case-study-image" data-image-popup="assets/docswell-exports/docswell-export-dashboard.png" />
-          <img src="assets/docswell-exports/settings-general.png" alt="Docswell settings" class="case-study-image" data-image-popup="assets/docswell-exports/settings-general.png" />
+          <img src="assets/docswell-case-study/docswell-export-dashboard.png" alt="Docswell dashboard" class="case-study-image" data-image-popup="assets/docswell-case-study/docswell-export-dashboard.png" />
         </div>
       `,
       outcome: `
@@ -645,16 +644,19 @@ document.addEventListener('DOMContentLoaded', function () {
       solutionHeading: 'Inbox',
       solutionText:
         'A centralised place to manage all patient interactions, including assigning patients, messaging, and appointment management. This reduced tool switching, streamlined day-to-day workflows, and enabled faster responses to patients.',
-      solutionImage: 'assets/docswell-exports/inbox-general.png',
+      solutionImage: 'assets/docswell-case-study/inbox-general.png',
       solutionTextAfterImage: 'Message templates allow practitioners to quickly send recurring messages with pre-attached documents, forms, and images, reducing repetitive actions and saving time.',
-      solutionImageAfterText: 'assets/docswell-exports/inbox-message-template.png',
+      solutionImageAfterText: 'assets/docswell-case-study/inbox-message-template.png',
       calendarHeading: 'Calendar',
       calendarText: 'A centralised calendar to manage all appointments and practitioner schedules across the practice.',
       calendarImages: [
-        'assets/docswell-exports/calendar-general.png',
-        'assets/docswell-exports/calendar-modal.png',
-        'assets/docswell-exports/calendar-event.png'
+        'assets/docswell-case-study/calendar-general.png',
+        'assets/docswell-case-study/calendar-modal.png',
+        'assets/docswell-case-study/calendar-event.png'
       ],
+      settingsHeading: 'Settings',
+      settingsText: 'The settings experience was restructured into a clear, well-organised system, making complex practice configuration easier to understand and manage.',
+      settingsImage: 'assets/docswell-case-study/settings-general.png',
     },
     rememberly: {
       logo: '',
@@ -877,6 +879,23 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     } else {
       calendarSection.style.display = 'none';
+    }
+
+    // Show and populate Settings section if exists in data
+    const settingsSection = document.getElementById('case-study-settings-section');
+    if (data.settingsHeading) {
+      settingsSection.style.display = 'flex';
+      document.getElementById('case-study-settings-heading').textContent = data.settingsHeading;
+      document.getElementById('case-study-settings-text').textContent = data.settingsText;
+      
+      const settingsImageContainer = document.getElementById('case-study-settings-image');
+      if (data.settingsImage) {
+        settingsImageContainer.innerHTML = `<img src="${data.settingsImage}" alt="Settings image" class="case-study-image" data-image-popup="${data.settingsImage}" />`;
+      } else {
+        settingsImageContainer.innerHTML = '';
+      }
+    } else {
+      settingsSection.style.display = 'none';
     }
 
     // Set the remaining content (other paragraphs and images) in description
