@@ -662,7 +662,7 @@ document.addEventListener('DOMContentLoaded', function () {
       company: 'Rememberly',
       role: 'Founder + Maker',
       title:
-        'Rememberly: Save highlights from physical books',
+        'Founding Rememberly: An iPhone app to Save highlights from physical books',
       subheading:
         'Worked on the full cycle from concept to development as Im working on launching my first iPhone app with the help of AI tools like Cursor',
       background: `
