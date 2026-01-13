@@ -1174,6 +1174,12 @@ document.addEventListener('DOMContentLoaded', function () {
   caseCards.forEach((card) => {
     card.addEventListener('click', function () {
       const caseStudyType = card.getAttribute('data-case-study');
+      
+      // Skip opening modal for jiffyhive as it's not complete
+      if (caseStudyType === 'jiffyhive') {
+        return;
+      }
+      
       if (caseStudyType) {
         openCaseStudyModal(caseStudyType);
       }
