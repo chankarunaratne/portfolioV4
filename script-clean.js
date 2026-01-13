@@ -682,6 +682,22 @@ document.addEventListener('DOMContentLoaded', function () {
           <img src="assets/rememberly-case-study/1.scan-quote.png" alt="Scanning a quote" class="case-study-image" data-image-popup="assets/rememberly-case-study/1.scan-quote.png" />
           <img src="assets/rememberly-case-study/2.select-quote.png" alt="Selecting a quote" class="case-study-image" data-image-popup="assets/rememberly-case-study/2.select-quote.png" />
         </div>
+        <p style="margin-top: 24px; margin-bottom: 16px;">Users can add books in two ways: search for a book through an API or add a custom book. If the user chooses to search for a book, the API will populate the book cover.</p>
+        <p style="margin-bottom: 16px;">I wanted to give custom books some love. Instead of a boring generic thumbnail that will be shared by all books, I gave the ability to customise the book cover with a color theme and engraved the first letter of the title into the cover.</p>
+        <p style="margin-bottom: 16px;">I was able to create the engraving using SwiftUI without having to use multiple assets representing all the outcomes. Just the color variations of the book was uploaded as an asset.</p>
+        <div class="case-study-images">
+          <img src="assets/rememberly-case-study/3.add-book.png" alt="Adding a book" class="case-study-image" data-image-popup="assets/rememberly-case-study/3.add-book.png" />
+        </div>
+        <p style="margin-top: 24px; margin-bottom: 16px;">You can manage your saved quotes and library of books neatly in one place.</p>
+        <div class="case-study-images">
+          <img src="assets/rememberly-case-study/4.my-library.png" alt="My library" class="case-study-image" data-image-popup="assets/rememberly-case-study/4.my-library.png" />
+          <img src="assets/rememberly-case-study/5.quotes.png" alt="My quotes" class="case-study-image" data-image-popup="assets/rememberly-case-study/5.quotes.png" />
+        </div>
+        <p style="margin-top: 24px; margin-bottom: 16px;">You can also share a quote externally as a text or image in a message or maybe even to your Instagram story. More options are available in the menu.</p>
+        <div class="case-study-images">
+          <img src="assets/rememberly-case-study/6.share.png" alt="Sharing a quote" class="case-study-image" data-image-popup="assets/rememberly-case-study/6.share.png" />
+          <img src="assets/rememberly-case-study/7. final.png" alt="Final screen" class="case-study-image" data-image-popup="assets/rememberly-case-study/7. final.png" />
+        </div>
       `,
     },
     jiffyhive: {
