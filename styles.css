@@ -1561,7 +1561,7 @@ img.card-logo {
 
 /* My Products Section */
 .my-products-section {
-  margin: 12px auto 48px;
+  margin: 12px auto 100px;
   width: 720px;
   max-width: 90%;
 }
@@ -1759,6 +1759,130 @@ img.card-logo {
 
 .product-button-disabled .product-button-text {
   color: #a4acb9;
+}
+
+/* Work Experience Section */
+.work-experience-section {
+  margin: 0 auto 48px;
+  width: 720px;
+  max-width: 90%;
+}
+
+.work-experience-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 32px;
+}
+
+.work-experience-header {
+  display: flex;
+  flex-direction: column;
+  gap: 19px;
+  align-items: flex-start;
+}
+
+.work-experience-icon {
+  width: 50px;
+  height: 50px;
+}
+
+.work-experience-icon-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.work-experience-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+  color: #666d80;
+  margin: 0;
+  text-align: left;
+}
+
+.experience-list {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  width: 100%;
+}
+
+.experience-item {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.experience-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.experience-company-details {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.experience-logo-wrapper {
+  width: 52px;
+  height: 52px;
+  border-radius: 13px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.experience-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.experience-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.experience-company {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #36394a;
+  margin: 0;
+}
+
+.experience-role {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #666d80;
+  margin: 0;
+}
+
+.experience-location {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #818898;
+}
+
+.experience-description {
+  width: 100%;
+}
+
+.experience-description p {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 22px;
+  color: #666d80;
+  margin: 0;
+  max-width: 563px;
 }
 
 /* Writing Section */
@@ -2124,7 +2248,7 @@ img.card-logo {
 
   /* Sky heights for stacked cards on mobile */
   .intro-stack {
-    min-height: min(220vh, 1500px); /* Taller for vertically stacked cards */
+    min-height: min(280vh, 2000px); /* Taller for vertically stacked sections */
   }
 
   #skyCanvas {
@@ -2158,6 +2282,7 @@ img.card-logo {
   .video-intro,
   .case-studies,
   .my-products-section,
+  .work-experience-section,
   .writing-section,
   .articles-section,
   .testimonials-section,
@@ -2231,10 +2356,15 @@ img.card-logo {
     margin-bottom: 32px;
   }
 
-  .my-products-title {
+  .my-products-title,
+  .work-experience-title {
     width: 100% !important;
     padding: 0;
     box-sizing: border-box;
+  }
+
+  .experience-description p {
+    max-width: none !important;
   }
 
   .products-cards-container {
