@@ -667,7 +667,7 @@ document.addEventListener('DOMContentLoaded', function () {
         'Worked on the full cycle from concept to development as Im working on launching my first iPhone app with the help of AI tools like Cursor.',
       background: `
         <p style="margin-bottom: 16px;">A problem I had while reading physical books is not being able to save highlights easily. Physically using a highlighter on the books was a no-go for many reasons.</p>
-        <p style="margin-bottom: 16px;">I wanted to solve this problem for myself and I'm sure there's many who face the same issue. So I'm building Rememberly, basically Kindle highlights but for your physical books.</p>
+        <p style="margin-bottom: 16px;">I wanted to solve this for myself and I'm sure there's many who face the same issue. So I'm building Rememberly, basically Kindle highlights but for your physical books.</p>
       `,
       roleText: `
         <p style="margin-bottom: 16px;">Building the product from 0 to 1.</p>
@@ -677,7 +677,11 @@ document.addEventListener('DOMContentLoaded', function () {
       `,
       description: `
         <p style="margin-bottom: 16px;">You can add a quote by taking a photo or uploading a photo of a page. The app uses native OCR to detect the text.</p>
-        <p style="margin-bottom: 16px;">Then you can create a book and add the quote to it.</p>
+        <p style="margin-bottom: 16px;">Then you can create a book and neatly organise them in it.</p>
+        <div class="case-study-images">
+          <img src="assets/rememberly-case-study/1.scan-quote.png" alt="Scanning a quote" class="case-study-image" data-image-popup="assets/rememberly-case-study/1.scan-quote.png" />
+          <img src="assets/rememberly-case-study/2.select-quote.png" alt="Selecting a quote" class="case-study-image" data-image-popup="assets/rememberly-case-study/2.select-quote.png" />
+        </div>
       `,
     },
     jiffyhive: {
