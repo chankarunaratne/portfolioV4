@@ -670,13 +670,15 @@ document.addEventListener('DOMContentLoaded', function () {
         <p style="margin-bottom: 16px;">I wanted to solve this problem for myself and I'm sure there's many who face the same issue. So I'm building Rememberly, basically Kindle highlights but for your physical books.</p>
       `,
       roleText: `
-        <p style="margin-bottom: 16px;">Found, designer, maker.</p>
+        <p style="margin-bottom: 16px;">Founder, designer, maker.</p>
+      `,
+      outcome: `
+        <p style="margin-bottom: 16px;">Design completed and I'm currently building it using XCode, Cursor and Antigravity. I have built a working base userflow for saving a scanned text, managing books, and managing saved quotes. I'm hoping to release a working testflight in the coming weeks.</p>
       `,
       description: `
-        <p>We started by observing how readers naturally highlight and revisit content in physical books, followed by interviews with 5 active readers and 3 students. The main pain points were clear: too much camera friction, low confidence in OCR accuracy, and excessive manual cleanup after scanning. These insights drove a redesigned capture flow that prioritised speed, clear visual feedback, and minimal correction — enabling users to scan, review, and save a highlight in seconds without breaking their reading momentum.</p>
+        <p style="margin-bottom: 16px;">You can add a quote by taking a photo or uploading a photo of a page. The app uses native OCR to detect the text.</p>
+        <p style="margin-bottom: 16px;">Then you can create a book and add the quote to it.</p>
       `,
-      solutionHeading: 'The Capture Flow',
-      solutionText: 'The redesigned capture flow allows users to quickly scan text from books with real-time OCR feedback, ensuring high accuracy while maintaining the reading momentum.',
     },
     jiffyhive: {
       logo: '',
@@ -775,11 +777,16 @@ document.addEventListener('DOMContentLoaded', function () {
         '<p>Placeholder text for the Role section.</p>';
     }
 
-    // Show and populate Outcome section for all case studies
+    // Show and populate Outcome section
     const outcomeSection = document.getElementById(
       'case-study-outcome-section'
     );
+    const divider = document.querySelector('.case-study-divider');
+
     outcomeSection.style.display = 'flex';
+    
+    // Divider is always shown if it exists
+    if (divider) divider.style.display = 'block';
     
     // Set outcome text based on case study data or placeholders
     if (data.outcome) {
@@ -788,10 +795,7 @@ document.addEventListener('DOMContentLoaded', function () {
     } else {
       let outcomeText =
         'This is a placeholder sentence for the Outcome section.';
-      if (caseStudyType === 'rememberly') {
-        outcomeText =
-          'This is a placeholder sentence for the Outcome section in the Rememberly case study.';
-      } else if (caseStudyType === 'jiffyhive') {
+      if (caseStudyType === 'jiffyhive') {
         outcomeText =
           'This is a placeholder sentence for the Outcome section in the Jiffyhive case study.';
       }
@@ -799,11 +803,16 @@ document.addEventListener('DOMContentLoaded', function () {
         outcomeText;
     }
 
-    // Show and populate Solution section for all case studies
+    // Show and populate Solution section
     const solutionSection = document.getElementById(
       'case-study-solution-section'
     );
-    solutionSection.style.display = 'flex';
+    
+    if (caseStudyType === 'rememberly') {
+      solutionSection.style.display = 'none';
+    } else {
+      solutionSection.style.display = 'flex';
+    }
 
     // Set heading and text based on case study data
     document.getElementById('case-study-solution-heading').textContent =
@@ -900,8 +909,14 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Set the remaining content (other paragraphs and images) in description
-    document.getElementById('case-study-description').innerHTML =
-      tempDiv.innerHTML;
+    const descriptionSection = document.getElementById('case-study-description');
+    if (data.description) {
+      descriptionSection.style.display = 'block';
+      descriptionSection.innerHTML = tempDiv.innerHTML;
+    } else {
+      descriptionSection.style.display = 'none';
+      descriptionSection.innerHTML = '';
+    }
 
     // Attach image popup handlers for ALL images in the modal that have data-image-popup
     const allPopupImages = caseStudyModal.querySelectorAll('[data-image-popup]');
