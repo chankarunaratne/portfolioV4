@@ -670,7 +670,7 @@ document.addEventListener('DOMContentLoaded', function () {
         <p style="margin-bottom: 16px;">I wanted to solve this problem for myself and I'm sure there's many who face the same issue. So I'm building Rememberly, basically Kindle highlights but for your physical books.</p>
       `,
       roleText: `
-        <p style="margin-bottom: 16px;">Founder, designer, maker.</p>
+        <p style="margin-bottom: 16px;">Building the product from 0 to 1.</p>
       `,
       outcome: `
         <p style="margin-bottom: 16px;">Design completed and I'm currently building it using XCode, Cursor and Antigravity. I have built a working base userflow for saving a scanned text, managing books, and managing saved quotes. I'm hoping to release a working testflight in the coming weeks.</p>
