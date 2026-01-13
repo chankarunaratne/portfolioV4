@@ -425,21 +425,7 @@ body {
   margin: 0;
 }
 
-.about-image-container {
-  display: flex;
-  justify-content: left;
-  width: 100%;
-  padding: 8px 0;
-  overflow: visible;
-}
 
-.about-image {
-  display: block;
-  width: 100%;
-  max-width: 60px;
-  height: auto;
-  object-fit: contain;
-}
 
 /* Stack wrapper for hero + video intro + case studies */
 .intro-stack {

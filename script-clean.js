@@ -664,12 +664,13 @@ document.addEventListener('DOMContentLoaded', function () {
       title:
         'Founding Rememberly: An iPhone app to Save highlights from physical books',
       subheading:
-        'Worked on the full cycle from concept to development as Im working on launching my first iPhone app with the help of AI tools like Cursor',
+        'Worked on the full cycle from concept to development as Im working on launching my first iPhone app with the help of AI tools like Cursor.',
       background: `
-        <p style="margin-bottom: 16px;">(AI-generated placeholder) The original experience for Rememberly, a mobile app designed to save highlights from physical books using a phone camera, was fragmented and unreliable. Early users struggled with inconsistent scan quality, unclear feedback during capture, and a confusing transition between scanning, editing, and saving highlights. Many felt the process interrupted their reading flow, making the app feel heavier than simply jotting notes. Feedback consistently pointed to friction at the exact moment users wanted speed and focus.</p>
+        <p style="margin-bottom: 16px;">A problem I had while reading physical books is not being able to save highlights easily. Physically using a highlighter on the books was a no-go for many reasons.</p>
+        <p style="margin-bottom: 16px;">I wanted to solve this problem for myself and I'm sure there's many who face the same issue. So I'm building Rememberly, basically Kindle highlights but for your physical books.</p>
       `,
       roleText: `
-        <p style="margin-bottom: 16px;">I worked as the sole product designer, collaborating closely with a solo iOS developer and an OCR-focused engineer. I led the end-to-end design process, including problem definition, user interviews, journey mapping, wireframing, and high-fidelity prototyping, while supporting developer handoff. Given tight timelines and limited resources, we followed a lean, iterative approach with short design sprints and frequent validation using real books in real-world reading conditions.</p>
+        <p style="margin-bottom: 16px;">Found, designer, maker.</p>
       `,
       description: `
         <p>We started by observing how readers naturally highlight and revisit content in physical books, followed by interviews with 5 active readers and 3 students. The main pain points were clear: too much camera friction, low confidence in OCR accuracy, and excessive manual cleanup after scanning. These insights drove a redesigned capture flow that prioritised speed, clear visual feedback, and minimal correction — enabling users to scan, review, and save a highlight in seconds without breaking their reading momentum.</p>
