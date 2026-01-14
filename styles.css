@@ -1826,7 +1826,7 @@ img.card-logo {
 
 .experience-company-details {
   display: flex;
-  gap: 12px;
+  gap: 8px;
   align-items: flex-start;
 }
 
