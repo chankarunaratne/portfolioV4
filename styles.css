@@ -2248,14 +2248,14 @@ img.card-logo {
 
   /* Sky heights for stacked cards on mobile */
   .intro-stack {
-    min-height: min(280vh, 2000px); /* Taller for vertically stacked sections */
+    min-height: min(210svh, 1500px); /* Reduced from 280vh to bring products closer */
   }
 
   #skyCanvas {
     height: min(
-      250svh,
-      1800px
-    ); /* Extended further to go well below last case study card */
+      200svh,
+      1400px
+    ); /* Adjusted to match the new stack proportions */
     /* Adjust fade to allow sky to be visible longer */
     -webkit-mask-image: linear-gradient(
       to bottom,
@@ -2274,7 +2274,7 @@ img.card-logo {
   }
 
   .home::before {
-    height: min(250svh, 1800px); /* Match sky canvas */
+    height: min(200svh, 1400px); /* Match sky canvas */
   }
 
   .navbar,
