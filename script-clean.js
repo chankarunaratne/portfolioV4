@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
     link.addEventListener('click', function (e) {
       const href = this.getAttribute('href') || '';
 
-      // Smooth-scroll for in-page anchor navigation (e.g., #my-products on homepage)
+      // Smooth-scroll for in-page anchor navigation
       if (href.startsWith('#') && href.length > 1) {
         const targetId = href.slice(1);
         const targetEl = document.getElementById(targetId);
@@ -1279,14 +1279,6 @@ document.addEventListener('DOMContentLoaded', function () {
       return;
     }
 
-    // Homepage: highlight My Products when hash matches, otherwise none
-    if (window.location.hash === '#my-products') {
-      allLinks.forEach((l) => {
-        if ((l.getAttribute('href') || '') === '#my-products') {
-          l.classList.add('active');
-        }
-      });
-    }
   }
 
   setActiveNav();
