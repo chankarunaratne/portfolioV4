@@ -2744,7 +2744,7 @@ img.card-logo {
     100% {
       opacity: 1;
       transform: none;
-      filter: none;
+    filter: blur(0px);
     }
   }
 
@@ -2844,14 +2844,32 @@ img.card-logo {
   .case-study-title,
   .case-study-subheading,
   .case-study-text-container > .case-study-featured-image,
-  .case-study-sections,
-  .case-study-description,
+  .case-study-sections > *,
+  .case-study-description > *,
   .about-title,
   .about-body {
     opacity: 0;
+    will-change: opacity, transform, filter;
+  }
+  
+  /* Force clean state after animation completes */
+  .case-study-modal.animation-complete .case-study-intro,
+  .case-study-modal.animation-complete .case-study-title,
+  .case-study-modal.animation-complete .case-study-subheading,
+  .case-study-modal.animation-complete .case-study-text-container > .case-study-featured-image,
+  .case-study-modal.animation-complete .case-study-sections > *,
+  .case-study-modal.animation-complete .case-study-description > *,
+  .case-study-modal.animation-complete .about-title,
+  .case-study-modal.animation-complete .about-body,
+  .about-panel.animation-complete .about-title,
+  .about-panel.animation-complete .about-body {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    animation: none !important;
+    will-change: auto !important;
   }
 
-  /* Animate only when the .opening class is present on the parent */
   /* Animate only when the .opening class is present on the parent */
   .case-study-modal.opening .case-study-intro {
     animation: fadeBlurUpEntry 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
@@ -2873,12 +2891,12 @@ img.card-logo {
     animation-delay: 0.25s;
   }
   
-  .case-study-modal.opening .case-study-description {
+  .case-study-modal.opening .case-study-description > * {
     animation: fadeBlurUpEntry 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
     animation-delay: 0.3s;
   }
   
-  .case-study-modal.opening .case-study-sections {
+  .case-study-modal.opening .case-study-sections > * {
     animation: fadeBlurUpEntry 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
     animation-delay: 0.35s;
   }

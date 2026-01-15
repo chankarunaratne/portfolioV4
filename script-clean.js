@@ -190,6 +190,26 @@ document.addEventListener('DOMContentLoaded', function () {
     document.body.style.overflow = 'hidden';
     document.documentElement.style.overflow = 'hidden';
 
+    // Trigger animation replay for desktop
+    if (window.innerWidth >= 768) {
+      // Remove class if it exists (cleanup)
+      aboutModal.classList.remove('opening');
+      aboutModal.classList.remove('animation-complete');
+      
+      // Force Reflow
+      void aboutModal.offsetWidth; 
+      
+      // Add class to trigger animation
+      aboutModal.classList.add('opening');
+
+      // Cleanup to ensure crisp text after animation
+      setTimeout(() => {
+        if (aboutModal.classList.contains('opening')) {
+          aboutModal.classList.add('animation-complete');
+        }
+      }, 1400); // 0.8s duration + 0.5s max delay + buffer
+    }
+
     // Mirror the case study modal's "scroll anywhere -> scroll popup" behavior,
     // but keep handlers separate so we never impact case study modal behavior.
     const isEventFromScrollableContainer = function (e) {
@@ -342,6 +362,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // Helper to run the actual teardown
     const finishClosing = () => {
       aboutModal.classList.remove('closing');
+      aboutModal.classList.remove('opening');
+      aboutModal.classList.remove('animation-complete');
       aboutModal.style.display = 'none';
       document.body.style.overflow = 'auto';
       document.documentElement.style.overflow = 'auto';
@@ -788,12 +810,20 @@ document.addEventListener('DOMContentLoaded', function () {
     if (window.innerWidth >= 768) {
       // Remove class if it exists (cleanup)
       caseStudyModal.classList.remove('opening');
+      caseStudyModal.classList.remove('animation-complete');
       
       // Force Reflow
       void caseStudyModal.offsetWidth; 
       
       // Add class to trigger animation
       caseStudyModal.classList.add('opening');
+
+      // Cleanup to ensure crisp text after animation
+      setTimeout(() => {
+        if (caseStudyModal.classList.contains('opening')) {
+          caseStudyModal.classList.add('animation-complete');
+        }
+      }, 1400); // 0.8s duration + 0.5s max delay + buffer
     }
 
     // Refresh paragraphs list after removals
@@ -1150,6 +1180,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const finishClosing = () => {
       caseStudyModal.classList.remove('closing');
       caseStudyModal.classList.remove('opening'); // Reset entry animation class
+      caseStudyModal.classList.remove('animation-complete');
       caseStudyModal.style.display = 'none';
       document.body.style.overflow = 'auto';
       document.documentElement.style.overflow = 'auto';
