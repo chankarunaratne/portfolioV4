@@ -349,11 +349,6 @@ document.addEventListener('DOMContentLoaded', function () {
         touchmove: handleTouchMove,
       };
     }
-
-    // Focus close button for accessibility
-    if (aboutModalClose) {
-      setTimeout(() => aboutModalClose.focus(), 150);
-    }
   }
 
   function closeAboutModal() {
@@ -486,11 +481,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Prevent body scrolling when modal is open
     document.body.style.overflow = 'hidden';
-
-    // Focus on the close button for accessibility
-    setTimeout(() => {
-      videoModalClose.focus();
-    }, 300);
   }
 
   // Function to close video modal

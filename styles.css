@@ -1019,6 +1019,7 @@ body {
   z-index: 10002;
   padding: 0;
   transition: transform 0.2s ease, filter 0.2s ease;
+  outline: none;
 }
 
 .video-modal-close img {
@@ -1146,6 +1147,7 @@ body {
   z-index: 10002;
   padding: 0;
   transition: transform 0.2s ease, filter 0.2s ease;
+  outline: none;
 }
 
 .case-study-modal-close img {
@@ -1441,6 +1443,7 @@ body {
   z-index: 10002;
   padding: 0;
   transition: transform 0.2s ease, filter 0.2s ease;
+  outline: none;
 }
 
 .image-popup-close img {
