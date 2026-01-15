@@ -1057,6 +1057,15 @@ body {
   }
 }
 
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
 @keyframes slideUp {
   from {
     opacity: 0;
@@ -1398,7 +1407,12 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: fadeIn 0.3s ease-out;
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+.image-popup-modal.closing {
+  animation: fadeOut 0.3s ease-out forwards;
+  pointer-events: none;
 }
 
 .image-popup-overlay {
@@ -2717,3 +2731,143 @@ img.card-logo {
 }
 
 /* Enhanced button animations */
+
+/* Desktop Full-Screen Popup Overrides (Added 2026-01-15) */
+@media (min-width: 768px) {
+  /* Simple slide up for the entire popup (background + content) */
+  @keyframes slideUpSimple {
+    0% { transform: translateY(100vh); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+  
+  /* Reverse slide down for closing */
+  @keyframes slideDownSimple {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(100vh); opacity: 0; }
+  }
+
+  /* Make the overlay solid white/opaque */
+  .case-study-modal-overlay {
+    background-color: #ffffff;
+    opacity: 1;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    /* Parents animates, so child doesn't need to */
+    animation: none;
+  }
+
+  /* Adjust the wrapper to allow window-level scrolling */
+  .case-study-modal {
+    padding: 0;
+    /* Use flex overrides to handle layout instead of forcing display: block, 
+       so inline display:none/flex toggles from JS still work. */
+    align-items: flex-start; 
+    overflow-y: auto;
+    /* Ensure scrollbar appears on the viewport edge */
+    scrollbar-gutter: stable;
+    /* Enable pointer events so the user can scroll the wrapper */
+    pointer-events: auto;
+    
+    /* Apply background here to ensure it covers the scrollable text when the 
+       internal overlay (which becomes absolute-like due to transform) scrolls away. */
+    background-color: #ffffff;
+    
+    /* REMOVED PARENT ANIMATION: 
+       If parent animates transform, 'position: fixed' children become relative to parent 
+       and scroll away. We must animate ONLY the content, not the container. */
+    animation: none;
+  }
+  
+  /* Apply exit animation when this class is added via JS */
+  .case-study-modal.closing .case-study-modal-content,
+  .case-study-modal.closing .case-study-modal-close {
+    animation: slideDownSimple 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards !important;
+    pointer-events: none; /* Prevent clicks during exit */
+  }
+
+  /* Make the content box transparent and fluid vertically */
+  .case-study-modal-content {
+    background: transparent;
+    box-shadow: none;
+    border: none;
+    border-radius: 0;
+    width: 832px; /* Increased to allow wider images */
+    max-width: 90%;
+    margin: 80px auto 120px; /* Top margin for breathing room, bottom for scroll space */
+    height: auto;
+    max-height: none;
+    overflow: visible;
+    flex: none; /* Don't stretch content */
+    max-height: unset !important;
+    
+    /* Content slides up */
+    animation: slideUpSimple 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  }
+
+  /* Constrain text elements to 640px and center them within the 832px container */
+  .case-study-intro,
+  .case-study-header,
+  .case-study-section-text,
+  .case-study-body-heading,
+  .case-study-divider,
+  .about-title,
+  .about-body,
+  .case-study-description p,
+  .case-study-description ul {
+    width: 100%;
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+  }
+
+  /* Ensure the intro block maintains its internal left-alignment within the 640px centered box */
+  .case-study-intro {
+    align-items: flex-start;
+  }
+
+  /* Remove internal scroll behavior since the viewport handles it */
+  .case-study-modal-container {
+    overflow: visible;
+    height: auto;
+    flex: none;
+    padding-top: 0; /* Remove top padding as we have margin on parent */
+    padding-left: 0;
+    padding-right: 0;
+    
+    animation: none;
+  }
+
+  /* Fix Close Button to top-right of the viewport */
+  .case-study-modal-close {
+    position: fixed;
+    top: 40px;
+    right: 48px;
+    left: auto;
+    width: 48px; 
+    height: 48px;
+    background: transparent; /* No backing circle by default */
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    z-index: 10005;
+    
+    /* Animate button entrance independently so it stays fixed */
+    animation: slideUpSimple 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  }
+  
+  .case-study-modal-close:hover {
+    background: rgba(0, 0, 0, 0.04); /* Very subtle hover state only */
+    transform: scale(1.05);
+  }
+
+  .case-study-modal-close img {
+    width: 48px;
+    height: 48px;
+    opacity: 1; /* Full visibility as requested */
+  }
+  
+  .case-study-modal-close:hover img {
+    opacity: 0.7; /* Slight fade on hover instead */
+  }
+}
+

@@ -208,6 +208,7 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     const forwardScrollToPopupWheel = function (e) {
+      if (window.innerWidth >= 768) return;
       if (isEventFromScrollableContainer(e)) return;
       if (!aboutModalContainer) return;
 
@@ -243,6 +244,7 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     const forwardScrollToPopupTouchMove = function (e) {
+      if (window.innerWidth >= 768) return;
       if (isEventFromScrollableContainer(e)) return;
       if (!aboutModalContainer || e.touches.length !== 1) return;
 
@@ -278,6 +280,7 @@ document.addEventListener('DOMContentLoaded', function () {
       let localTouchStartY = 0;
 
       const handleWheel = function (e) {
+        if (window.innerWidth >= 768) return;
         const container = e.currentTarget;
         const isAtTop = container.scrollTop === 0;
         const isAtBottom =
@@ -295,6 +298,7 @@ document.addEventListener('DOMContentLoaded', function () {
       };
 
       const handleTouchMove = function (e) {
+        if (window.innerWidth >= 768) return;
         const container = e.currentTarget;
         const touchY = e.touches[0].clientY;
         const deltaY = localTouchStartY - touchY;
@@ -334,37 +338,50 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function closeAboutModal() {
     if (!aboutModal) return;
-    aboutModal.style.display = 'none';
-    document.body.style.overflow = 'auto';
-    document.documentElement.style.overflow = 'auto';
 
-    if (aboutModalContainer && aboutModalContainer._scrollHandlers) {
-      aboutModalContainer.removeEventListener(
-        'wheel',
-        aboutModalContainer._scrollHandlers.wheel
-      );
-      aboutModalContainer.removeEventListener(
-        'touchstart',
-        aboutModalContainer._scrollHandlers.touchstart
-      );
-      aboutModalContainer.removeEventListener(
-        'touchmove',
-        aboutModalContainer._scrollHandlers.touchmove
-      );
-      aboutModalContainer._scrollHandlers = null;
-    }
+    // Helper to run the actual teardown
+    const finishClosing = () => {
+      aboutModal.classList.remove('closing');
+      aboutModal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+      document.documentElement.style.overflow = 'auto';
+  
+      if (aboutModalContainer && aboutModalContainer._scrollHandlers) {
+        aboutModalContainer.removeEventListener(
+          'wheel',
+          aboutModalContainer._scrollHandlers.wheel
+        );
+        aboutModalContainer.removeEventListener(
+          'touchstart',
+          aboutModalContainer._scrollHandlers.touchstart
+        );
+        aboutModalContainer.removeEventListener(
+          'touchmove',
+          aboutModalContainer._scrollHandlers.touchmove
+        );
+        aboutModalContainer._scrollHandlers = null;
+      }
+  
+      if (document._aboutScrollHandlers) {
+        document.removeEventListener('wheel', document._aboutScrollHandlers.wheel);
+        document.removeEventListener(
+          'touchstart',
+          document._aboutScrollHandlers.touchstart
+        );
+        document.removeEventListener(
+          'touchmove',
+          document._aboutScrollHandlers.touchmove
+        );
+        document._aboutScrollHandlers = null;
+      }
+    };
 
-    if (document._aboutScrollHandlers) {
-      document.removeEventListener('wheel', document._aboutScrollHandlers.wheel);
-      document.removeEventListener(
-        'touchstart',
-        document._aboutScrollHandlers.touchstart
-      );
-      document.removeEventListener(
-        'touchmove',
-        document._aboutScrollHandlers.touchmove
-      );
-      document._aboutScrollHandlers = null;
+    // Desktop: animate slide-down before hiding
+    if (window.innerWidth >= 768 && aboutModal.style.display !== 'none') {
+      aboutModal.classList.add('closing');
+      setTimeout(finishClosing, 400); // Matches CSS animation duration
+    } else {
+      finishClosing();
     }
   }
 
@@ -980,6 +997,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Forward scroll events to popup container when scrolling outside popup
     const forwardScrollToPopupWheel = function (e) {
+      if (window.innerWidth >= 768) return;
       // If scroll is from the scrollable container, let it handle naturally
       if (isEventFromScrollableContainer(e)) {
         return;
@@ -1024,6 +1042,7 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     const forwardScrollToPopupTouchMove = function (e) {
+      if (window.innerWidth >= 768) return;
       // If scroll is from the scrollable container, let it handle naturally
       if (isEventFromScrollableContainer(e)) {
         return;
@@ -1072,6 +1091,7 @@ document.addEventListener('DOMContentLoaded', function () {
       let touchStartY = 0;
 
       const handleWheel = function (e) {
+        if (window.innerWidth >= 768) return;
         const container = e.currentTarget;
         const isAtTop = container.scrollTop === 0;
         const isAtBottom =
@@ -1090,6 +1110,7 @@ document.addEventListener('DOMContentLoaded', function () {
       };
 
       const handleTouchMove = function (e) {
+        if (window.innerWidth >= 768) return;
         const container = e.currentTarget;
         const touchY = e.touches[0].clientY;
         const deltaY = touchStartY - touchY;
@@ -1127,45 +1148,58 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Function to close case study modal
   function closeCaseStudyModal() {
-    caseStudyModal.style.display = 'none';
-    document.body.style.overflow = 'auto';
-    document.documentElement.style.overflow = 'auto';
+    // Helper to run the actual teardown
+    const finishClosing = () => {
+      caseStudyModal.classList.remove('closing');
+      caseStudyModal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+      document.documentElement.style.overflow = 'auto';
+  
+      // Remove scroll event listeners from container
+      const caseStudyModalContainer = document.querySelector(
+        '.case-study-modal-container'
+      );
+      if (caseStudyModalContainer && caseStudyModalContainer._scrollHandlers) {
+        caseStudyModalContainer.removeEventListener(
+          'wheel',
+          caseStudyModalContainer._scrollHandlers.wheel
+        );
+        caseStudyModalContainer.removeEventListener(
+          'touchstart',
+          caseStudyModalContainer._scrollHandlers.touchstart
+        );
+        caseStudyModalContainer.removeEventListener(
+          'touchmove',
+          caseStudyModalContainer._scrollHandlers.touchmove
+        );
+        caseStudyModalContainer._scrollHandlers = null;
+      }
+  
+      // Remove document scroll handlers
+      if (document._caseStudyScrollHandlers) {
+        document.removeEventListener(
+          'wheel',
+          document._caseStudyScrollHandlers.wheel
+        );
+        document.removeEventListener(
+          'touchstart',
+          document._caseStudyScrollHandlers.touchstart
+        );
+        document.removeEventListener(
+          'touchmove',
+          document._caseStudyScrollHandlers.touchmove
+        );
+        document._caseStudyScrollHandlers = null;
+      }
+    };
 
-    // Remove scroll event listeners from container
-    const caseStudyModalContainer = document.querySelector(
-      '.case-study-modal-container'
-    );
-    if (caseStudyModalContainer && caseStudyModalContainer._scrollHandlers) {
-      caseStudyModalContainer.removeEventListener(
-        'wheel',
-        caseStudyModalContainer._scrollHandlers.wheel
-      );
-      caseStudyModalContainer.removeEventListener(
-        'touchstart',
-        caseStudyModalContainer._scrollHandlers.touchstart
-      );
-      caseStudyModalContainer.removeEventListener(
-        'touchmove',
-        caseStudyModalContainer._scrollHandlers.touchmove
-      );
-      caseStudyModalContainer._scrollHandlers = null;
-    }
-
-    // Remove document scroll handlers
-    if (document._caseStudyScrollHandlers) {
-      document.removeEventListener(
-        'wheel',
-        document._caseStudyScrollHandlers.wheel
-      );
-      document.removeEventListener(
-        'touchstart',
-        document._caseStudyScrollHandlers.touchstart
-      );
-      document.removeEventListener(
-        'touchmove',
-        document._caseStudyScrollHandlers.touchmove
-      );
-      document._caseStudyScrollHandlers = null;
+    // Desktop: animate slide-down before hiding
+    if (window.innerWidth >= 768 && caseStudyModal.style.display !== 'none') {
+      caseStudyModal.classList.add('closing');
+      setTimeout(finishClosing, 400); // Matches CSS animation duration
+    } else {
+      // Mobile or already closed: close immediately
+      finishClosing();
     }
   }
 
@@ -1212,6 +1246,7 @@ document.addEventListener('DOMContentLoaded', function () {
   function openImagePopup(imageSrc, imageAlt) {
     popupImage.src = imageSrc;
     popupImage.alt = imageAlt;
+    imagePopupModal.classList.remove('closing');
     imagePopupModal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
 
@@ -1220,10 +1255,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Function to close image popup modal
   function closeImagePopup() {
-    imagePopupModal.style.display = 'none';
-    document.body.style.overflow = 'auto';
-
-    isZoomed = false;
+    if (imagePopupModal.style.display === 'none') return;
+    
+    imagePopupModal.classList.add('closing');
+    setTimeout(() => {
+      imagePopupModal.style.display = 'none';
+      imagePopupModal.classList.remove('closing');
+      document.body.style.overflow = 'auto';
+      isZoomed = false;
+    }, 300); // Matches CSS animation duration
   }
 
   // Image click handlers
@@ -1296,4 +1336,27 @@ document.addEventListener('DOMContentLoaded', function () {
 
   syncAboutModalToHash();
   window.addEventListener('hashchange', syncAboutModalToHash);
+
+  // Re-attach close handlers for the moved close buttons
+  // Because we moved the close buttons in the DOM, we need to ensure their listeners are attached
+  // The variables `aboutModalClose` and `caseStudyModalClose` were queried at the top of DOMContentLoaded
+  // but let's re-query them to be safe if they weren't caught or to be explicit.
+  
+  const newCaseStudyCloseBtn = document.querySelector('#case-study-modal > .case-study-modal-close');
+  if (newCaseStudyCloseBtn) {
+    newCaseStudyCloseBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      closeCaseStudyModal();
+    });
+  }
+
+  const newAboutCloseBtn = document.querySelector('#about-modal > .case-study-modal-close');
+  if (newAboutCloseBtn) {
+    newAboutCloseBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      closeAboutByHashOrReplace();
+    });
+  }
+
 });
