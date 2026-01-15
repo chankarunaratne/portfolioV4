@@ -2734,26 +2734,48 @@ img.card-logo {
 
 /* Desktop Full-Screen Popup Overrides (Added 2026-01-15) */
 @media (min-width: 768px) {
-  /* Simple slide up for the entire popup (background + content) */
-  @keyframes slideUpSimple {
-    0% { transform: translateY(100vh); opacity: 0; }
-    100% { transform: translateY(0); opacity: 1; }
+  /* New animation matching the home screen "fade-blur-up" style */
+  @keyframes fadeBlurUpEntry {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+      filter: blur(8px);
+    }
+    100% {
+      opacity: 1;
+      transform: none;
+      filter: none;
+    }
   }
-  
-  /* Reverse slide down for closing */
-  @keyframes slideDownSimple {
-    0% { transform: translateY(0); opacity: 1; }
-    100% { transform: translateY(100vh); opacity: 0; }
+
+  /* Reverse animation for closing */
+  @keyframes fadeBlurDownExit {
+    0% {
+      opacity: 1;
+      transform: none;
+      filter: none;
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(20px);
+      filter: blur(8px);
+    }
   }
 
   /* Make the overlay solid white/opaque */
+  /* Make the overlay solid white/opaque with smooth fade in */
   .case-study-modal-overlay {
     background-color: #ffffff;
-    opacity: 1;
+    opacity: 0;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
-    /* Parents animates, so child doesn't need to */
-    animation: none;
+    /* Smooth fade in first */
+    animation: fadeIn 0.4s ease-out forwards;
+  }
+  
+  /* Handle overlay exit */
+  .case-study-modal.closing .case-study-modal-overlay {
+    animation: fadeOut 0.4s ease-out forwards;
   }
 
   /* Adjust the wrapper to allow window-level scrolling */
@@ -2779,9 +2801,10 @@ img.card-logo {
   }
   
   /* Apply exit animation when this class is added via JS */
+  /* Apply exit animation when this class is added via JS */
   .case-study-modal.closing .case-study-modal-content,
   .case-study-modal.closing .case-study-modal-close {
-    animation: slideDownSimple 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards !important;
+    animation: fadeBlurDownExit 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards !important;
     pointer-events: none; /* Prevent clicks during exit */
   }
 
@@ -2800,13 +2823,68 @@ img.card-logo {
     flex: none; /* Don't stretch content */
     max-height: unset !important;
     
-    /* Content slides up */
-    animation: slideUpSimple 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    /* Content flows in with springy blur animation */
+    /* REMOVED: Animating the container. Now staggered on children below. */
+    opacity: 1;
+    animation: none;
+  }
+
+  /* Staggered Entry Animations for Modal Children */
+  
+  /* Initial state for all flowing elements */
+  .case-study-intro,
+  .case-study-title,
+  .case-study-subheading,
+  .case-study-text-container > .case-study-featured-image,
+  .case-study-sections,
+  .case-study-description,
+  .about-title,
+  .about-body {
+    opacity: 1;
+    animation: fadeBlurUpEntry 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+  }
+  
+  /* NOTE: Animating the .case-study-sections wrapper instead of individual sections 
+     because section content is dynamic/hidden-by-default (display:none) in HTML 
+     and managing nth-child delays on hidden elements is brittle. 
+     Flowing the whole block is safer and still looks good. */
+
+  /* Delays to create the flow-down effect */
+  
+  /* 1. Intro (Logo/Role) & About Title */
+  .case-study-intro,
+  .about-title {
+    animation-delay: 0.3s;
+  }
+
+  /* 2. Header (Title/Subheading) & About Body */
+  .case-study-title,
+  .case-study-subheading,
+  .about-body {
+    animation-delay: 0.35s;
+  }
+
+  /* 3. Featured Image (Main one only) */
+  .case-study-text-container > .case-study-featured-image {
+    animation-delay: 0.4s;
+  }
+
+  /* 4. Sections (Background, Role, etc.) */
+  .case-study-sections {
+    animation-delay: 0.45s;
+  }
+
+  /* 5. Footer Description */
+  .case-study-description {
+    animation-delay: 0.5s;
   }
 
   /* Constrain text elements to 640px and center them within the 832px container */
   .case-study-intro,
   .case-study-header,
+  /* Target title/subheading directly instead of via header */
+  .case-study-title,
+  .case-study-subheading,
   .case-study-section-text,
   .case-study-body-heading,
   .case-study-divider,
@@ -2851,8 +2929,10 @@ img.card-logo {
     transition: all 0.2s ease;
     z-index: 10005;
     
-    /* Animate button entrance independently so it stays fixed */
-    animation: slideUpSimple 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    /* Animate button entrance consistent with content */
+    opacity: 1;
+    animation: fadeBlurUpEntry 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+    animation-delay: 0.3s;
   }
   
   .case-study-modal-close:hover {
