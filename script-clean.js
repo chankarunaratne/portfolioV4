@@ -803,15 +803,17 @@ document.addEventListener('DOMContentLoaded', function () {
     document.body.style.overflow = 'hidden';
     document.documentElement.style.overflow = 'hidden';
 
-    // Trigger animation replay for all devices (Mobile + Desktop)
-    // Remove class if it exists (cleanup)
-    caseStudyModal.classList.remove('opening');
-    
-    // Force Reflow
-    void caseStudyModal.offsetWidth; 
-    
-    // Add class to trigger animation
-    caseStudyModal.classList.add('opening');
+    // Trigger animation replay for desktop
+    if (window.innerWidth >= 768) {
+      // Remove class if it exists (cleanup)
+      caseStudyModal.classList.remove('opening');
+      
+      // Force Reflow
+      void caseStudyModal.offsetWidth; 
+      
+      // Add class to trigger animation
+      caseStudyModal.classList.add('opening');
+    }
 
     // Refresh paragraphs list after removals
     const remainingParasAfterBackground = tempDiv.querySelectorAll('p');
@@ -1209,8 +1211,8 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     };
 
-    // Animate slide-down/fade-out before hiding (All devices)
-    if (caseStudyModal.style.display !== 'none') {
+    // Desktop: animate slide-down before hiding
+    if (window.innerWidth >= 768 && caseStudyModal.style.display !== 'none') {
       caseStudyModal.classList.add('closing');
       setTimeout(finishClosing, 600); // Matches CSS animation duration
     } else {

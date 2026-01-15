@@ -2589,133 +2589,55 @@ img.card-logo {
     padding: 0 !important;
   }
 
-  /* Mobile case study modal adjustments (Full Screen override) */
+  /* Mobile case study modal adjustments (iOS-style bottom sheet) */
   .case-study-modal {
-    align-items: flex-start !important;
+    /* Increase top breathing room while keeping iOS Safari viewport stability */
+    --case-study-sheet-top-gap: 24px;
+    align-items: flex-end !important;
     justify-content: center !important;
     padding: 0 !important;
-    /* Full screen white background that fades */
-    background-color: #ffffff !important;
-    transition: background-color 0.6s ease-out;
-    /* Fix scrolling */
-    overflow-y: auto !important;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  /* Hide the dark overlay on mobile since we use the wrapper background */
-  .case-study-modal-overlay {
-    display: none !important;
-  }
-  
-  /* Shared Animations (Moved from Desktop Query) */
-  @keyframes fadeBlurUpEntry {
-    0% {
-      opacity: 0;
-      transform: translateY(20px);
-      filter: blur(8px);
-    }
-    100% {
-      opacity: 1;
-      transform: none;
-      filter: none;
-    }
-  }
-
-  @keyframes fadeBlurDownExit {
-    0% {
-      opacity: 1;
-      transform: none;
-      filter: none;
-    }
-    100% {
-      opacity: 0;
-      transform: translateY(20px);
-      filter: blur(8px);
-    }
-  }
-
-  /* Staggered Entry Animations for Modal Children (Global) */
-  .case-study-intro,
-  .case-study-title,
-  .case-study-subheading,
-  .case-study-text-container > .case-study-featured-image,
-  .case-study-sections,
-  .case-study-description,
-  .about-title,
-  .about-body {
-    opacity: 0;
-  }
-
-  /* Animate only when the .opening class is present on the parent */
-  .case-study-modal.opening .case-study-intro {
-    animation: fadeBlurUpEntry 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-    animation-delay: 0.1s;
-  }
-  
-  .case-study-modal.opening .case-study-title {
-    animation: fadeBlurUpEntry 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-    animation-delay: 0.15s;
-  }
-  
-  .case-study-modal.opening .case-study-subheading {
-    animation: fadeBlurUpEntry 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-    animation-delay: 0.2s;
-  }
-  
-  .case-study-modal.opening .case-study-text-container > .case-study-featured-image {
-    animation: fadeBlurUpEntry 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-    animation-delay: 0.25s;
-  }
-  
-  .case-study-modal.opening .case-study-description {
-    animation: fadeBlurUpEntry 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-    animation-delay: 0.3s;
-  }
-  
-  .case-study-modal.opening .case-study-sections {
-    animation: fadeBlurUpEntry 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-    animation-delay: 0.35s;
-  }
-
-  /* About modal delays */
-  .about-panel.opening .about-title,
-  #about-modal.opening .about-title {
-    animation: fadeBlurUpEntry 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-    animation-delay: 0.1s;
-  }
-  
-  #about-modal.opening .about-body {
-    animation: fadeBlurUpEntry 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-    animation-delay: 0.2s;
-  }
-  
-  .case-study-modal.closing {
-    background-color: transparent !important;
+    padding-top: calc(
+      var(--case-study-sheet-top-gap) + env(safe-area-inset-top, 0px)
+    ) !important;
   }
 
   .case-study-modal-content {
     width: 100% !important;
     max-width: none !important;
-    margin: 80px auto 40px !important; /* Top margin for close btn breathing room */
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    background: transparent !important;
-    max-height: none !important;
-    overflow: visible !important;
-    animation: none !important; /* Animation handled by staggered children */
+    margin: 0 !important;
+    border-radius: 24px 24px 0 0 !important;
+    /* Fallback first; overridden below when `dvh` is supported */
+    max-height: calc(
+      100vh - (var(--case-study-sheet-top-gap) + env(safe-area-inset-top, 0px))
+    ) !important;
+    animation: caseStudySheetUp 0.28s ease-out !important;
+  }
+
+  @supports (height: 100dvh) {
+    .case-study-modal-content {
+      max-height: calc(
+        100dvh -
+          (var(--case-study-sheet-top-gap) + env(safe-area-inset-top, 0px))
+      ) !important;
+    }
   }
 
   .case-study-modal-container {
-    padding: 0 20px !important; /* Horizontal padding for content */
+    padding: 24px 20px calc(20px + env(safe-area-inset-bottom, 0px)) 20px !important;
     gap: 20px !important;
-    width: 100%;
-    box-sizing: border-box;
-    /* Remove scroll handling on container since we scroll the modal wrapper now */
-    overflow: visible !important; 
+    -webkit-overflow-scrolling: touch;
   }
 
-  /* Remove unused sheet animation */
-  /* @keyframes caseStudySheetUp removed */
+  @keyframes caseStudySheetUp {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 
   .case-study-title {
     font-size: 24px !important;
@@ -2767,12 +2689,10 @@ img.card-logo {
   }
 
   .case-study-modal-close {
-    position: fixed !important; /* Keep it fixed at the top */
-    top: 24px !important;
-    right: 20px !important;
+    top: 12px !important;
+    right: 12px !important;
     width: 28px !important;
     height: 28px !important;
-    z-index: 10002; /* Ensure it's above content */
   }
 
   /* Mobile image popup adjustments */
@@ -2814,8 +2734,35 @@ img.card-logo {
 
 /* Desktop Full-Screen Popup Overrides (Added 2026-01-15) */
 @media (min-width: 768px) {
-  /* Keyframes moved to global scope */
+  /* New animation matching the home screen "fade-blur-up" style */
+  @keyframes fadeBlurUpEntry {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+      filter: blur(8px);
+    }
+    100% {
+      opacity: 1;
+      transform: none;
+      filter: none;
+    }
+  }
 
+  /* Reverse animation for closing */
+  @keyframes fadeBlurDownExit {
+    0% {
+      opacity: 1;
+      transform: none;
+      filter: none;
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(20px);
+      filter: blur(8px);
+    }
+  }
+
+  /* Make the overlay solid white/opaque */
   /* Make the overlay solid white/opaque with smooth fade in */
   .case-study-modal-overlay {
     background-color: #ffffff;
@@ -2834,14 +2781,23 @@ img.card-logo {
   /* Adjust the wrapper to allow window-level scrolling */
   .case-study-modal {
     padding: 0;
+    /* Use flex overrides to handle layout instead of forcing display: block, 
+       so inline display:none/flex toggles from JS still work. */
     align-items: flex-start; 
     overflow-y: auto;
+    /* Ensure scrollbar appears on the viewport edge */
     scrollbar-gutter: stable;
+    /* Enable pointer events so the user can scroll the wrapper */
     pointer-events: auto;
     
+    /* Apply background here to ensure it covers the scrollable text when the 
+       internal overlay (which becomes absolute-like due to transform) scrolls away. */
     background-color: #ffffff;
-    transition: background-color 0.6s ease-out;
+    transition: background-color 0.6s ease-out; /* Smoothly fade out background */
     
+    /* REMOVED PARENT ANIMATION: 
+       If parent animates transform, 'position: fixed' children become relative to parent 
+       and scroll away. We must animate ONLY the content, not the container. */
     animation: none;
   }
 
@@ -2851,10 +2807,11 @@ img.card-logo {
   }
   
   /* Apply exit animation when this class is added via JS */
+  /* Apply exit animation when this class is added via JS */
   .case-study-modal.closing .case-study-modal-content,
   .case-study-modal.closing .case-study-modal-close {
     animation: fadeBlurDownExit 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards !important;
-    pointer-events: none;
+    pointer-events: none; /* Prevent clicks during exit */
   }
 
   /* Make the content box transparent and fluid vertically */
@@ -2863,21 +2820,85 @@ img.card-logo {
     box-shadow: none;
     border: none;
     border-radius: 0;
-    width: 832px;
+    width: 832px; /* Increased to allow wider images */
     max-width: 90%;
-    margin: 80px auto 120px;
+    margin: 80px auto 120px; /* Top margin for breathing room, bottom for scroll space */
     height: auto;
     max-height: none;
     overflow: visible;
-    flex: none;
+    flex: none; /* Don't stretch content */
     max-height: unset !important;
     
+    /* Content flows in with springy blur animation */
+    /* REMOVED: Animating the container. Now staggered on children below. */
     opacity: 1;
     animation: none;
   }
 
-  /* Staggered Entry Animations moved to global scope */
+  /* Staggered Entry Animations for Modal Children */
+  
+  /* Staggered Entry Animations for Modal Children */
+  
+  /* Initial state: Hidden to prevent flash before animation */
+  .case-study-intro,
+  .case-study-title,
+  .case-study-subheading,
+  .case-study-text-container > .case-study-featured-image,
+  .case-study-sections,
+  .case-study-description,
+  .about-title,
+  .about-body {
+    opacity: 0;
+  }
 
+  /* Animate only when the .opening class is present on the parent */
+  /* Animate only when the .opening class is present on the parent */
+  .case-study-modal.opening .case-study-intro {
+    animation: fadeBlurUpEntry 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    animation-delay: 0.1s;
+  }
+  
+  .case-study-modal.opening .case-study-title {
+    animation: fadeBlurUpEntry 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    animation-delay: 0.15s;
+  }
+  
+  .case-study-modal.opening .case-study-subheading {
+    animation: fadeBlurUpEntry 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    animation-delay: 0.2s;
+  }
+  
+  .case-study-modal.opening .case-study-text-container > .case-study-featured-image {
+    animation: fadeBlurUpEntry 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    animation-delay: 0.25s;
+  }
+  
+  .case-study-modal.opening .case-study-description {
+    animation: fadeBlurUpEntry 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    animation-delay: 0.3s;
+  }
+  
+  .case-study-modal.opening .case-study-sections {
+    animation: fadeBlurUpEntry 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    animation-delay: 0.35s;
+  }
+
+  /* About modal delays */
+  .about-panel.opening .about-title,
+  #about-modal.opening .about-title {
+    animation: fadeBlurUpEntry 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    animation-delay: 0.1s;
+  }
+  
+  #about-modal.opening .about-body {
+    animation: fadeBlurUpEntry 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    animation-delay: 0.2s;
+  }
+  
+  /* NOTE: Animating the .case-study-sections wrapper instead of individual sections 
+     because section content is dynamic/hidden-by-default (display:none) in HTML 
+     and managing nth-child delays on hidden elements is brittle. 
+     Flowing the whole block is safer and still looks good. */
 
   /* Delays to create the flow-down effect */
   
