@@ -3072,6 +3072,7 @@ img.card-logo {
   margin: 0;
   max-width: 90%;
   text-transform: none;
+  white-space: nowrap;
 }
 
 .footer-links {
