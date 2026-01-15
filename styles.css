@@ -156,6 +156,7 @@ body {
 .video-intro,
 .case-studies,
 .my-products-section,
+.work-experience-section,
 .writing-section,
 .articles-section,
 .testimonials-section,
@@ -3023,3 +3024,95 @@ img.card-logo {
   }
 }
 
+
+/* Footer Section */
+.footer-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 0 100px;
+  width: 100%;
+  margin-top: 120px; /* Generous gap from last element */
+  transition: opacity 0.8s cubic-bezier(0.34, 1.56, 0.64, 1),
+    transform 0.9s cubic-bezier(0.34, 1.56, 0.64, 1),
+    filter 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+}
+
+.footer-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.footer-logo {
+  height: 20px;
+}
+
+.footer-logo img {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+}
+
+.footer-copyright {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  color: #A4ACB9;
+  text-align: center;
+  margin: 0;
+  max-width: 90%;
+  text-transform: none;
+}
+
+.footer-links {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.footer-link {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  color: #A4ACB9;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  text-transform: none;
+}
+
+.footer-link:hover {
+  color: var(--text-primary);
+}
+
+.footer-dot {
+  width: 4px;
+  height: 4px;
+  background-color: #A4ACB9;
+  border-radius: 50%;
+}
+
+@media (max-width: 768px) {
+  .footer-section {
+    margin-top: 80px;
+    padding-bottom: 60px;
+  }
+  
+  .footer-links {
+    gap: 8px;
+  }
+  
+  .footer-dot {
+    width: 3px;
+    height: 3px;
+  }
+}

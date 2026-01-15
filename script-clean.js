@@ -21,6 +21,8 @@ document.addEventListener('DOMContentLoaded', function () {
     { selector: '.video-intro', delay: 700 },
     { selector: '.case-studies', delay: 900 },
     { selector: '.my-products-section', delay: 1100 },
+    { selector: '.work-experience-section', delay: 1300 },
+    { selector: '.footer-section', delay: 1500 },
   ];
 
   // Start sequential animations
@@ -404,7 +406,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // About link clicks (desktop + mobile)
   const aboutLinks = document.querySelectorAll(
-    '.nav-link[href="#about"], .mobile-nav-link[href="#about"]'
+    '.nav-link[href="#about"], .mobile-nav-link[href="#about"], .footer-link[href="#about"]'
   );
   aboutLinks.forEach((link) => {
     link.addEventListener('click', function (e) {
