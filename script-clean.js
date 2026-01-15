@@ -379,7 +379,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Desktop: animate slide-down before hiding
     if (window.innerWidth >= 768 && aboutModal.style.display !== 'none') {
       aboutModal.classList.add('closing');
-      setTimeout(finishClosing, 400); // Matches CSS animation duration
+      setTimeout(finishClosing, 600); // Matches CSS animation duration
     } else {
       finishClosing();
     }
@@ -795,7 +795,24 @@ document.addEventListener('DOMContentLoaded', function () {
         paragraphs[0].outerHTML;
       paragraphs[0].remove();
     } else {
-      document.getElementById('case-study-background-text').innerHTML = '';
+    document.getElementById('case-study-background-text').innerHTML = '';
+    }
+
+    // Show the modal
+    caseStudyModal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+
+    // Trigger animation replay for desktop
+    if (window.innerWidth >= 768) {
+      // Remove class if it exists (cleanup)
+      caseStudyModal.classList.remove('opening');
+      
+      // Force Reflow
+      void caseStudyModal.offsetWidth; 
+      
+      // Add class to trigger animation
+      caseStudyModal.classList.add('opening');
     }
 
     // Refresh paragraphs list after removals
@@ -1151,6 +1168,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Helper to run the actual teardown
     const finishClosing = () => {
       caseStudyModal.classList.remove('closing');
+      caseStudyModal.classList.remove('opening'); // Reset entry animation class
       caseStudyModal.style.display = 'none';
       document.body.style.overflow = 'auto';
       document.documentElement.style.overflow = 'auto';
@@ -1196,7 +1214,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Desktop: animate slide-down before hiding
     if (window.innerWidth >= 768 && caseStudyModal.style.display !== 'none') {
       caseStudyModal.classList.add('closing');
-      setTimeout(finishClosing, 400); // Matches CSS animation duration
+      setTimeout(finishClosing, 600); // Matches CSS animation duration
     } else {
       // Mobile or already closed: close immediately
       finishClosing();
