@@ -386,7 +386,6 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // About link clicks (desktop + mobile)
-  let aboutOpenedViaClick = false;
   const aboutLinks = document.querySelectorAll(
     '.nav-link[href="#about"], .mobile-nav-link[href="#about"]'
   );
@@ -394,50 +393,32 @@ document.addEventListener('DOMContentLoaded', function () {
     link.addEventListener('click', function (e) {
       e.preventDefault();
       e.stopPropagation();
-      aboutOpenedViaClick = true;
       // Close mobile menu if open
       closeMobileMenuIfPresent();
-      // Hash-driven behavior; opening will be handled by hashchange below
-      window.location.hash = '#about';
+      // Open modal directly
+      openAboutModal();
     });
   });
-
-  function closeAboutByHashOrReplace() {
-    // If the About modal was opened via an in-page click, prefer history.back()
-    // so the browser back button behavior stays natural.
-    if (aboutOpenedViaClick && window.location.hash === '#about') {
-      aboutOpenedViaClick = false;
-      history.back();
-      return;
-    }
-
-    // Otherwise (e.g., direct visit to #about), clear hash without navigating away.
-    if (window.location.hash === '#about') {
-      history.replaceState(null, '', window.location.pathname + window.location.search);
-    }
-    closeAboutModal();
-    setActiveNav();
-  }
 
   // Close About modal interactions
   if (aboutModalClose) {
     aboutModalClose.addEventListener('click', function (e) {
       e.preventDefault();
-      closeAboutByHashOrReplace();
+      closeAboutModal();
     });
   }
 
   if (aboutModalOverlay) {
     aboutModalOverlay.addEventListener('click', function (e) {
       e.preventDefault();
-      closeAboutByHashOrReplace();
+      closeAboutModal();
     });
   }
 
   // Close About modal with Escape key (only when About is open)
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && aboutModal && aboutModal.style.display === 'flex') {
-      closeAboutByHashOrReplace();
+      closeAboutModal();
     }
   });
 
@@ -1342,18 +1323,9 @@ document.addEventListener('DOMContentLoaded', function () {
   setActiveNav();
   window.addEventListener('hashchange', setActiveNav);
 
-  // Hash-driven About modal open/close
-  function syncAboutModalToHash() {
-    if (!aboutModal) return;
-    if (window.location.hash === '#about') {
-      if (aboutModal.style.display !== 'flex') openAboutModal();
-    } else {
-      if (aboutModal.style.display === 'flex') closeAboutModal();
-    }
-  }
+  // Hash-driven About modal behavior (removed to treat as simple popup)
+  // function syncAboutModalToHash() { ... }
 
-  syncAboutModalToHash();
-  window.addEventListener('hashchange', syncAboutModalToHash);
 
   // Re-attach close handlers for the moved close buttons
   // Because we moved the close buttons in the DOM, we need to ensure their listeners are attached
@@ -1373,7 +1345,7 @@ document.addEventListener('DOMContentLoaded', function () {
     newAboutCloseBtn.addEventListener('click', function(e) {
       e.preventDefault();
       e.stopPropagation();
-      closeAboutByHashOrReplace();
+      closeAboutModal();
     });
   }
 
