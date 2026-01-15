@@ -2693,10 +2693,11 @@ img.card-logo {
   }
 
   .case-study-modal-close {
-    top: 12px !important;
-    right: 12px !important;
-    width: 28px !important;
-    height: 28px !important;
+    top: calc(var(--case-study-sheet-top-gap) + env(safe-area-inset-top, 0px) + 16px) !important;
+    right: 16px !important;
+    width: 40px !important;
+    height: 40px !important;
+    pointer-events: auto !important;
   }
 
   /* Mobile image popup adjustments */
