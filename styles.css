@@ -1967,8 +1967,8 @@ img.card-logo {
 }
 
 .testimonial-avatar-wrapper {
-  width: 80px;
-  height: 80px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   overflow: hidden;
   flex-shrink: 0;
