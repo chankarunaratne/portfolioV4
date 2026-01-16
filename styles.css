@@ -1579,7 +1579,7 @@ img.card-logo {
 
 /* My Products Section */
 .my-products-section {
-  margin: 12px auto 100px;
+  margin: 12px auto 120px;
   width: 720px;
   max-width: 90%;
 }
@@ -2371,7 +2371,7 @@ img.card-logo {
   }
 
   .my-products-section {
-    margin-bottom: 32px;
+    margin-bottom: 60px;
   }
 
   .my-products-title,
