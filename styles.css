@@ -1781,7 +1781,7 @@ img.card-logo {
 
 /* Work Experience Section */
 .work-experience-section {
-  margin: 0 auto 48px;
+  margin: 0 auto 120px;
   width: 720px;
   max-width: 90%;
 }
@@ -1900,7 +1900,119 @@ img.card-logo {
   line-height: 22px;
   color: #666d80;
   margin: 0;
-  max-width: 563px;
+  width: 640px;
+}
+
+/* Testimonials Section */
+.testimonials-section {
+  margin: 0 auto 120px;
+  width: 720px;
+  max-width: 90%;
+}
+
+.testimonials-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 32px;
+}
+
+.testimonials-header {
+  display: flex;
+  flex-direction: column;
+  gap: 19px;
+  align-items: flex-start;
+}
+
+.testimonials-icon {
+  width: 50px;
+  height: 50px;
+}
+
+.testimonials-icon-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.testimonials-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+  color: #666d80;
+  margin: 0;
+  text-align: left;
+}
+
+.testimonials-list {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  width: 100%;
+}
+
+.testimonial-item {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.testimonial-profile {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.testimonial-avatar-wrapper {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.testimonial-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.testimonial-author-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.testimonial-author-name {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #36394a;
+  margin: 0;
+}
+
+.testimonial-author-role {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #666d80;
+  margin: 0;
+}
+
+.testimonial-text {
+  width: 100%;
+}
+
+.testimonial-text p {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 22px;
+  color: #666d80;
+  margin: 0;
+  width: 640px;
 }
 
 /* Writing Section */
@@ -2031,132 +2143,7 @@ img.card-logo {
   margin: 0; /* Reset margin */
 }
 
-/* Testimonials Section */
-.testimonials-section {
-  margin: 0 auto 48px;
-  max-width: 720px;
-  width: 90%;
-}
 
-.testimonials-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-}
-
-.envelope-image {
-  width: 108px;
-  height: 108px;
-  border-radius: 0;
-}
-
-.envelope-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 0;
-}
-
-.testimonials-text {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  text-align: center;
-}
-
-.testimonials-title {
-  font-size: 16px;
-  line-height: 24px;
-  font-weight: 400;
-  color: var(--text-muted);
-  margin: 0;
-}
-
-.testimonials-description {
-  font-size: 16px;
-  line-height: 24px;
-  color: #818898;
-  margin: 0;
-  width: 320px; /* Added fixed width */
-}
-
-.testimonial-cards {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-  margin-top: 2rem;
-}
-
-.testimonial-card {
-  background-color: var(--testimonial-bg);
-  border-radius: 15px;
-  padding: 2rem;
-  width: 100%;
-  max-width: 730px;
-}
-
-.testimonial-card-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2rem;
-}
-
-.testimonial-profile {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.5rem;
-}
-
-.testimonial-avatar {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-}
-
-.testimonial-author {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.testimonial-name {
-  font-family: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 24px;
-  color: var(--testimonial-name);
-}
-
-.testimonial-role {
-  font-family: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, sans-serif;
-  font-size: 14px;
-  line-height: 20px;
-  color: #666d80;
-}
-
-.testimonial-quote {
-  font-family: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, sans-serif;
-  font-size: 16px;
-  line-height: 28px;
-  color: var(--text-normal);
-  border: 1px solid var(--testimonial-border);
-  padding: 1.5rem;
-  border-radius: 24px;
-  max-width: 560px;
-}
-
-.testimonial-quote p {
-  margin: 0;
-}
 
 /* Final Illustration Section */
 .final-illustration-section {
@@ -2375,13 +2362,20 @@ img.card-logo {
   }
 
   .my-products-title,
-  .work-experience-title {
+  .work-experience-title,
+  .testimonials-subtitle {
     width: 100% !important;
     padding: 0;
     box-sizing: border-box;
   }
 
-  .experience-description p {
+  .testimonials-section {
+    margin-bottom: 100px;
+  }
+
+  .experience-description p,
+  .testimonial-text p {
+    width: 100% !important;
     max-width: none !important;
   }
 
@@ -2439,9 +2433,7 @@ img.card-logo {
     margin-bottom: 72px;
   }
 
-  .testimonials-section {
-    margin-bottom: 32px;
-  }
+
 
   .final-illustration-section {
     margin-top: 60px;
@@ -3031,7 +3023,7 @@ img.card-logo {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 0 100px;
+  padding: 0 0 40px;
   width: 100%;
   margin-top: 120px; /* Generous gap from last element */
   transition: opacity 0.8s cubic-bezier(0.34, 1.56, 0.64, 1),

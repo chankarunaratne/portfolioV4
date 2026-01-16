@@ -22,7 +22,8 @@ document.addEventListener('DOMContentLoaded', function () {
     { selector: '.case-studies', delay: 900 },
     { selector: '.my-products-section', delay: 1100 },
     { selector: '.work-experience-section', delay: 1300 },
-    { selector: '.footer-section', delay: 1500 },
+    { selector: '.testimonials-section', delay: 1500 },
+    { selector: '.footer-section', delay: 1700 },
   ];
 
   // Start sequential animations
