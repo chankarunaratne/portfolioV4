@@ -2167,7 +2167,7 @@ img.card-logo {
   justify-content: center;
   align-items: center;
   margin-top: 64px;
-  margin-bottom: 80px;
+  margin-bottom: 40px;
   /* iOS Safari safe area support for home indicator */
   padding-bottom: env(safe-area-inset-bottom, 0px);
 }
@@ -3023,7 +3023,7 @@ img.card-logo {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 0 40px;
+  padding: 0;
   width: 100%;
   margin-top: 120px; /* Generous gap from last element */
   transition: opacity 0.8s cubic-bezier(0.34, 1.56, 0.64, 1),
