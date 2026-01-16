@@ -1994,6 +1994,17 @@ img.card-logo {
   margin: 0;
 }
 
+.testimonial-author-name a {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.2s ease;
+  cursor: pointer;
+}
+
+.testimonial-author-name a:hover {
+  color: #818898;
+}
+
 .testimonial-author-role {
   font-family: 'Inter', sans-serif;
   font-size: 14px;
