@@ -193,6 +193,11 @@ document.addEventListener('DOMContentLoaded', function () {
     document.body.style.overflow = 'hidden';
     document.documentElement.style.overflow = 'hidden';
 
+    // Reset scroll position to top
+    if (aboutModalContainer) {
+      aboutModalContainer.scrollTop = 0;
+    }
+
     // Trigger animation replay for desktop
     if (window.innerWidth >= 768) {
       // Remove class if it exists (cleanup)
@@ -621,6 +626,9 @@ document.addEventListener('DOMContentLoaded', function () {
     '.case-study-modal-overlay'
   );
   const caseStudyModalClose = document.querySelector('.case-study-modal-close');
+  const caseStudyModalContainer = caseStudyModal
+    ? caseStudyModal.querySelector('.case-study-modal-container')
+    : null;
 
   // Case study data for each card
   const caseStudyData = {
@@ -791,7 +799,12 @@ document.addEventListener('DOMContentLoaded', function () {
         paragraphs[0].outerHTML;
       paragraphs[0].remove();
     } else {
-    document.getElementById('case-study-background-text').innerHTML = '';
+      document.getElementById('case-study-background-text').innerHTML = '';
+    }
+
+    // Reset scroll position to top
+    if (caseStudyModalContainer) {
+      caseStudyModalContainer.scrollTop = 0;
     }
 
     // Show the modal
@@ -993,10 +1006,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.body.style.overflow = 'hidden';
     document.documentElement.style.overflow = 'hidden';
 
-    // Get references to modal elements
-    const caseStudyModalContainer = document.querySelector(
-      '.case-study-modal-container'
-    );
+    // Modal elements are already referenced in the outer scope
 
     // Function to check if event originated from scrollable container
     const isEventFromScrollableContainer = function (e) {
