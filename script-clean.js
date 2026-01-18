@@ -862,6 +862,10 @@ document.addEventListener('DOMContentLoaded', function () {
           caseStudyModal.classList.add('animation-complete');
         }
       }, 1400); // 0.8s duration + 0.5s max delay + buffer
+    } else {
+      // Mobile: immediately add animation-complete to prevent blur
+      caseStudyModal.classList.remove('opening');
+      caseStudyModal.classList.add('animation-complete');
     }
 
     // Refresh paragraphs list after removals

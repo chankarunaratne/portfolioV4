@@ -3425,4 +3425,78 @@ img.card-logo {
     width: 3px;
     height: 3px;
   }
+
+  /* Mobile animations - simple fade without blur/transform to prevent artifacts */
+  @keyframes mobileFadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* Initial hidden state for mobile animations */
+  .case-study-modal .case-study-intro,
+  .case-study-modal .case-study-title,
+  .case-study-modal .case-study-subheading,
+  .case-study-modal .case-study-text-container > .case-study-featured-image,
+  .case-study-modal .case-study-sections,
+  .case-study-modal .case-study-description,
+  .case-study-modal .about-title,
+  .case-study-modal .about-body {
+    opacity: 0;
+    animation: mobileFadeIn 0.4s ease forwards;
+  }
+
+  /* Staggered delays - top to bottom in visual order */
+  .case-study-modal .case-study-title,
+  .case-study-modal .about-title {
+    animation-delay: 0s; /* First - appears immediately */
+  }
+
+  .case-study-modal .case-study-subheading {
+    animation-delay: 0.08s; /* Second */
+  }
+
+  .case-study-modal .case-study-intro {
+    animation-delay: 0.16s; /* Third - logo/role section */
+  }
+
+  .case-study-modal .case-study-text-container > .case-study-featured-image {
+    animation-delay: 0.24s; /* Fourth - main image */
+  }
+
+  .case-study-modal .case-study-sections {
+    animation-delay: 0.32s; /* Fifth - background/role sections */
+  }
+
+  .case-study-modal .case-study-description,
+  .case-study-modal .about-body {
+    animation-delay: 0.4s; /* Last - description at bottom */
+  }
+
+  /* Force clean rendering - prevent blur artifacts */
+  .case-study-modal *,
+  .case-study-modal img,
+  .case-study-modal .case-study-intro,
+  .case-study-modal .case-study-title,
+  .case-study-modal .case-study-subheading,
+  .case-study-modal .case-study-text-container > .case-study-featured-image,
+  .case-study-modal .case-study-sections,
+  .case-study-modal .case-study-sections > *,
+  .case-study-modal .case-study-section,
+  .case-study-modal .case-study-description,
+  .case-study-modal .case-study-description > *,
+  .case-study-modal .case-study-image,
+  .case-study-modal .about-title,
+  .case-study-modal .about-body {
+    will-change: auto !important;
+    transform: none !important;
+    filter: none !important;
+    -webkit-transform: none !important;
+    -webkit-filter: none !important;
+    -webkit-backface-visibility: hidden !important;
+    backface-visibility: hidden !important;
+  }
 }
