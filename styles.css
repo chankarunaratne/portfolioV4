@@ -963,11 +963,19 @@ body {
   margin: 0;
 }
 
+.video-title-mobile {
+  display: none;
+}
+
 .video-description {
   font-size: 14px;
   line-height: 20px;
   color: #ffffff;
   margin: 0;
+}
+
+.video-soon-pill {
+  display: none;
 }
 
 .watch-btn {
@@ -2746,12 +2754,40 @@ img.card-logo {
     margin: 0 !important;
   }
 
+  .video-title-default {
+    display: none !important;
+  }
+
+  .video-title-mobile {
+    display: inline !important;
+  }
+
   .video-description {
     display: none !important;
   }
 
   .watch-btn {
     display: none !important; /* hide button on mobile per spec */
+  }
+
+  .video-soon-pill {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 12px;
+    margin-left: auto;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #ffffff;
+    font-size: 13px;
+    line-height: 18px;
+    font-weight: 500;
+    backdrop-filter: saturate(140%) blur(14px);
+    -webkit-backdrop-filter: saturate(140%) blur(14px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+    white-space: nowrap;
+    letter-spacing: 0.01em;
   }
 
   /* Mobile text adjustments */
