@@ -6,7 +6,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const navbar = document.querySelector('.navbar');
     if (!navbar) return;
     const height = navbar.offsetHeight || 0;
-    document.documentElement.style.setProperty('--navbar-height', `${height}px`);
+    document.documentElement.style.setProperty(
+      '--navbar-height',
+      `${height}px`,
+    );
   }
 
   updateNavbarHeightVar();
@@ -52,7 +55,10 @@ document.addEventListener('DOMContentLoaded', function () {
         window.location.pathname.endsWith('index.html');
 
       // If we're already on home, keep the existing smooth scroll-to-top behavior.
-      if (isHome && (href === 'index.html' || href === './index.html' || href === '/')) {
+      if (
+        isHome &&
+        (href === 'index.html' || href === './index.html' || href === '/')
+      ) {
         e.preventDefault();
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
@@ -60,7 +66,9 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // Navigation links functionality
-  const allScrollLinks = document.querySelectorAll('.nav-link, .highlight-text');
+  const allScrollLinks = document.querySelectorAll(
+    '.nav-link, .highlight-text',
+  );
   allScrollLinks.forEach((link) => {
     link.addEventListener('click', function (e) {
       const href = this.getAttribute('href') || '';
@@ -152,7 +160,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Add active class to corresponding desktop link
         const linkText = this.textContent;
         const correspondingDesktopLink = Array.from(navLinks).find(
-          (link) => link.textContent === linkText
+          (link) => link.textContent === linkText,
         );
         if (correspondingDesktopLink) {
           correspondingDesktopLink.classList.add('active');
@@ -203,10 +211,10 @@ document.addEventListener('DOMContentLoaded', function () {
       // Remove class if it exists (cleanup)
       aboutModal.classList.remove('opening');
       aboutModal.classList.remove('animation-complete');
-      
+
       // Force Reflow
-      void aboutModal.offsetWidth; 
-      
+      void aboutModal.offsetWidth;
+
       // Add class to trigger animation
       aboutModal.classList.add('opening');
 
@@ -256,7 +264,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       const newScroll = Math.max(
         0,
-        Math.min(maxScroll, currentScroll + scrollAmount)
+        Math.min(maxScroll, currentScroll + scrollAmount),
       );
       aboutModalContainer.scrollTop = newScroll;
     };
@@ -284,7 +292,10 @@ document.addEventListener('DOMContentLoaded', function () {
       const maxScroll =
         aboutModalContainer.scrollHeight - aboutModalContainer.clientHeight;
       const newScroll = touchStartScroll + deltaY;
-      aboutModalContainer.scrollTop = Math.max(0, Math.min(maxScroll, newScroll));
+      aboutModalContainer.scrollTop = Math.max(
+        0,
+        Math.min(maxScroll, newScroll),
+      );
     };
 
     document.addEventListener('wheel', forwardScrollToPopupWheel, {
@@ -362,6 +373,15 @@ document.addEventListener('DOMContentLoaded', function () {
   function closeAboutModal() {
     if (!aboutModal) return;
 
+    // Remove hash from URL when closing
+    if (window.location.hash === '#about') {
+      history.pushState(
+        '',
+        document.title,
+        window.location.pathname + window.location.search,
+      );
+    }
+
     // Helper to run the actual teardown
     const finishClosing = () => {
       aboutModal.classList.remove('closing');
@@ -370,32 +390,35 @@ document.addEventListener('DOMContentLoaded', function () {
       aboutModal.style.display = 'none';
       document.body.style.overflow = 'auto';
       document.documentElement.style.overflow = 'auto';
-  
+
       if (aboutModalContainer && aboutModalContainer._scrollHandlers) {
         aboutModalContainer.removeEventListener(
           'wheel',
-          aboutModalContainer._scrollHandlers.wheel
+          aboutModalContainer._scrollHandlers.wheel,
         );
         aboutModalContainer.removeEventListener(
           'touchstart',
-          aboutModalContainer._scrollHandlers.touchstart
+          aboutModalContainer._scrollHandlers.touchstart,
         );
         aboutModalContainer.removeEventListener(
           'touchmove',
-          aboutModalContainer._scrollHandlers.touchmove
+          aboutModalContainer._scrollHandlers.touchmove,
         );
         aboutModalContainer._scrollHandlers = null;
       }
-  
+
       if (document._aboutScrollHandlers) {
-        document.removeEventListener('wheel', document._aboutScrollHandlers.wheel);
+        document.removeEventListener(
+          'wheel',
+          document._aboutScrollHandlers.wheel,
+        );
         document.removeEventListener(
           'touchstart',
-          document._aboutScrollHandlers.touchstart
+          document._aboutScrollHandlers.touchstart,
         );
         document.removeEventListener(
           'touchmove',
-          document._aboutScrollHandlers.touchmove
+          document._aboutScrollHandlers.touchmove,
         );
         document._aboutScrollHandlers = null;
       }
@@ -412,7 +435,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // About link clicks (desktop + mobile)
   const aboutLinks = document.querySelectorAll(
-    '.nav-link[href="#about"], .mobile-nav-link[href="#about"], .footer-link[href="#about"]'
+    '.nav-link[href="#about"], .mobile-nav-link[href="#about"], .footer-link[href="#about"]',
   );
   aboutLinks.forEach((link) => {
     link.addEventListener('click', function (e) {
@@ -442,7 +465,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Close About modal with Escape key (only when About is open)
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && aboutModal && aboutModal.style.display === 'flex') {
+    if (
+      e.key === 'Escape' &&
+      aboutModal &&
+      aboutModal.style.display === 'flex'
+    ) {
       closeAboutModal();
     }
   });
@@ -468,7 +495,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // Mobile detection function
   function isMobileDevice() {
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-      navigator.userAgent
+      navigator.userAgent,
     );
   }
 
@@ -578,7 +605,7 @@ document.addEventListener('DOMContentLoaded', function () {
       videoIntroSection.setAttribute('role', 'button');
       videoIntroSection.setAttribute(
         'aria-label',
-        "Play Chan's video introduction"
+        "Play Chan's video introduction",
       );
 
       videoIntroSection.addEventListener('keydown', function (e) {
@@ -623,7 +650,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // Case Study Modal Functionality
   const caseStudyModal = document.getElementById('case-study-modal');
   const caseStudyModalOverlay = document.querySelector(
-    '.case-study-modal-overlay'
+    '.case-study-modal-overlay',
   );
   const caseStudyModalClose = document.querySelector('.case-study-modal-close');
   const caseStudyModalContainer = caseStudyModal
@@ -664,17 +691,21 @@ document.addEventListener('DOMContentLoaded', function () {
       solutionText:
         'A centralised place to manage all patient interactions, including assigning patients, messaging, and appointment management. This reduced tool switching, streamlined day-to-day workflows, and enabled faster responses to patients.',
       solutionImage: 'assets/docswell-case-study/inbox-general.png',
-      solutionTextAfterImage: 'Message templates allow practitioners to quickly send recurring messages with pre-attached documents, forms, and images, reducing repetitive actions and saving time.',
-      solutionImageAfterText: 'assets/docswell-case-study/inbox-message-template.png',
+      solutionTextAfterImage:
+        'Message templates allow practitioners to quickly send recurring messages with pre-attached documents, forms, and images, reducing repetitive actions and saving time.',
+      solutionImageAfterText:
+        'assets/docswell-case-study/inbox-message-template.png',
       calendarHeading: 'Calendar',
-      calendarText: 'A centralised calendar to manage all appointments and practitioner schedules across the practice.',
+      calendarText:
+        'A centralised calendar to manage all appointments and practitioner schedules across the practice.',
       calendarImages: [
         'assets/docswell-case-study/calendar-general.png',
         'assets/docswell-case-study/calendar-modal.png',
-        'assets/docswell-case-study/calendar-event.png'
+        'assets/docswell-case-study/calendar-event.png',
       ],
       settingsHeading: 'Settings',
-      settingsText: 'The settings experience was restructured into a clear, well-organised system, making complex practice configuration easier to understand and manage.',
+      settingsText:
+        'The settings experience was restructured into a clear, well-organised system, making complex practice configuration easier to understand and manage.',
       settingsImage: 'assets/docswell-case-study/settings-general.png',
     },
     rememberly: {
@@ -768,7 +799,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Extract dashboard image for docswell (first image in the images container)
     const featuredImageContainer = document.getElementById(
-      'case-study-featured-image'
+      'case-study-featured-image',
     );
     if (data.featuredImage) {
       featuredImageContainer.innerHTML = `<img src="${data.featuredImage}" alt="${data.company} featured image" data-image-popup="${data.featuredImage}" />`;
@@ -776,7 +807,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const imagesContainer = tempDiv.querySelector('.case-study-images');
       if (imagesContainer) {
         const firstImage = imagesContainer.querySelector(
-          'img[src*="dashboard"]'
+          'img[src*="dashboard"]',
         );
         if (firstImage) {
           // Clone and add the dashboard image to featured image container
@@ -792,7 +823,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     if (data.background) {
-      document.getElementById('case-study-background-text').innerHTML = data.background;
+      document.getElementById('case-study-background-text').innerHTML =
+        data.background;
     } else if (paragraphs.length > 0) {
       // Fallback: Use first paragraph for Background
       document.getElementById('case-study-background-text').innerHTML =
@@ -817,10 +849,10 @@ document.addEventListener('DOMContentLoaded', function () {
       // Remove class if it exists (cleanup)
       caseStudyModal.classList.remove('opening');
       caseStudyModal.classList.remove('animation-complete');
-      
+
       // Force Reflow
-      void caseStudyModal.offsetWidth; 
-      
+      void caseStudyModal.offsetWidth;
+
       // Add class to trigger animation
       caseStudyModal.classList.add('opening');
 
@@ -850,15 +882,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Show and populate Outcome section
     const outcomeSection = document.getElementById(
-      'case-study-outcome-section'
+      'case-study-outcome-section',
     );
     const divider = document.querySelector('.case-study-divider');
 
     outcomeSection.style.display = 'flex';
-    
+
     // Divider is always shown if it exists
     if (divider) divider.style.display = 'block';
-    
+
     // Set outcome text based on case study data or placeholders
     if (data.outcome) {
       document.getElementById('case-study-outcome-text').innerHTML =
@@ -876,9 +908,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Show and populate Solution section
     const solutionSection = document.getElementById(
-      'case-study-solution-section'
+      'case-study-solution-section',
     );
-    
+
     if (caseStudyType === 'rememberly') {
       solutionSection.style.display = 'none';
     } else {
@@ -909,7 +941,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Set solution image if exists
     const solutionImageContainer = document.getElementById(
-      'case-study-solution-image'
+      'case-study-solution-image',
     );
     if (data.solutionImage) {
       solutionImageContainer.innerHTML = `<img src="${data.solutionImage}" alt="${
@@ -921,7 +953,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Set solution text after image if exists
     const solutionTextAfterContainer = document.getElementById(
-      'case-study-solution-text-after'
+      'case-study-solution-text-after',
     );
     if (data.solutionTextAfterImage) {
       solutionTextAfterContainer.textContent = data.solutionTextAfterImage;
@@ -932,7 +964,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Set solution image after text if exists
     const solutionImageAfterContainer = document.getElementById(
-      'case-study-solution-image-after'
+      'case-study-solution-image-after',
     );
     if (data.solutionImageAfterText) {
       solutionImageAfterContainer.innerHTML = `<img src="${data.solutionImageAfterText}" alt="${
@@ -944,17 +976,26 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Show and populate Calendar section if exists in data
-    const calendarSection = document.getElementById('case-study-calendar-section');
+    const calendarSection = document.getElementById(
+      'case-study-calendar-section',
+    );
     if (data.calendarHeading) {
       calendarSection.style.display = 'flex';
-      document.getElementById('case-study-calendar-heading').textContent = data.calendarHeading;
-      document.getElementById('case-study-calendar-text').textContent = data.calendarText;
-      
-      const calendarImagesContainer = document.getElementById('case-study-calendar-images');
+      document.getElementById('case-study-calendar-heading').textContent =
+        data.calendarHeading;
+      document.getElementById('case-study-calendar-text').textContent =
+        data.calendarText;
+
+      const calendarImagesContainer = document.getElementById(
+        'case-study-calendar-images',
+      );
       if (data.calendarImages && data.calendarImages.length > 0) {
-        calendarImagesContainer.innerHTML = data.calendarImages.map(imgSrc => 
-          `<img src="${imgSrc}" alt="Calendar image" class="case-study-image" data-image-popup="${imgSrc}" />`
-        ).join('');
+        calendarImagesContainer.innerHTML = data.calendarImages
+          .map(
+            (imgSrc) =>
+              `<img src="${imgSrc}" alt="Calendar image" class="case-study-image" data-image-popup="${imgSrc}" />`,
+          )
+          .join('');
       } else {
         calendarImagesContainer.innerHTML = '';
       }
@@ -963,13 +1004,19 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Show and populate Settings section if exists in data
-    const settingsSection = document.getElementById('case-study-settings-section');
+    const settingsSection = document.getElementById(
+      'case-study-settings-section',
+    );
     if (data.settingsHeading) {
       settingsSection.style.display = 'flex';
-      document.getElementById('case-study-settings-heading').textContent = data.settingsHeading;
-      document.getElementById('case-study-settings-text').textContent = data.settingsText;
-      
-      const settingsImageContainer = document.getElementById('case-study-settings-image');
+      document.getElementById('case-study-settings-heading').textContent =
+        data.settingsHeading;
+      document.getElementById('case-study-settings-text').textContent =
+        data.settingsText;
+
+      const settingsImageContainer = document.getElementById(
+        'case-study-settings-image',
+      );
       if (data.settingsImage) {
         settingsImageContainer.innerHTML = `<img src="${data.settingsImage}" alt="Settings image" class="case-study-image" data-image-popup="${data.settingsImage}" />`;
       } else {
@@ -980,7 +1027,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Set the remaining content (other paragraphs and images) in description
-    const descriptionSection = document.getElementById('case-study-description');
+    const descriptionSection = document.getElementById(
+      'case-study-description',
+    );
     if (data.description) {
       descriptionSection.style.display = 'block';
       descriptionSection.innerHTML = tempDiv.innerHTML;
@@ -990,10 +1039,11 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Attach image popup handlers for ALL images in the modal that have data-image-popup
-    const allPopupImages = caseStudyModal.querySelectorAll('[data-image-popup]');
+    const allPopupImages =
+      caseStudyModal.querySelectorAll('[data-image-popup]');
     allPopupImages.forEach((img) => {
       // Small cleanup: remove old listeners if any (though they are usually new elements)
-      img.onclick = null; 
+      img.onclick = null;
       img.addEventListener('click', function () {
         const imageSrc = this.getAttribute('data-image-popup');
         const imageAlt = this.getAttribute('alt') || '';
@@ -1056,7 +1106,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Apply scroll to the container
         const newScroll = Math.max(
           0,
-          Math.min(maxScroll, currentScroll + scrollAmount)
+          Math.min(maxScroll, currentScroll + scrollAmount),
         );
         caseStudyModalContainer.scrollTop = newScroll;
       }
@@ -1179,6 +1229,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Function to close case study modal
   function closeCaseStudyModal() {
+    // Remove hash from URL when closing
+    const currentHash = window.location.hash;
+    if (currentHash === '#docswell' || currentHash === '#rememberly') {
+      history.pushState(
+        '',
+        document.title,
+        window.location.pathname + window.location.search,
+      );
+    }
+
     // Helper to run the actual teardown
     const finishClosing = () => {
       caseStudyModal.classList.remove('closing');
@@ -1187,40 +1247,40 @@ document.addEventListener('DOMContentLoaded', function () {
       caseStudyModal.style.display = 'none';
       document.body.style.overflow = 'auto';
       document.documentElement.style.overflow = 'auto';
-  
+
       // Remove scroll event listeners from container
       const caseStudyModalContainer = document.querySelector(
-        '.case-study-modal-container'
+        '.case-study-modal-container',
       );
       if (caseStudyModalContainer && caseStudyModalContainer._scrollHandlers) {
         caseStudyModalContainer.removeEventListener(
           'wheel',
-          caseStudyModalContainer._scrollHandlers.wheel
+          caseStudyModalContainer._scrollHandlers.wheel,
         );
         caseStudyModalContainer.removeEventListener(
           'touchstart',
-          caseStudyModalContainer._scrollHandlers.touchstart
+          caseStudyModalContainer._scrollHandlers.touchstart,
         );
         caseStudyModalContainer.removeEventListener(
           'touchmove',
-          caseStudyModalContainer._scrollHandlers.touchmove
+          caseStudyModalContainer._scrollHandlers.touchmove,
         );
         caseStudyModalContainer._scrollHandlers = null;
       }
-  
+
       // Remove document scroll handlers
       if (document._caseStudyScrollHandlers) {
         document.removeEventListener(
           'wheel',
-          document._caseStudyScrollHandlers.wheel
+          document._caseStudyScrollHandlers.wheel,
         );
         document.removeEventListener(
           'touchstart',
-          document._caseStudyScrollHandlers.touchstart
+          document._caseStudyScrollHandlers.touchstart,
         );
         document.removeEventListener(
           'touchmove',
-          document._caseStudyScrollHandlers.touchmove
+          document._caseStudyScrollHandlers.touchmove,
         );
         document._caseStudyScrollHandlers = null;
       }
@@ -1241,12 +1301,12 @@ document.addEventListener('DOMContentLoaded', function () {
   caseCards.forEach((card) => {
     card.addEventListener('click', function () {
       const caseStudyType = card.getAttribute('data-case-study');
-      
+
       // Skip opening modal for jiffyhive as it's not complete
       if (caseStudyType === 'jiffyhive') {
         return;
       }
-      
+
       if (caseStudyType) {
         openCaseStudyModal(caseStudyType);
       }
@@ -1289,7 +1349,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // Function to close image popup modal
   function closeImagePopup() {
     if (imagePopupModal.style.display === 'none') return;
-    
+
     imagePopupModal.classList.add('closing');
     setTimeout(() => {
       imagePopupModal.style.display = 'none';
@@ -1325,8 +1385,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-
-
   // Set nav active state based on current page + hash
   function setActiveNav() {
     const path = window.location.pathname.toLowerCase();
@@ -1335,10 +1393,7 @@ document.addEventListener('DOMContentLoaded', function () {
     navLinks.forEach((l) => l.classList.remove('active'));
     mobileNavLinks.forEach((l) => l.classList.remove('active'));
 
-    const allLinks = [
-      ...Array.from(navLinks),
-      ...Array.from(mobileNavLinks),
-    ];
+    const allLinks = [...Array.from(navLinks), ...Array.from(mobileNavLinks)];
 
     if (isAbout || window.location.hash === '#about') {
       allLinks.forEach((l) => {
@@ -1351,7 +1406,6 @@ document.addEventListener('DOMContentLoaded', function () {
       });
       return;
     }
-
   }
 
   setActiveNav();
@@ -1360,27 +1414,73 @@ document.addEventListener('DOMContentLoaded', function () {
   // Hash-driven About modal behavior (removed to treat as simple popup)
   // function syncAboutModalToHash() { ... }
 
-
   // Re-attach close handlers for the moved close buttons
   // Because we moved the close buttons in the DOM, we need to ensure their listeners are attached
   // The variables `aboutModalClose` and `caseStudyModalClose` were queried at the top of DOMContentLoaded
   // but let's re-query them to be safe if they weren't caught or to be explicit.
-  
-  const newCaseStudyCloseBtn = document.querySelector('#case-study-modal > .case-study-modal-close');
+
+  const newCaseStudyCloseBtn = document.querySelector(
+    '#case-study-modal > .case-study-modal-close',
+  );
   if (newCaseStudyCloseBtn) {
-    newCaseStudyCloseBtn.addEventListener('click', function(e) {
+    newCaseStudyCloseBtn.addEventListener('click', function (e) {
       e.stopPropagation();
       closeCaseStudyModal();
     });
   }
 
-  const newAboutCloseBtn = document.querySelector('#about-modal > .case-study-modal-close');
+  const newAboutCloseBtn = document.querySelector(
+    '#about-modal > .case-study-modal-close',
+  );
   if (newAboutCloseBtn) {
-    newAboutCloseBtn.addEventListener('click', function(e) {
+    newAboutCloseBtn.addEventListener('click', function (e) {
       e.preventDefault();
       e.stopPropagation();
       closeAboutModal();
     });
   }
 
+  // Hash-based modal opening on page load
+  function handleInitialHash() {
+    const hash = window.location.hash;
+
+    if (hash === '#about') {
+      // Open about modal
+      openAboutModal();
+    } else if (hash === '#docswell') {
+      // Open Docswell case study
+      openCaseStudyModal('docswell');
+    } else if (hash === '#rememberly') {
+      // Open Rememberly case study
+      openCaseStudyModal('rememberly');
+    }
+  }
+
+  // Check hash on initial page load
+  handleInitialHash();
+
+  // Listen for hash changes (e.g., browser back/forward)
+  window.addEventListener('hashchange', function () {
+    const hash = window.location.hash;
+
+    // Close any open modals first
+    const aboutModalOpen = aboutModal && aboutModal.style.display === 'flex';
+    const caseStudyModalOpen =
+      caseStudyModal && caseStudyModal.style.display === 'flex';
+
+    if (hash === '#about') {
+      if (caseStudyModalOpen) closeCaseStudyModal();
+      if (!aboutModalOpen) openAboutModal();
+    } else if (hash === '#docswell') {
+      if (aboutModalOpen) closeAboutModal();
+      if (!caseStudyModalOpen) openCaseStudyModal('docswell');
+    } else if (hash === '#rememberly') {
+      if (aboutModalOpen) closeAboutModal();
+      if (!caseStudyModalOpen) openCaseStudyModal('rememberly');
+    } else if (hash === '') {
+      // No hash - close all modals
+      if (aboutModalOpen) closeAboutModal();
+      if (caseStudyModalOpen) closeCaseStudyModal();
+    }
+  });
 });
