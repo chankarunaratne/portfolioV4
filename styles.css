@@ -71,8 +71,16 @@ html {
 }
 
 body {
-  font-family: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family:
+    'Geist',
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
   background-color: transparent;
   color: var(--text-primary);
   line-height: 1.5;
@@ -138,7 +146,8 @@ body {
   opacity: 0;
   transform: translateY(20px);
   filter: blur(8px);
-  transition: opacity 0.8s cubic-bezier(0.34, 1.56, 0.64, 1),
+  transition:
+    opacity 0.8s cubic-bezier(0.34, 1.56, 0.64, 1),
     transform 0.9s cubic-bezier(0.34, 1.56, 0.64, 1),
     filter 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -172,7 +181,8 @@ body {
   opacity: 0;
   filter: blur(8px);
   transform: translateY(12px);
-  transition: opacity 0.7s cubic-bezier(0.34, 1.56, 0.64, 1),
+  transition:
+    opacity 0.7s cubic-bezier(0.34, 1.56, 0.64, 1),
     filter 0.7s cubic-bezier(0.34, 1.56, 0.64, 1),
     transform 1.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -308,7 +318,8 @@ body {
   height: 100svh;
   pointer-events: none;
   z-index: -3;
-  background: linear-gradient(
+  background:
+    linear-gradient(
       180deg,
       rgba(255, 255, 255, 0) 0%,
       rgba(255, 255, 255, 0) 80%,
@@ -346,7 +357,8 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.62);
   backdrop-filter: saturate(120%) blur(18px);
   -webkit-backdrop-filter: saturate(120%) blur(18px);
-  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.12),
+  box-shadow:
+    0 14px 40px rgba(0, 0, 0, 0.12),
     inset 0 1px 0 rgba(255, 255, 255, 0.82);
   overflow: hidden;
   display: flex;
@@ -373,7 +385,8 @@ body {
   inset: 0;
   pointer-events: none;
   /* Keep the "glass" feel, but make it subtle (better for long-form reading) */
-  background-image: radial-gradient(
+  background-image:
+    radial-gradient(
       circle at 85% 10%,
       rgba(255, 255, 255, 0.75) 0%,
       rgba(255, 255, 255, 0.22) 22%,
@@ -406,8 +419,16 @@ body {
 }
 
 .about-title {
-  font-family: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family:
+    'Geist',
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
   font-size: 24px;
   font-weight: 500;
   line-height: 32px;
@@ -417,16 +438,21 @@ body {
 }
 
 .about-body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    'Helvetica Neue', Arial, sans-serif;
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
   font-size: 16px;
   font-weight: 400;
   line-height: 26px;
   color: var(--text-normal);
   margin: 0;
 }
-
-
 
 /* Stack wrapper for hero + video intro + case studies */
 .intro-stack {
@@ -447,7 +473,8 @@ body {
   pointer-events: none;
   z-index: -3; /* Behind WebGL sky and all content */
   /* Larger white ramp at the bottom for a smoother transition */
-  background: linear-gradient(
+  background:
+    linear-gradient(
       180deg,
       rgba(255, 255, 255, 0) 0%,
       rgba(255, 255, 255, 0) 80%,
@@ -588,7 +615,9 @@ body {
   margin-top: 8px;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
 }
 
 /* Removed scrolled navbar background behavior */
@@ -649,7 +678,6 @@ body {
   isolation: isolate;
 }
 
-
 .hero-content {
   padding: 35px 32px;
   display: flex;
@@ -664,8 +692,16 @@ body {
   letter-spacing: -0.02em;
   color: rgba(255, 255, 255, 0.6);
   margin: 0;
-  font-family: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family:
+    'Geist',
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
 }
 
 /* Force precise two-line layout for hero title on desktop */
@@ -703,7 +739,8 @@ body {
   position: absolute;
   inset: -40% -10% 10% 40%; /* bias towards top-right, extend slightly outside card */
   pointer-events: none;
-  background-image: radial-gradient(
+  background-image:
+    radial-gradient(
       circle at 110% -10%,
       rgba(255, 255, 255, 0.75) 0%,
       rgba(255, 255, 255, 0.45) 8%,
@@ -747,7 +784,8 @@ body {
   pointer-events: none;
   background-repeat: no-repeat;
   /* Main sun glow + soft beam coming in from the top-right */
-  background-image: radial-gradient(
+  background-image:
+    radial-gradient(
       160% 160% at 115% -15%,
       rgba(255, 255, 255, 0.95) 0%,
       rgba(255, 255, 255, 0.5) 8%,
@@ -762,7 +800,7 @@ body {
       rgba(175, 207, 255, 0) 60%
     ),
     /* Long diagonal cone of light */
-      linear-gradient(
+    linear-gradient(
         225deg,
         rgba(255, 255, 255, 0.28) 0%,
         rgba(255, 255, 255, 0.12) 10%,
@@ -788,7 +826,8 @@ body {
   pointer-events: none;
   background-repeat: no-repeat;
   /* Chain of circular lens artifacts travelling diagonally across the sky */
-  background-image: radial-gradient(
+  background-image:
+    radial-gradient(
       32% 32% at 82% 18%,
       rgba(255, 255, 255, 0.9) 0%,
       rgba(255, 255, 255, 0.55) 18%,
@@ -944,7 +983,10 @@ body {
   backdrop-filter: saturate(140%) blur(14px);
   -webkit-backdrop-filter: saturate(140%) blur(14px);
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
-  transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease,
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
     transform 0.1s ease;
   position: relative;
   z-index: 10;
@@ -963,7 +1005,8 @@ body {
 
 .watch-btn:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.35),
+  box-shadow:
+    0 0 0 2px rgba(255, 255, 255, 0.35),
     0 8px 22px rgba(0, 0, 0, 0.16);
 }
 
@@ -1019,7 +1062,9 @@ body {
   justify-content: center;
   z-index: 10002;
   padding: 0;
-  transition: transform 0.2s ease, filter 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    filter 0.2s ease;
   outline: none;
 }
 
@@ -1147,7 +1192,9 @@ body {
   justify-content: center;
   z-index: 10002;
   padding: 0;
-  transition: transform 0.2s ease, filter 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    filter 0.2s ease;
   outline: none;
 }
 
@@ -1194,8 +1241,15 @@ body {
 }
 
 .case-study-company {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    'Helvetica Neue', Arial, sans-serif;
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
@@ -1204,8 +1258,15 @@ body {
 }
 
 .case-study-role {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    'Helvetica Neue', Arial, sans-serif;
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
@@ -1232,8 +1293,16 @@ body {
 }
 
 .case-study-title {
-  font-family: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family:
+    'Geist',
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
   font-size: 24px;
   font-weight: 500;
   line-height: 32px;
@@ -1243,8 +1312,15 @@ body {
 }
 
 .case-study-subheading {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    'Helvetica Neue', Arial, sans-serif;
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
   font-size: 16px;
   font-weight: 400;
   line-height: 26px;
@@ -1288,8 +1364,15 @@ body {
 }
 
 .case-study-body-heading {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    'Helvetica Neue', Arial, sans-serif;
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
   font-size: 14px;
   font-weight: 400;
   line-height: 26px;
@@ -1298,8 +1381,15 @@ body {
 }
 
 .case-study-section-text {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    'Helvetica Neue', Arial, sans-serif;
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
   font-size: 14px;
   font-weight: 400;
   line-height: 26px;
@@ -1336,10 +1426,16 @@ body {
   margin: 0;
 }
 
-
 .case-study-description {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    'Helvetica Neue', Arial, sans-serif;
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
   font-size: 14px;
   font-weight: 400;
   line-height: 26px;
@@ -1373,8 +1469,16 @@ body {
 }
 
 .case-study-more-content {
-  font-family: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family:
+    'Geist',
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
@@ -1443,7 +1547,9 @@ body {
   justify-content: center;
   z-index: 10002;
   padding: 0;
-  transition: transform 0.2s ease, filter 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    filter 0.2s ease;
   outline: none;
 }
 
@@ -1612,8 +1718,15 @@ img.card-logo {
 }
 
 .my-products-title {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    'Helvetica Neue', Arial, sans-serif;
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
   font-size: 14px;
   line-height: 20px;
   font-weight: 400;
@@ -1687,8 +1800,15 @@ img.card-logo {
 }
 
 .product-name {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    'Helvetica Neue', Arial, sans-serif;
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
   font-size: 14px;
   line-height: 20px;
   font-weight: 400;
@@ -1697,8 +1817,15 @@ img.card-logo {
 }
 
 .product-description {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    'Helvetica Neue', Arial, sans-serif;
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
   font-size: 14px;
   line-height: 20px;
   font-weight: 400;
@@ -1707,7 +1834,8 @@ img.card-logo {
 }
 
 .product-button-secondary {
-  background: linear-gradient(
+  background:
+    linear-gradient(
       180deg,
       rgba(255, 255, 255, 0) 0%,
       rgba(193, 199, 208, 0.02) 100%
@@ -1716,7 +1844,8 @@ img.card-logo {
   border: 1px solid rgba(18, 55, 105, 0.08);
   border-radius: 60px;
   padding: 6px 8px;
-  box-shadow: 0px 1px 2px 0px rgba(164, 172, 185, 0.24),
+  box-shadow:
+    0px 1px 2px 0px rgba(164, 172, 185, 0.24),
     0px 0px 0px 1px rgba(18, 55, 105, 0.08);
   display: flex;
   align-items: center;
@@ -1725,14 +1854,22 @@ img.card-logo {
   cursor: pointer;
   flex-shrink: 0;
   transition: all 0.2s ease;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    'Helvetica Neue', Arial, sans-serif;
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
   text-decoration: none;
   color: inherit;
 }
 
 .product-button-secondary:hover {
-  background: linear-gradient(
+  background:
+    linear-gradient(
       180deg,
       rgba(255, 255, 255, 0) 0%,
       rgba(193, 199, 208, 0.04) 100%
@@ -1745,8 +1882,15 @@ img.card-logo {
 }
 
 .product-button-text {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    'Helvetica Neue', Arial, sans-serif;
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
   font-size: 14px;
   line-height: 20px;
   font-weight: 500;
@@ -1771,8 +1915,15 @@ img.card-logo {
   gap: 6px;
   cursor: not-allowed;
   flex-shrink: 0;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    'Helvetica Neue', Arial, sans-serif;
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
 }
 
 .product-button-disabled .product-button-text {
@@ -2107,8 +2258,16 @@ img.card-logo {
 }
 
 .article-title {
-  font-family: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family:
+    'Geist',
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
   font-weight: 500; /* Medium */
   font-size: 14px;
   line-height: 20px;
@@ -2117,8 +2276,16 @@ img.card-logo {
 }
 
 .article-read-time {
-  font-family: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family:
+    'Geist',
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
   font-weight: 400; /* Regular */
   font-size: 14px;
   line-height: 20px;
@@ -2127,8 +2294,16 @@ img.card-logo {
 }
 
 .read-article-btn {
-  font-family: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family:
+    'Geist',
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
   font-weight: 500; /* Medium */
   font-size: 14px;
   line-height: 20px;
@@ -2153,8 +2328,6 @@ img.card-logo {
   background-color: var(--article-divider);
   margin: 0; /* Reset margin */
 }
-
-
 
 /* Final Illustration Section */
 .final-illustration-section {
@@ -2264,14 +2437,14 @@ img.card-logo {
 
   /* Sky heights for stacked cards on mobile */
   .intro-stack {
-    min-height: min(220svh, 1600px); /* Reduced to pull My Products up closer to gradient */
+    min-height: min(
+      220svh,
+      1600px
+    ); /* Reduced to pull My Products up closer to gradient */
   }
 
   #skyCanvas {
-    height: min(
-      235svh,
-      1700px
-    ); /* Extended to go past the last card */
+    height: min(235svh, 1700px); /* Extended to go past the last card */
     /* Adjust fade to allow sky to be visible longer */
     -webkit-mask-image: linear-gradient(
       to bottom,
@@ -2344,7 +2517,8 @@ img.card-logo {
     border: 1px solid rgba(255, 255, 255, 0.72) !important;
     backdrop-filter: saturate(120%) blur(14px) !important;
     -webkit-backdrop-filter: saturate(120%) blur(14px) !important;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12),
+    box-shadow:
+      0 12px 30px rgba(0, 0, 0, 0.12),
       inset 0 1px 0 rgba(255, 255, 255, 0.82) !important;
   }
 
@@ -2444,8 +2618,6 @@ img.card-logo {
     margin-bottom: 72px;
   }
 
-
-
   .final-illustration-section {
     margin-top: 60px;
     margin-bottom: 32px;
@@ -2470,8 +2642,16 @@ img.card-logo {
     font-size: 28px;
     line-height: 36px;
     letter-spacing: -0.02em;
-    font-family: 'PP Neue Montreal', 'Inter', -apple-system, BlinkMacSystemFont,
-      'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-family:
+      'PP Neue Montreal',
+      'Inter',
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      Roboto,
+      'Helvetica Neue',
+      Arial,
+      sans-serif;
   }
 
   /* Allow wrapping on smaller screens */
@@ -2596,54 +2776,127 @@ img.card-logo {
     padding: 0 !important;
   }
 
-  /* Mobile case study modal adjustments (iOS-style bottom sheet) */
+  /* Mobile case study modal adjustments - Full white background like desktop */
+
+  /* Define animations for mobile */
+  @keyframes fadeBlurUpEntry {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+      filter: blur(8px);
+    }
+    100% {
+      opacity: 1;
+      transform: none;
+      filter: blur(0px);
+    }
+  }
+
+  @keyframes fadeBlurDownExit {
+    0% {
+      opacity: 1;
+      transform: none;
+      filter: none;
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(20px);
+      filter: blur(8px);
+    }
+  }
+
   .case-study-modal {
-    /* Increase top breathing room while keeping iOS Safari viewport stability */
-    --case-study-sheet-top-gap: 24px;
-    align-items: flex-end !important;
+    /* Full viewport coverage with white background */
+    align-items: flex-start !important;
     justify-content: center !important;
     padding: 0 !important;
-    padding-top: calc(
-      var(--case-study-sheet-top-gap) + env(safe-area-inset-top, 0px)
-    ) !important;
+    overflow-y: auto !important;
+    scrollbar-gutter: stable;
+    pointer-events: auto !important;
+    background-color: #ffffff !important;
+    animation: fadeBlurUpEntry 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+  }
+
+  .case-study-modal-overlay {
+    background-color: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    animation: none !important;
+    display: none !important;
   }
 
   .case-study-modal-content {
     width: 100% !important;
     max-width: none !important;
     margin: 0 !important;
-    border-radius: 24px 24px 0 0 !important;
+    background: transparent !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
     /* Fallback first; overridden below when `dvh` is supported */
-    max-height: calc(
-      100vh - (var(--case-study-sheet-top-gap) + env(safe-area-inset-top, 0px))
-    ) !important;
-    animation: caseStudySheetUp 0.28s ease-out !important;
+    max-height: calc(100vh) !important;
+    animation: fadeBlurUpEntry 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    overflow: visible !important;
   }
 
   @supports (height: 100dvh) {
     .case-study-modal-content {
-      max-height: calc(
-        100dvh -
-          (var(--case-study-sheet-top-gap) + env(safe-area-inset-top, 0px))
-      ) !important;
+      max-height: calc(100dvh) !important;
     }
   }
 
   .case-study-modal-container {
-    padding: 24px 20px calc(20px + env(safe-area-inset-bottom, 0px)) 20px !important;
+    padding: calc(24px + env(safe-area-inset-top, 0px)) 20px
+      calc(20px + env(safe-area-inset-bottom, 0px)) 20px !important;
     gap: 20px !important;
     -webkit-overflow-scrolling: touch;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
   }
 
-  @keyframes caseStudySheetUp {
-    from {
-      opacity: 0;
-      transform: translateY(24px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  /* Staggered animations for modal children on mobile */
+  .case-study-intro,
+  .case-study-header,
+  .case-study-featured-image,
+  .case-study-section {
+    opacity: 0;
+    transform: translateY(20px);
+    filter: blur(8px);
+    animation: fadeBlurUpEntry 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  .case-study-intro {
+    animation-delay: 0.2s !important;
+  }
+
+  .case-study-header {
+    animation-delay: 0.35s !important;
+  }
+
+  .case-study-featured-image:first-of-type {
+    animation-delay: 0.5s !important;
+  }
+
+  .case-study-section:nth-of-type(1) {
+    animation-delay: 0.65s !important;
+  }
+
+  .case-study-section:nth-of-type(2) {
+    animation-delay: 0.8s !important;
+  }
+
+  .case-study-section:nth-of-type(3) {
+    animation-delay: 0.95s !important;
+  }
+
+  .case-study-section:nth-of-type(4) {
+    animation-delay: 1.1s !important;
+  }
+
+  .case-study-section:nth-of-type(n + 5) {
+    animation-delay: 1.25s !important;
   }
 
   .case-study-title {
@@ -2696,11 +2949,57 @@ img.card-logo {
   }
 
   .case-study-modal-close {
-    top: calc(var(--case-study-sheet-top-gap) + env(safe-area-inset-top, 0px) + 16px) !important;
-    right: 16px !important;
+    position: fixed !important;
+    top: calc(12px + env(safe-area-inset-top, 0px)) !important;
+    right: 12px !important;
     width: 40px !important;
     height: 40px !important;
+    z-index: 10002 !important;
     pointer-events: auto !important;
+    animation: fadeBlurUpEntry 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+  }
+
+  /* Mobile closing animation */
+  .case-study-modal.closing {
+    background-color: transparent !important;
+  }
+
+  .case-study-modal.closing .case-study-modal-close {
+    animation: fadeBlurDownExit 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards !important;
+    pointer-events: none !important;
+  }
+
+  /* Staggered closing animation for modal content - reverse order */
+  .case-study-modal.closing .case-study-intro,
+  .case-study-modal.closing .case-study-header,
+  .case-study-modal.closing .case-study-featured-image,
+  .case-study-modal.closing .case-study-section {
+    animation: fadeBlurDownExit 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards !important;
+    pointer-events: none !important;
+  }
+
+  .case-study-modal.closing .case-study-intro {
+    animation-delay: 0s !important;
+  }
+
+  .case-study-modal.closing .case-study-header {
+    animation-delay: 0.08s !important;
+  }
+
+  .case-study-modal.closing .case-study-featured-image:first-of-type {
+    animation-delay: 0.16s !important;
+  }
+
+  .case-study-modal.closing .case-study-section:nth-of-type(1) {
+    animation-delay: 0.24s !important;
+  }
+
+  .case-study-modal.closing .case-study-section:nth-of-type(2) {
+    animation-delay: 0.32s !important;
+  }
+
+  .case-study-modal.closing .case-study-section:nth-of-type(3) {
+    animation-delay: 0.4s !important;
   }
 
   /* Mobile image popup adjustments */
@@ -2719,7 +3018,9 @@ img.card-logo {
 
 /* Interactive elements */
 .case-card {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
   cursor: pointer;
   user-select: none;
 }
@@ -2752,7 +3053,7 @@ img.card-logo {
     100% {
       opacity: 1;
       transform: none;
-    filter: blur(0px);
+      filter: blur(0px);
     }
   }
 
@@ -2780,7 +3081,7 @@ img.card-logo {
     /* Smooth fade in first */
     animation: fadeIn 0.4s ease-out forwards;
   }
-  
+
   /* Handle overlay exit */
   .case-study-modal.closing .case-study-modal-overlay {
     animation: fadeOut 0.6s ease-out forwards;
@@ -2791,18 +3092,18 @@ img.card-logo {
     padding: 0;
     /* Use flex overrides to handle layout instead of forcing display: block, 
        so inline display:none/flex toggles from JS still work. */
-    align-items: flex-start; 
+    align-items: flex-start;
     overflow-y: auto;
     /* Ensure scrollbar appears on the viewport edge */
     scrollbar-gutter: stable;
     /* Enable pointer events so the user can scroll the wrapper */
     pointer-events: auto;
-    
+
     /* Apply background here to ensure it covers the scrollable text when the 
        internal overlay (which becomes absolute-like due to transform) scrolls away. */
     background-color: #ffffff;
     transition: background-color 0.6s ease-out; /* Smoothly fade out background */
-    
+
     /* REMOVED PARENT ANIMATION: 
        If parent animates transform, 'position: fixed' children become relative to parent 
        and scroll away. We must animate ONLY the content, not the container. */
@@ -2813,7 +3114,7 @@ img.card-logo {
   .case-study-modal.closing {
     background-color: transparent;
   }
-  
+
   /* Apply exit animation when this class is added via JS */
   /* Apply exit animation when this class is added via JS */
   .case-study-modal.closing .case-study-modal-content,
@@ -2836,7 +3137,7 @@ img.card-logo {
     overflow: visible;
     flex: none; /* Don't stretch content */
     max-height: unset !important;
-    
+
     /* Content flows in with springy blur animation */
     /* REMOVED: Animating the container. Now staggered on children below. */
     opacity: 1;
@@ -2844,9 +3145,9 @@ img.card-logo {
   }
 
   /* Staggered Entry Animations for Modal Children */
-  
+
   /* Staggered Entry Animations for Modal Children */
-  
+
   /* Initial state: Hidden to prevent flash before animation */
   .case-study-intro,
   .case-study-title,
@@ -2859,12 +3160,14 @@ img.card-logo {
     opacity: 0;
     will-change: opacity, transform, filter;
   }
-  
+
   /* Force clean state after animation completes */
   .case-study-modal.animation-complete .case-study-intro,
   .case-study-modal.animation-complete .case-study-title,
   .case-study-modal.animation-complete .case-study-subheading,
-  .case-study-modal.animation-complete .case-study-text-container > .case-study-featured-image,
+  .case-study-modal.animation-complete
+    .case-study-text-container
+    > .case-study-featured-image,
   .case-study-modal.animation-complete .case-study-sections > *,
   .case-study-modal.animation-complete .case-study-description > *,
   .case-study-modal.animation-complete .about-title,
@@ -2883,27 +3186,29 @@ img.card-logo {
     animation: fadeBlurUpEntry 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
     animation-delay: 0.1s;
   }
-  
+
   .case-study-modal.opening .case-study-title {
     animation: fadeBlurUpEntry 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
     animation-delay: 0.15s;
   }
-  
+
   .case-study-modal.opening .case-study-subheading {
     animation: fadeBlurUpEntry 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
     animation-delay: 0.2s;
   }
-  
-  .case-study-modal.opening .case-study-text-container > .case-study-featured-image {
+
+  .case-study-modal.opening
+    .case-study-text-container
+    > .case-study-featured-image {
     animation: fadeBlurUpEntry 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
     animation-delay: 0.25s;
   }
-  
+
   .case-study-modal.opening .case-study-description > * {
     animation: fadeBlurUpEntry 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
     animation-delay: 0.3s;
   }
-  
+
   .case-study-modal.opening .case-study-sections > * {
     animation: fadeBlurUpEntry 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
     animation-delay: 0.35s;
@@ -2915,19 +3220,19 @@ img.card-logo {
     animation: fadeBlurUpEntry 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
     animation-delay: 0.1s;
   }
-  
+
   #about-modal.opening .about-body {
     animation: fadeBlurUpEntry 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
     animation-delay: 0.2s;
   }
-  
+
   /* NOTE: Animating the .case-study-sections wrapper instead of individual sections 
      because section content is dynamic/hidden-by-default (display:none) in HTML 
      and managing nth-child delays on hidden elements is brittle. 
      Flowing the whole block is safer and still looks good. */
 
   /* Delays to create the flow-down effect */
-  
+
   /* 1. Intro (Logo/Role) & About Title */
   .case-study-intro,
   .about-title {
@@ -2989,7 +3294,7 @@ img.card-logo {
     padding-top: 0; /* Remove top padding as we have margin on parent */
     padding-left: 0;
     padding-right: 0;
-    
+
     animation: none;
   }
 
@@ -2999,19 +3304,19 @@ img.card-logo {
     top: 40px;
     right: 48px;
     left: auto;
-    width: 48px; 
+    width: 48px;
     height: 48px;
     background: transparent; /* No backing circle by default */
     border-radius: 50%;
     transition: all 0.2s ease;
     z-index: 10005;
-    
+
     /* Animate button entrance consistent with content */
     opacity: 1;
     animation: fadeBlurUpEntry 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
     animation-delay: 0.3s;
   }
-  
+
   .case-study-modal-close:hover {
     background: rgba(0, 0, 0, 0.04); /* Very subtle hover state only */
     transform: scale(1.05);
@@ -3022,12 +3327,11 @@ img.card-logo {
     height: 48px;
     opacity: 1; /* Full visibility as requested */
   }
-  
+
   .case-study-modal-close:hover img {
     opacity: 0.7; /* Slight fade on hover instead */
   }
 }
-
 
 /* Footer Section */
 .footer-section {
@@ -3037,7 +3341,8 @@ img.card-logo {
   padding: 0;
   width: 100%;
   margin-top: 120px; /* Generous gap from last element */
-  transition: opacity 0.8s cubic-bezier(0.34, 1.56, 0.64, 1),
+  transition:
+    opacity 0.8s cubic-bezier(0.34, 1.56, 0.64, 1),
     transform 0.9s cubic-bezier(0.34, 1.56, 0.64, 1),
     filter 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -3071,7 +3376,7 @@ img.card-logo {
   font-family: 'Inter', sans-serif;
   font-size: 14px;
   line-height: 20px;
-  color: #A4ACB9;
+  color: #a4acb9;
   text-align: center;
   margin: 0;
   max-width: 90%;
@@ -3089,7 +3394,7 @@ img.card-logo {
   font-family: 'Inter', sans-serif;
   font-size: 14px;
   line-height: 20px;
-  color: #A4ACB9;
+  color: #a4acb9;
   text-decoration: none;
   transition: color 0.2s ease;
   text-transform: none;
@@ -3102,7 +3407,7 @@ img.card-logo {
 .footer-dot {
   width: 4px;
   height: 4px;
-  background-color: #A4ACB9;
+  background-color: #a4acb9;
   border-radius: 50%;
 }
 
@@ -3111,11 +3416,11 @@ img.card-logo {
     margin-top: 80px;
     padding-bottom: 60px;
   }
-  
+
   .footer-links {
     gap: 8px;
   }
-  
+
   .footer-dot {
     width: 3px;
     height: 3px;
