@@ -689,7 +689,7 @@ document.addEventListener('DOMContentLoaded', function () {
       `,
       solutionHeading: 'Inbox',
       solutionText:
-        'A centralised place to manage all patient interactions, including assigning patients, messaging, and appointment management. This reduced tool switching, streamlined day-to-day workflows, and enabled faster responses to patients.',
+        'The centralised Inbox helps manage all patient interactions, including assigning patients, messaging, and appointment management. This reduced tool switching, streamlined day-to-day workflows, and enabled faster responses to patients.',
       solutionImage: 'assets/docswell-case-study/inbox-general.png',
       solutionTextAfterImage:
         'Message templates allow practitioners to quickly send recurring messages with pre-attached documents, forms, and images, reducing repetitive actions and saving time.',
@@ -774,6 +774,18 @@ document.addEventListener('DOMContentLoaded', function () {
   // Function to open case study modal with specific content
   function openCaseStudyModal(caseStudyType) {
     const data = caseStudyData[caseStudyType] || caseStudyData['docswell']; // Fallback to docswell if type not found
+
+    // Hide body headings only for sections below the divider when viewing Docswell
+    const shouldHideLowerHeadings = caseStudyType === 'docswell';
+    [
+      'case-study-solution-heading',
+      'case-study-calendar-heading',
+      'case-study-settings-heading',
+    ].forEach((headingId) => {
+      const headingEl = document.getElementById(headingId);
+      if (headingEl)
+        headingEl.style.display = shouldHideLowerHeadings ? 'none' : '';
+    });
 
     // Update modal content
     const logoElement = document.getElementById('case-study-logo');
