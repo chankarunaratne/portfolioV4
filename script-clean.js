@@ -703,6 +703,14 @@ document.addEventListener('DOMContentLoaded', function () {
         'assets/docswell-case-study/calendar-modal.png',
         'assets/docswell-case-study/calendar-event.png',
       ],
+      profileHeading: 'Profile',
+      profileText:
+        'A comprehensive profile section for the patient inludes all details related to them that will help the practitioner in aiding him easily.',
+      profileImages: [
+        'assets/docswell-case-study/profile.png',
+        'assets/docswell-case-study/notes.png',
+        'assets/docswell-case-study/note-create.png',
+      ],
       settingsHeading: 'Settings',
       settingsText:
         'The settings experience was restructured into a clear, well-organised system, making complex practice configuration easier to understand and manage.',
@@ -933,10 +941,6 @@ document.addEventListener('DOMContentLoaded', function () {
       solutionSection.style.display = 'flex';
     }
 
-    // Set heading and text based on case study data
-    document.getElementById('case-study-solution-heading').textContent =
-      data.solutionHeading || 'Solution';
-
     if (data.solutionText) {
       document.getElementById('case-study-solution-text').textContent =
         data.solutionText;
@@ -995,10 +999,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const calendarSection = document.getElementById(
       'case-study-calendar-section',
     );
-    if (data.calendarHeading) {
+    if (data.calendarText) {
       calendarSection.style.display = 'flex';
-      document.getElementById('case-study-calendar-heading').textContent =
-        data.calendarHeading;
       document.getElementById('case-study-calendar-text').textContent =
         data.calendarText;
 
@@ -1019,14 +1021,38 @@ document.addEventListener('DOMContentLoaded', function () {
       calendarSection.style.display = 'none';
     }
 
+    // Show and populate Profile section if exists in data
+    const profileSection = document.getElementById(
+      'case-study-profile-section',
+    );
+    if (data.profileText) {
+      profileSection.style.display = 'flex';
+      document.getElementById('case-study-profile-text').textContent =
+        data.profileText;
+
+      const profileImagesContainer = document.getElementById(
+        'case-study-profile-images',
+      );
+      if (data.profileImages && data.profileImages.length > 0) {
+        profileImagesContainer.innerHTML = data.profileImages
+          .map(
+            (imgSrc) =>
+              `<img src="${imgSrc}" alt="Profile image" class="case-study-image" data-image-popup="${imgSrc}" />`,
+          )
+          .join('');
+      } else {
+        profileImagesContainer.innerHTML = '';
+      }
+    } else {
+      profileSection.style.display = 'none';
+    }
+
     // Show and populate Settings section if exists in data
     const settingsSection = document.getElementById(
       'case-study-settings-section',
     );
-    if (data.settingsHeading) {
+    if (data.settingsText) {
       settingsSection.style.display = 'flex';
-      document.getElementById('case-study-settings-heading').textContent =
-        data.settingsHeading;
       document.getElementById('case-study-settings-text').textContent =
         data.settingsText;
 
