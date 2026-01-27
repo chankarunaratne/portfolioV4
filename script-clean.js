@@ -687,7 +687,6 @@ document.addEventListener('DOMContentLoaded', function () {
           <li>Built and maintained a new design system that cut significant design and UI dev hours</li>
         </ul>
       `,
-      solutionHeading: 'Inbox',
       solutionText:
         'The centralised Inbox helps manage all patient interactions, including assigning patients, messaging, and appointment management. This reduced tool switching, streamlined day-to-day workflows, and enabled faster responses to patients.',
       solutionImage: 'assets/docswell-case-study/inbox-general.png',
@@ -695,7 +694,6 @@ document.addEventListener('DOMContentLoaded', function () {
         'Message templates allow practitioners to quickly send recurring messages with pre-attached documents, forms, and images, reducing repetitive actions and saving time.',
       solutionImageAfterText:
         'assets/docswell-case-study/inbox-message-template.png',
-      calendarHeading: 'Calendar',
       calendarText:
         'A centralised calendar to manage all appointments and practitioner schedules across the practice.',
       calendarImages: [
@@ -703,7 +701,6 @@ document.addEventListener('DOMContentLoaded', function () {
         'assets/docswell-case-study/calendar-modal.png',
         'assets/docswell-case-study/calendar-event.png',
       ],
-      profileHeading: 'Profile',
       profileText:
         'A comprehensive profile section for the patient inludes all details related to them that will help the practitioner in aiding him easily.',
       profileImages: [
@@ -711,7 +708,6 @@ document.addEventListener('DOMContentLoaded', function () {
         'assets/docswell-case-study/notes.png',
         'assets/docswell-case-study/note-create.png',
       ],
-      settingsHeading: 'Settings',
       settingsText:
         'The settings experience was restructured into a clear, well-organised system, making complex practice configuration easier to understand and manage.',
       settingsImage: 'assets/docswell-case-study/settings-general.png',
