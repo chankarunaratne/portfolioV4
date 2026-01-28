@@ -30,9 +30,55 @@ class SkyRenderer {
     this.mouse = { x: 0, y: 0 };
     this.time = 0;
 
+    // Animation loop state (so we can pause rendering while modals are open)
+    this._rafId = null;
+    this._isRunning = false;
+    this._pauseTokens = new Set();
+    this._tick = this._tick.bind(this);
+
     this.init();
     this.setupEventListeners();
-    this.animate();
+    this.start();
+  }
+
+  start() {
+    if (this._isRunning) return;
+    this._isRunning = true;
+    this._rafId = requestAnimationFrame(this._tick);
+  }
+
+  pause(token = 'default') {
+    this._pauseTokens.add(token);
+    if (!this._isRunning) return;
+    this._isRunning = false;
+    if (this._rafId != null) {
+      cancelAnimationFrame(this._rafId);
+      this._rafId = null;
+    }
+  }
+
+  resume(token = 'default') {
+    this._pauseTokens.delete(token);
+    if (this._pauseTokens.size > 0) return;
+    if (this._isRunning) return;
+
+    // Render a frame immediately so the sky feels instant on close,
+    // then continue on the next rAF.
+    this._isRunning = true;
+    this._renderFrame();
+    this._rafId = requestAnimationFrame(this._tick);
+  }
+
+  _renderFrame() {
+    this.time += 0.016; // 60fps delta (intentionally fixed for the aesthetic)
+    this.material.uniforms.uTime.value = this.time;
+    this.renderer.render(this.scene, this.camera);
+  }
+
+  _tick() {
+    if (!this._isRunning) return;
+    this._renderFrame();
+    this._rafId = requestAnimationFrame(this._tick);
   }
 
   init() {
@@ -247,7 +293,7 @@ class SkyRenderer {
         uResolution: {
           value: new THREE.Vector2(
             this.canvas.getBoundingClientRect().width,
-            this.canvas.getBoundingClientRect().height
+            this.canvas.getBoundingClientRect().height,
           ),
         },
         uMouse: { value: new THREE.Vector2(0.5, 0.5) },
@@ -258,7 +304,7 @@ class SkyRenderer {
           value: new THREE.Vector3(
             SKY_CONFIG.colorTint.r,
             SKY_CONFIG.colorTint.g,
-            SKY_CONFIG.colorTint.b
+            SKY_CONFIG.colorTint.b,
           ),
         },
         uParallaxStrength: { value: SKY_CONFIG.parallaxStrength },
@@ -270,13 +316,13 @@ class SkyRenderer {
         uClearEllipse: {
           value: new THREE.Vector2(
             SKY_CONFIG.clearEllipse.x,
-            SKY_CONFIG.clearEllipse.y
+            SKY_CONFIG.clearEllipse.y,
           ),
         },
         uCloudBlob1Center: {
           value: new THREE.Vector2(
             SKY_CONFIG.cloudBlob1Center.x,
-            SKY_CONFIG.cloudBlob1Center.y
+            SKY_CONFIG.cloudBlob1Center.y,
           ),
         },
         uCloudBlob1Radius: { value: SKY_CONFIG.cloudBlob1Radius },
@@ -284,13 +330,13 @@ class SkyRenderer {
         uCloudBlob1Ellipse: {
           value: new THREE.Vector2(
             SKY_CONFIG.cloudBlob1Ellipse.x,
-            SKY_CONFIG.cloudBlob1Ellipse.y
+            SKY_CONFIG.cloudBlob1Ellipse.y,
           ),
         },
         uCloudBlob2Center: {
           value: new THREE.Vector2(
             SKY_CONFIG.cloudBlob2Center.x,
-            SKY_CONFIG.cloudBlob2Center.y
+            SKY_CONFIG.cloudBlob2Center.y,
           ),
         },
         uCloudBlob2Radius: { value: SKY_CONFIG.cloudBlob2Radius },
@@ -298,7 +344,7 @@ class SkyRenderer {
         uCloudBlob2Ellipse: {
           value: new THREE.Vector2(
             SKY_CONFIG.cloudBlob2Ellipse.x,
-            SKY_CONFIG.cloudBlob2Ellipse.y
+            SKY_CONFIG.cloudBlob2Ellipse.y,
           ),
         },
       },
@@ -359,7 +405,7 @@ class SkyRenderer {
       this.material.uniforms.uClearStrength.value = mobileClearStrength;
       this.material.uniforms.uClearEllipse.value.set(
         mobileClearEllipseX,
-        mobileClearEllipseY
+        mobileClearEllipseY,
       );
       this.material.uniforms.uCloudDensity.value = mobileCloudDensity;
 
@@ -385,11 +431,11 @@ class SkyRenderer {
       SKY_CONFIG.cloudBlob1Ellipse = blob1Ellipse;
       this.material.uniforms.uCloudBlob1Center.value.set(
         blob1Center.x,
-        blob1Center.y
+        blob1Center.y,
       );
       this.material.uniforms.uCloudBlob2Center.value.set(
         blob2Center.x,
-        blob2Center.y
+        blob2Center.y,
       );
       this.material.uniforms.uCloudBlob1Radius.value = blob1Radius;
       this.material.uniforms.uCloudBlob2Radius.value = blob2Radius;
@@ -397,7 +443,7 @@ class SkyRenderer {
       this.material.uniforms.uCloudBlob2Feather.value = blob2Feather;
       this.material.uniforms.uCloudBlob1Ellipse.value.set(
         blob1Ellipse.x,
-        blob1Ellipse.y
+        blob1Ellipse.y,
       );
     } else {
       // Restore desktop defaults
@@ -415,7 +461,7 @@ class SkyRenderer {
       this.material.uniforms.uClearStrength.value = desktopClearStrength;
       this.material.uniforms.uClearEllipse.value.set(
         desktopClearEllipseX,
-        desktopClearEllipseY
+        desktopClearEllipseY,
       );
       this.material.uniforms.uCloudDensity.value = desktopCloudDensity;
 
@@ -436,11 +482,11 @@ class SkyRenderer {
       SKY_CONFIG.cloudBlob1Ellipse = blob1Ellipse;
       this.material.uniforms.uCloudBlob1Center.value.set(
         blob1Center.x,
-        blob1Center.y
+        blob1Center.y,
       );
       this.material.uniforms.uCloudBlob2Center.value.set(
         blob2Center.x,
-        blob2Center.y
+        blob2Center.y,
       );
       this.material.uniforms.uCloudBlob1Radius.value = blob1Radius;
       this.material.uniforms.uCloudBlob2Radius.value = blob2Radius;
@@ -448,17 +494,15 @@ class SkyRenderer {
       this.material.uniforms.uCloudBlob2Feather.value = blob2Feather;
       this.material.uniforms.uCloudBlob1Ellipse.value.set(
         blob1Ellipse.x,
-        blob1Ellipse.y
+        blob1Ellipse.y,
       );
     }
   }
 
   animate() {
-    this.time += 0.016; // 60fps delta
-    this.material.uniforms.uTime.value = this.time;
-
-    this.renderer.render(this.scene, this.camera);
-    requestAnimationFrame(() => this.animate());
+    // Backwards-compatible alias (some external code may call animate()).
+    // Prefer pause()/resume()/start() for lifecycle control.
+    this.start();
   }
 
   // Public methods to update configuration

@@ -197,6 +197,9 @@ document.addEventListener('DOMContentLoaded', function () {
   function openAboutModal() {
     if (!aboutModal) return;
 
+    // Reduce Chrome scroll/compositing jank by pausing the animated sky while a modal is open.
+    window.skyRenderer?.pause('aboutModal');
+
     aboutModal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
     document.documentElement.style.overflow = 'hidden';
@@ -226,96 +229,97 @@ document.addEventListener('DOMContentLoaded', function () {
       }, 1400); // 0.8s duration + 0.5s max delay + buffer
     }
 
-    // Mirror the case study modal's "scroll anywhere -> scroll popup" behavior,
-    // but keep handlers separate so we never impact case study modal behavior.
-    const isEventFromScrollableContainer = function (e) {
-      if (!aboutModalContainer) return false;
-      let target = e.target;
-      while (target && target !== document.body) {
-        if (
-          target === aboutModalContainer ||
-          aboutModalContainer.contains(target)
-        ) {
-          return true;
+    // Mobile-only: mirror the case study modal's "scroll anywhere -> scroll popup" behavior.
+    // IMPORTANT: On desktop Chrome, any non-passive wheel listener can force main-thread scrolling
+    // and cause scroll jank even if the handler returns early.
+    if (window.innerWidth < 768) {
+      const isEventFromScrollableContainer = function (e) {
+        if (!aboutModalContainer) return false;
+        let target = e.target;
+        while (target && target !== document.body) {
+          if (
+            target === aboutModalContainer ||
+            aboutModalContainer.contains(target)
+          ) {
+            return true;
+          }
+          target = target.parentElement;
         }
-        target = target.parentElement;
-      }
-      return false;
-    };
+        return false;
+      };
 
-    const forwardScrollToPopupWheel = function (e) {
-      if (window.innerWidth >= 768) return;
-      if (isEventFromScrollableContainer(e)) return;
-      if (!aboutModalContainer) return;
+      const forwardScrollToPopupWheel = function (e) {
+        if (isEventFromScrollableContainer(e)) return;
+        if (!aboutModalContainer) return;
 
-      e.preventDefault();
-      e.stopPropagation();
+        e.preventDefault();
+        e.stopPropagation();
 
-      const scrollAmount = e.deltaY;
-      const currentScroll = aboutModalContainer.scrollTop;
-      const maxScroll =
-        aboutModalContainer.scrollHeight - aboutModalContainer.clientHeight;
-      const isAtTop = currentScroll === 0;
-      const isAtBottom = currentScroll >= maxScroll - 1;
+        const scrollAmount = e.deltaY;
+        const currentScroll = aboutModalContainer.scrollTop;
+        const maxScroll =
+          aboutModalContainer.scrollHeight - aboutModalContainer.clientHeight;
+        const isAtTop = currentScroll === 0;
+        const isAtBottom = currentScroll >= maxScroll - 1;
 
-      if ((isAtTop && scrollAmount < 0) || (isAtBottom && scrollAmount > 0)) {
-        return;
-      }
+        if ((isAtTop && scrollAmount < 0) || (isAtBottom && scrollAmount > 0)) {
+          return;
+        }
 
-      const newScroll = Math.max(
-        0,
-        Math.min(maxScroll, currentScroll + scrollAmount),
-      );
-      aboutModalContainer.scrollTop = newScroll;
-    };
+        const newScroll = Math.max(
+          0,
+          Math.min(maxScroll, currentScroll + scrollAmount),
+        );
+        aboutModalContainer.scrollTop = newScroll;
+      };
 
-    let touchStartY = 0;
-    let touchStartScroll = 0;
+      let touchStartY = 0;
+      let touchStartScroll = 0;
 
-    const forwardScrollToPopupTouchStart = function (e) {
-      if (aboutModalContainer && e.touches.length === 1) {
-        touchStartY = e.touches[0].clientY;
-        touchStartScroll = aboutModalContainer.scrollTop;
-      }
-    };
+      const forwardScrollToPopupTouchStart = function (e) {
+        if (aboutModalContainer && e.touches.length === 1) {
+          touchStartY = e.touches[0].clientY;
+          touchStartScroll = aboutModalContainer.scrollTop;
+        }
+      };
 
-    const forwardScrollToPopupTouchMove = function (e) {
-      if (window.innerWidth >= 768) return;
-      if (isEventFromScrollableContainer(e)) return;
-      if (!aboutModalContainer || e.touches.length !== 1) return;
+      const forwardScrollToPopupTouchMove = function (e) {
+        if (isEventFromScrollableContainer(e)) return;
+        if (!aboutModalContainer || e.touches.length !== 1) return;
 
-      e.preventDefault();
-      e.stopPropagation();
+        e.preventDefault();
+        e.stopPropagation();
 
-      const touchY = e.touches[0].clientY;
-      const deltaY = touchStartY - touchY;
-      const maxScroll =
-        aboutModalContainer.scrollHeight - aboutModalContainer.clientHeight;
-      const newScroll = touchStartScroll + deltaY;
-      aboutModalContainer.scrollTop = Math.max(
-        0,
-        Math.min(maxScroll, newScroll),
-      );
-    };
+        const touchY = e.touches[0].clientY;
+        const deltaY = touchStartY - touchY;
+        const maxScroll =
+          aboutModalContainer.scrollHeight - aboutModalContainer.clientHeight;
+        const newScroll = touchStartScroll + deltaY;
+        aboutModalContainer.scrollTop = Math.max(
+          0,
+          Math.min(maxScroll, newScroll),
+        );
+      };
 
-    document.addEventListener('wheel', forwardScrollToPopupWheel, {
-      passive: false,
-    });
-    document.addEventListener('touchstart', forwardScrollToPopupTouchStart, {
-      passive: true,
-    });
-    document.addEventListener('touchmove', forwardScrollToPopupTouchMove, {
-      passive: false,
-    });
+      document.addEventListener('wheel', forwardScrollToPopupWheel, {
+        passive: false,
+      });
+      document.addEventListener('touchstart', forwardScrollToPopupTouchStart, {
+        passive: true,
+      });
+      document.addEventListener('touchmove', forwardScrollToPopupTouchMove, {
+        passive: false,
+      });
 
-    document._aboutScrollHandlers = {
-      wheel: forwardScrollToPopupWheel,
-      touchstart: forwardScrollToPopupTouchStart,
-      touchmove: forwardScrollToPopupTouchMove,
-    };
+      document._aboutScrollHandlers = {
+        wheel: forwardScrollToPopupWheel,
+        touchstart: forwardScrollToPopupTouchStart,
+        touchmove: forwardScrollToPopupTouchMove,
+      };
+    }
 
-    // Prevent scroll propagation when container reaches limits (same idea as case studies)
-    if (aboutModalContainer) {
+    // Mobile-only: prevent scroll propagation when container reaches limits
+    if (aboutModalContainer && window.innerWidth < 768) {
       let localTouchStartY = 0;
 
       const handleWheel = function (e) {
@@ -372,6 +376,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function closeAboutModal() {
     if (!aboutModal) return;
+
+    // Resume immediately on close intent so the sky feels instant behind the closing animation.
+    window.skyRenderer?.resume('aboutModal');
 
     // Remove hash from URL when closing
     if (window.location.hash === '#about') {
@@ -508,6 +515,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Function to open video modal
   function openVideoModal() {
+    window.skyRenderer?.pause('videoModal');
     // Add the Loom embed to the container
     loomEmbedContainer.innerHTML = loomEmbedHTML;
 
@@ -520,6 +528,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Function to close video modal
   function closeVideoModal() {
+    window.skyRenderer?.resume('videoModal');
     // Hide the modal
     videoModal.style.display = 'none';
 
@@ -777,6 +786,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Function to open case study modal with specific content
   function openCaseStudyModal(caseStudyType) {
+    // Pause early to avoid competing with modal DOM work + Chrome compositing while scrolling.
+    window.skyRenderer?.pause('caseStudyModal');
     const data = caseStudyData[caseStudyType] || caseStudyData['docswell']; // Fallback to docswell if type not found
 
     // Hide body headings only for sections below the divider when viewing Docswell
@@ -1096,38 +1107,32 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Modal elements are already referenced in the outer scope
 
-    // Function to check if event originated from scrollable container
-    const isEventFromScrollableContainer = function (e) {
-      if (!caseStudyModalContainer) return false;
-      let target = e.target;
+    // Mobile-only: scroll forwarding + scroll boundary handling.
+    // IMPORTANT: Keep these off desktop Chrome to avoid main-thread wheel scrolling.
+    if (window.innerWidth < 768) {
+      const isEventFromScrollableContainer = function (e) {
+        if (!caseStudyModalContainer) return false;
+        let target = e.target;
 
-      // Walk up the DOM tree to check if we're inside the scrollable container
-      while (target && target !== document.body) {
-        if (
-          target === caseStudyModalContainer ||
-          caseStudyModalContainer.contains(target)
-        ) {
-          return true;
+        while (target && target !== document.body) {
+          if (
+            target === caseStudyModalContainer ||
+            caseStudyModalContainer.contains(target)
+          ) {
+            return true;
+          }
+          target = target.parentElement;
         }
-        target = target.parentElement;
-      }
-      return false;
-    };
+        return false;
+      };
 
-    // Forward scroll events to popup container when scrolling outside popup
-    const forwardScrollToPopupWheel = function (e) {
-      if (window.innerWidth >= 768) return;
-      // If scroll is from the scrollable container, let it handle naturally
-      if (isEventFromScrollableContainer(e)) {
-        return;
-      }
+      const forwardScrollToPopupWheel = function (e) {
+        if (isEventFromScrollableContainer(e)) return;
+        if (!caseStudyModalContainer) return;
 
-      // Otherwise, prevent background scroll and forward to popup container
-      if (caseStudyModalContainer) {
         e.preventDefault();
         e.stopPropagation();
 
-        // Check boundaries before applying scroll
         const scrollAmount = e.deltaY;
         const currentScroll = caseStudyModalContainer.scrollTop;
         const maxScroll =
@@ -1136,77 +1141,65 @@ document.addEventListener('DOMContentLoaded', function () {
         const isAtTop = currentScroll === 0;
         const isAtBottom = currentScroll >= maxScroll - 1;
 
-        // Prevent scroll if trying to scroll beyond boundaries
         if ((isAtTop && scrollAmount < 0) || (isAtBottom && scrollAmount > 0)) {
-          return; // Already at limit, don't scroll
+          return;
         }
 
-        // Apply scroll to the container
         const newScroll = Math.max(
           0,
           Math.min(maxScroll, currentScroll + scrollAmount),
         );
         caseStudyModalContainer.scrollTop = newScroll;
-      }
-    };
+      };
 
-    let touchStartY = 0;
-    let touchStartScroll = 0;
+      let touchStartY = 0;
+      let touchStartScroll = 0;
 
-    const forwardScrollToPopupTouchStart = function (e) {
-      if (caseStudyModalContainer && e.touches.length === 1) {
-        touchStartY = e.touches[0].clientY;
-        touchStartScroll = caseStudyModalContainer.scrollTop;
-      }
-    };
+      const forwardScrollToPopupTouchStart = function (e) {
+        if (caseStudyModalContainer && e.touches.length === 1) {
+          touchStartY = e.touches[0].clientY;
+          touchStartScroll = caseStudyModalContainer.scrollTop;
+        }
+      };
 
-    const forwardScrollToPopupTouchMove = function (e) {
-      if (window.innerWidth >= 768) return;
-      // If scroll is from the scrollable container, let it handle naturally
-      if (isEventFromScrollableContainer(e)) {
-        return;
-      }
+      const forwardScrollToPopupTouchMove = function (e) {
+        if (isEventFromScrollableContainer(e)) return;
+        if (!caseStudyModalContainer || e.touches.length !== 1) return;
 
-      // Otherwise, prevent background scroll and forward to popup container
-      if (caseStudyModalContainer && e.touches.length === 1) {
         e.preventDefault();
         e.stopPropagation();
 
         const touchY = e.touches[0].clientY;
         const deltaY = touchStartY - touchY;
-        const currentScroll = caseStudyModalContainer.scrollTop;
         const maxScroll =
           caseStudyModalContainer.scrollHeight -
           caseStudyModalContainer.clientHeight;
         const newScroll = touchStartScroll + deltaY;
 
-        // Clamp to boundaries
-        const clampedScroll = Math.max(0, Math.min(maxScroll, newScroll));
-        caseStudyModalContainer.scrollTop = clampedScroll;
-      }
-    };
+        caseStudyModalContainer.scrollTop = Math.max(
+          0,
+          Math.min(maxScroll, newScroll),
+        );
+      };
 
-    // Add scroll forwarding to document to catch scrolls anywhere on the page
-    // This ensures scrolling anywhere (overlay, modal, or outside) scrolls the popup
-    document.addEventListener('wheel', forwardScrollToPopupWheel, {
-      passive: false,
-    });
-    document.addEventListener('touchstart', forwardScrollToPopupTouchStart, {
-      passive: true,
-    });
-    document.addEventListener('touchmove', forwardScrollToPopupTouchMove, {
-      passive: false,
-    });
+      document.addEventListener('wheel', forwardScrollToPopupWheel, {
+        passive: false,
+      });
+      document.addEventListener('touchstart', forwardScrollToPopupTouchStart, {
+        passive: true,
+      });
+      document.addEventListener('touchmove', forwardScrollToPopupTouchMove, {
+        passive: false,
+      });
 
-    // Store document handlers for cleanup
-    document._caseStudyScrollHandlers = {
-      wheel: forwardScrollToPopupWheel,
-      touchstart: forwardScrollToPopupTouchStart,
-      touchmove: forwardScrollToPopupTouchMove,
-    };
+      document._caseStudyScrollHandlers = {
+        wheel: forwardScrollToPopupWheel,
+        touchstart: forwardScrollToPopupTouchStart,
+        touchmove: forwardScrollToPopupTouchMove,
+      };
+    }
 
-    // Prevent scroll propagation when container reaches limits
-    if (caseStudyModalContainer) {
+    if (caseStudyModalContainer && window.innerWidth < 768) {
       let touchStartY = 0;
 
       const handleWheel = function (e) {
@@ -1267,6 +1260,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Function to close case study modal
   function closeCaseStudyModal() {
+    // Resume immediately on close intent so the sky animates behind the closing transition.
+    window.skyRenderer?.resume('caseStudyModal');
     // Remove hash from URL when closing
     const currentHash = window.location.hash;
     if (currentHash === '#docswell' || currentHash === '#rememberly') {
@@ -1375,6 +1370,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Function to open image popup modal
   function openImagePopup(imageSrc, imageAlt) {
+    window.skyRenderer?.pause('imagePopup');
     popupImage.src = imageSrc;
     popupImage.alt = imageAlt;
     imagePopupModal.classList.remove('closing');
@@ -1387,6 +1383,9 @@ document.addEventListener('DOMContentLoaded', function () {
   // Function to close image popup modal
   function closeImagePopup() {
     if (imagePopupModal.style.display === 'none') return;
+
+    // Resume immediately; if another modal is still open, token-based pausing keeps the sky paused.
+    window.skyRenderer?.resume('imagePopup');
 
     imagePopupModal.classList.add('closing');
     setTimeout(() => {
