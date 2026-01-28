@@ -1,5 +1,8 @@
 // Sky Configuration
 const SKY_CONFIG = {
+  // Feature flag: set to false to freeze the sky (no time progression / no continuous rendering)
+  // Useful for debugging Chrome scroll jank.
+  motionEnabled: false,
   cloudSpeed: 0.15,
   cloudDensity: 0.6,
   cloudScale: 1.5,
@@ -30,6 +33,8 @@ class SkyRenderer {
     this.mouse = { x: 0, y: 0 };
     this.time = 0;
 
+    this._motionEnabled = SKY_CONFIG.motionEnabled !== false;
+
     // Animation loop state (so we can pause rendering while modals are open)
     this._rafId = null;
     this._isRunning = false;
@@ -38,11 +43,21 @@ class SkyRenderer {
 
     this.init();
     this.setupEventListeners();
-    this.start();
+
+    // Always render at least one frame so the canvas looks correct even if motion is disabled.
+    this._renderFrame(false);
+
+    if (this._motionEnabled) {
+      this.start();
+    } else {
+      // Keep all code intact, but disable continuous rendering.
+      this.pause('motionFreeze');
+    }
   }
 
   start() {
     if (this._isRunning) return;
+    if (this._pauseTokens.size > 0) return;
     this._isRunning = true;
     this._rafId = requestAnimationFrame(this._tick);
   }
@@ -65,20 +80,37 @@ class SkyRenderer {
     // Render a frame immediately so the sky feels instant on close,
     // then continue on the next rAF.
     this._isRunning = true;
-    this._renderFrame();
+    this._renderFrame(this._motionEnabled);
     this._rafId = requestAnimationFrame(this._tick);
   }
 
-  _renderFrame() {
-    this.time += 0.016; // 60fps delta (intentionally fixed for the aesthetic)
+  _renderFrame(advanceTime = true) {
+    if (advanceTime) {
+      this.time += 0.016; // 60fps delta (intentionally fixed for the aesthetic)
+    }
     this.material.uniforms.uTime.value = this.time;
     this.renderer.render(this.scene, this.camera);
   }
 
   _tick() {
     if (!this._isRunning) return;
-    this._renderFrame();
+    this._renderFrame(this._motionEnabled);
     this._rafId = requestAnimationFrame(this._tick);
+  }
+
+  // Debug/feature-flag helper: freeze/unfreeze motion without removing code.
+  setMotionEnabled(enabled) {
+    const nextEnabled = !!enabled;
+    SKY_CONFIG.motionEnabled = nextEnabled;
+    this._motionEnabled = nextEnabled;
+
+    if (nextEnabled) {
+      this.resume('motionFreeze');
+    } else {
+      this.pause('motionFreeze');
+      // Render once (without advancing time) to lock the final visual state.
+      this._renderFrame(false);
+    }
   }
 
   init() {
