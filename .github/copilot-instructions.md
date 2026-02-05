@@ -4,6 +4,25 @@
 
 This is a responsive portfolio website showcasing product design work. It features a Three.js animated sky canvas background, smooth page transitions, and multiple case study sections. The site uses vanilla JavaScript, CSS3 animations, and Google Fonts (Inter, JetBrains Mono, PP Neue Montreal custom fonts).
 
+## General Principles
+
+- **Do not break existing functionality**  
+   New features or code changes must never break current behavior of the portfolio. Implement new changes in a way that won’t break or change other elements.
+
+- **Scalable code**  
+   Any new component or UI element must be written with future extensibility in mind (e.g., easy theming, flexible layout, maintainable CSS).
+
+- **No hallucinations**  
+   Never invent components, icons, sections, or layouts. Always stick exactly to the user-provided instructions.
+  - **Brief summary**  
+     After completing a task, do not explain what you did in detail. Provide only a brief one- or two-sentence summary of the important changes.
+
+  - **Keep responsiveness in mind**  
+     When adding or editing elements, ensure they look good across desktop sizes and that mobile responsiveness is handled accordingly.
+
+  - **Should work both on Safari and Chrome**  
+     Ensure new additions or changes don’t break the site in specific browsers. It should work on both Safari and Chrome; on mobile, Safari is given priority.
+
 ## Architecture & Key Patterns
 
 ### Animation System

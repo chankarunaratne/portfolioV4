@@ -766,21 +766,27 @@ document.addEventListener('DOMContentLoaded', function () {
       `,
     },
     jiffyhive: {
-      logo: '',
+      logo: 'assets/jiffy-case-study/jiffyhive-company-logo.png',
+      featuredImage: 'assets/jiffy-case-study/jiffy-featured.png',
       company: 'Jiffyhive',
       role: 'Founding Designer',
       title: 'Jiffyhive: AI-powered employee hiring platform',
       subheading:
-        'This is a placeholder sentence for the Jiffyhive case study.',
+        'Jiffy aims to eliminate the tedious process of hiring employees with the help of AI.',
       background: `
-        <p style="margin-bottom: 16px;">(AI-generated placeholder) The original hiring flow for Jiffyhive, an AI-powered employee hiring platform, was overwhelming for both employers and candidates. Recruiters struggled with long setup times, noisy candidate lists, and little clarity on why certain matches were recommended. Candidates, on the other hand, found the application process repetitive and impersonal, with unclear expectations around role fit and response timelines. As a result, drop-off rates were high and hiring teams relied heavily on manual screening despite the presence of AI.</p>
+        <p style="margin-bottom: 16px;">Our Co-founder who constantly hires software engineers, had one main problem - spending weeks to find the right candidate for the job.</p>
+        <p style="margin-bottom: 16px;">Our main goal was to reduce the steps in the traditional hiring process and get the manager to have the initial chat not in a matter of days, but minutes.</p>
       `,
       roleText: `
-        <p style="margin-bottom: 16px;">I worked as the sole product designer, partnering closely with the founder and a small engineering team. I led discovery, UX research, flow redesign, wireframing, and high-fidelity prototyping, and supported implementation through ongoing design reviews. We followed a lean, outcome-driven process, shipping in small increments and validating assumptions through weekly usability tests with recruiters and job seekers across different company sizes.</p>
+        <p style="margin-bottom: 16px;">I worked as the founding designer partnering closely with the two co-founders. I led design while wearing multiple hats.</p>
       `,
-      description: `
-        <p>We began by mapping the end-to-end hiring journey and interviewing 6 hiring managers and 8 job seekers. The key pain points were clear: too many steps to post a role, low trust in AI recommendations, and poor feedback loops for candidates. These insights informed a redesigned experience that focused on fast role setup, transparent AI matching signals, and clear next-step communication — allowing employers to reach qualified candidates in minutes while giving applicants confidence that their profiles were being evaluated fairly and efficiently.</p>
+      outcome: `
+        <ul>
+          <li>Finalised the MVP design in 6 weeks</li>
+          <li>Development now ongoing</li>
+        </ul>
       `,
+      description: '',
     },
   };
 
@@ -1264,7 +1270,11 @@ document.addEventListener('DOMContentLoaded', function () {
     window.skyRenderer?.resume('caseStudyModal');
     // Remove hash from URL when closing
     const currentHash = window.location.hash;
-    if (currentHash === '#docswell' || currentHash === '#rememberly') {
+    if (
+      currentHash === '#docswell' ||
+      currentHash === '#rememberly' ||
+      currentHash === '#jiffyhive'
+    ) {
       history.pushState(
         '',
         document.title,
@@ -1334,11 +1344,6 @@ document.addEventListener('DOMContentLoaded', function () {
   caseCards.forEach((card) => {
     card.addEventListener('click', function () {
       const caseStudyType = card.getAttribute('data-case-study');
-
-      // Skip opening modal for jiffyhive as it's not complete
-      if (caseStudyType === 'jiffyhive') {
-        return;
-      }
 
       if (caseStudyType) {
         openCaseStudyModal(caseStudyType);
@@ -1490,6 +1495,9 @@ document.addEventListener('DOMContentLoaded', function () {
     } else if (hash === '#rememberly') {
       // Open Rememberly case study
       openCaseStudyModal('rememberly');
+    } else if (hash === '#jiffyhive') {
+      // Open Jiffyhive case study
+      openCaseStudyModal('jiffyhive');
     }
   }
 
@@ -1514,6 +1522,9 @@ document.addEventListener('DOMContentLoaded', function () {
     } else if (hash === '#rememberly') {
       if (aboutModalOpen) closeAboutModal();
       if (!caseStudyModalOpen) openCaseStudyModal('rememberly');
+    } else if (hash === '#jiffyhive') {
+      if (aboutModalOpen) closeAboutModal();
+      if (!caseStudyModalOpen) openCaseStudyModal('jiffyhive');
     } else if (hash === '') {
       // No hash - close all modals
       if (aboutModalOpen) closeAboutModal();
