@@ -786,6 +786,8 @@ document.addEventListener('DOMContentLoaded', function () {
           <li>Development now ongoing</li>
         </ul>
       `,
+      solutionText:
+        "I'm still working on adding the content of this case study. Stay tuned :)",
       description: '',
     },
   };
