@@ -786,8 +786,19 @@ document.addEventListener('DOMContentLoaded', function () {
           <li>Development now ongoing</li>
         </ul>
       `,
-      solutionText:
-        "I'm still working on adding the content of this case study. Stay tuned :)",
+      solutionImages: [
+        'assets/jiffy-case-study/0.5-searching-initial.png',
+        'assets/jiffy-case-study/1.0-searching-1.png',
+        'assets/jiffy-case-study/1.1-searching-2.png',
+        'assets/jiffy-case-study/1.2-call.png',
+        'assets/jiffy-case-study/1.3-inbox.png',
+        'assets/jiffy-case-study/1.4-shortlist.png',
+        'assets/jiffy-case-study/1.5-candidate-home.png',
+        'assets/jiffy-case-study/1.6-candidate-profile.png',
+        'assets/jiffy-case-study/1.7-candidate-experience.png',
+        'assets/jiffy-case-study/1.8-candidate-add-experience.png',
+        'assets/jiffy-case-study/1.9-candidate-add-project.png',
+      ],
       description: '',
     },
   };
@@ -949,6 +960,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const solutionSection = document.getElementById(
       'case-study-solution-section',
     );
+    const solutionTextEl = document.getElementById('case-study-solution-text');
+    const solutionImagesContainer = document.getElementById(
+      'case-study-solution-images',
+    );
 
     if (caseStudyType === 'rememberly') {
       solutionSection.style.display = 'none';
@@ -956,22 +971,44 @@ document.addEventListener('DOMContentLoaded', function () {
       solutionSection.style.display = 'flex';
     }
 
-    if (data.solutionText) {
-      document.getElementById('case-study-solution-text').textContent =
-        data.solutionText;
-    } else {
-      // Fallback placeholders
-      let solutionText =
-        'This is a placeholder sentence for the Solution section.';
-      if (caseStudyType === 'rememberly') {
-        solutionText =
-          'This is a placeholder sentence for the Solution section in the Rememberly case study.';
-      } else if (caseStudyType === 'jiffyhive') {
-        solutionText =
-          'This is a placeholder sentence for the Solution section in the Jiffyhive case study.';
+    const hasSolutionImages =
+      Array.isArray(data.solutionImages) && data.solutionImages.length > 0;
+
+    // Populate solution images (used by Jiffyhive)
+    if (solutionImagesContainer) {
+      if (hasSolutionImages) {
+        solutionImagesContainer.innerHTML = data.solutionImages
+          .map((imgSrc, idx) => {
+            const imageNumber = idx + 1;
+            return `<img src="${imgSrc}" alt="Jiffyhive screen ${imageNumber}" class="case-study-image" data-image-popup="${imgSrc}" />`;
+          })
+          .join('');
+        solutionImagesContainer.style.display = '';
+      } else {
+        solutionImagesContainer.innerHTML = '';
+        solutionImagesContainer.style.display = 'none';
       }
-      document.getElementById('case-study-solution-text').textContent =
-        solutionText;
+    }
+
+    // Populate/hide solution text
+    if (solutionTextEl) {
+      if (hasSolutionImages && caseStudyType === 'jiffyhive') {
+        solutionTextEl.textContent = '';
+        solutionTextEl.style.display = 'none';
+      } else if (data.solutionText && String(data.solutionText).trim()) {
+        solutionTextEl.textContent = data.solutionText;
+        solutionTextEl.style.display = '';
+      } else {
+        // Fallback placeholders (but avoid showing placeholders when section is image-only)
+        if (caseStudyType === 'rememberly') {
+          solutionTextEl.textContent =
+            'This is a placeholder sentence for the Solution section in the Rememberly case study.';
+        } else {
+          solutionTextEl.textContent =
+            'This is a placeholder sentence for the Solution section.';
+        }
+        solutionTextEl.style.display = '';
+      }
     }
 
     // Set solution image if exists
