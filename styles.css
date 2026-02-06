@@ -3708,6 +3708,10 @@ img.card-logo {
     animation-delay: 0.4s; /* Last - description at bottom */
   }
 
+  #about-modal .about-modal-body {
+    font-size: 16px;
+  }
+
   /* Force clean rendering - prevent blur artifacts */
   .case-study-modal *,
   .case-study-modal img,
