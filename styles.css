@@ -454,6 +454,145 @@ body {
   margin: 0;
 }
 
+/* About Modal (Figma 2026) */
+#about-modal .about-modal-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  width: 100%;
+}
+
+#about-modal .about-modal-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 0 0 auto;
+}
+
+#about-modal .about-modal-photo-frame {
+  width: 314px;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#about-modal .about-modal-photo {
+  width: 288px;
+  height: 388px;
+  object-fit: cover;
+  transform: rotate(-4deg);
+  display: block;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+}
+
+#about-modal .about-modal-caption {
+  margin: 16px 0 0;
+  width: min(277px, 100%);
+  text-align: center;
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+  color: var(--text-subdued);
+}
+
+#about-modal .about-modal-right {
+  width: 100%;
+  max-width: 654px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+/* Keep the existing animation hook class, but match Figma typography */
+#about-modal .about-title {
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 36px;
+  letter-spacing: 0;
+}
+
+#about-modal .about-modal-nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: 1000px;
+  background: var(--bg-normal);
+  flex-wrap: wrap;
+}
+
+#about-modal .about-modal-nav-item {
+  height: 38px;
+  padding: 0 24px;
+  border-radius: 1000px;
+  border: none;
+  background: transparent;
+  cursor: default;
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 38px;
+  color: var(--text-normal);
+  text-align: center;
+  padding-bottom: 1px; /* visually matches Figma's "pb-px" */
+}
+
+#about-modal .about-modal-nav-item.is-active {
+  background: #ffffff;
+  color: var(--text-muted);
+  font-weight: 600;
+  opacity: 0.9;
+  box-shadow:
+    0px 1px 3px rgba(0, 0, 0, 0.08),
+    0px 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+#about-modal .about-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  color: var(--text-muted);
+  letter-spacing: 0.08px;
+}
+
+#about-modal .about-modal-body p {
+  margin: 0;
+  width: min(654px, 100%);
+}
+
+#about-modal .about-modal-reachout {
+  font-weight: 600;
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+#about-modal .about-modal-reachout:hover {
+  text-decoration: underline;
+}
+
 /* Stack wrapper for hero + video intro + case studies */
 .intro-stack {
   position: relative;
@@ -3180,6 +3319,33 @@ img.card-logo {
     animation: none;
   }
 
+  /* About modal: center the Figma layout in the viewport */
+  #about-modal.case-study-modal {
+    align-items: center;
+  }
+
+  #about-modal .case-study-modal-content {
+    width: auto;
+    max-width: none;
+    margin: 0 auto;
+  }
+
+  #about-modal .case-study-modal-container {
+    padding: 0;
+    gap: 0;
+  }
+
+  #about-modal .about-modal-inner {
+    flex-direction: row;
+    gap: 64px;
+    width: min(1032px, calc(100vw - 96px));
+  }
+
+  #about-modal .about-modal-right {
+    width: 654px;
+    max-width: none;
+  }
+
   /* Staggered Entry Animations for Modal Children */
 
   /* Staggered Entry Animations for Modal Children */
@@ -3192,7 +3358,10 @@ img.card-logo {
   .case-study-sections > *,
   .case-study-description > *,
   .about-title,
-  .about-body {
+  .about-body,
+  /* About modal extra elements (left image + menu) */
+  .about-modal-left,
+  .about-modal-nav {
     opacity: 0;
     will-change: opacity, transform, filter;
   }
@@ -3208,6 +3377,8 @@ img.card-logo {
   .case-study-modal.animation-complete .case-study-description > *,
   .case-study-modal.animation-complete .about-title,
   .case-study-modal.animation-complete .about-body,
+  .case-study-modal.animation-complete .about-modal-left,
+  .case-study-modal.animation-complete .about-modal-nav,
   .about-panel.animation-complete .about-title,
   .about-panel.animation-complete .about-body {
     opacity: 1 !important;
@@ -3257,6 +3428,16 @@ img.card-logo {
     animation-delay: 0.1s;
   }
 
+  #about-modal.opening .about-modal-left {
+    animation: fadeBlurUpEntry 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    animation-delay: 0.1s;
+  }
+
+  #about-modal.opening .about-modal-nav {
+    animation: fadeBlurUpEntry 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    animation-delay: 0.18s;
+  }
+
   #about-modal.opening .about-body {
     animation: fadeBlurUpEntry 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
     animation-delay: 0.2s;
@@ -3271,14 +3452,16 @@ img.card-logo {
 
   /* 1. Intro (Logo/Role) & About Title */
   .case-study-intro,
-  .about-title {
+  .about-title,
+  #about-modal .about-modal-left {
     animation-delay: 0.3s;
   }
 
   /* 2. Header (Title/Subheading) & About Body */
   .case-study-title,
   .case-study-subheading,
-  .about-body {
+  .about-body,
+  #about-modal .about-modal-nav {
     animation-delay: 0.35s;
   }
 
@@ -3480,7 +3663,9 @@ img.card-logo {
   .case-study-modal .case-study-sections,
   .case-study-modal .case-study-description,
   .case-study-modal .about-title,
-  .case-study-modal .about-body {
+  .case-study-modal .about-body,
+  .case-study-modal .about-modal-left,
+  .case-study-modal .about-modal-nav {
     opacity: 0;
     animation: mobileFadeIn 0.4s ease forwards;
   }
@@ -3489,6 +3674,14 @@ img.card-logo {
   .case-study-modal .case-study-title,
   .case-study-modal .about-title {
     animation-delay: 0s; /* First - appears immediately */
+  }
+
+  .case-study-modal .about-modal-left {
+    animation-delay: 0s;
+  }
+
+  .case-study-modal .about-modal-nav {
+    animation-delay: 0.16s;
   }
 
   .case-study-modal .case-study-subheading {
@@ -3526,7 +3719,9 @@ img.card-logo {
   .case-study-modal .case-study-description > *,
   .case-study-modal .case-study-image,
   .case-study-modal .about-title,
-  .case-study-modal .about-body {
+  .case-study-modal .about-body,
+  .case-study-modal .about-modal-left,
+  .case-study-modal .about-modal-nav {
     will-change: auto !important;
     transform: none !important;
     filter: none !important;
