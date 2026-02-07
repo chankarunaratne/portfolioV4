@@ -204,6 +204,107 @@ document.addEventListener('DOMContentLoaded', function () {
   const aboutNavItems = aboutNav
     ? aboutNav.querySelectorAll('.about-modal-nav-item')
     : [];
+  const aboutBodies = aboutModal
+    ? aboutModal.querySelectorAll('.about-modal-body[data-tab]')
+    : [];
+  const aboutBodyStack = aboutModal
+    ? aboutModal.querySelector('.about-modal-body-stack')
+    : null;
+  let activeAboutBody = Array.from(aboutBodies).find(function (body) {
+    return body.classList.contains('is-active');
+  });
+  if (!activeAboutBody && aboutBodies.length) {
+    activeAboutBody = aboutBodies[0];
+    activeAboutBody.classList.add('is-visible', 'is-active');
+  }
+  let aboutBodyAnimation = Promise.resolve();
+
+  function setAboutBodyStackHeight(body) {
+    if (!aboutBodyStack || !body) return;
+    const targetHeight = body.scrollHeight;
+    aboutBodyStack.style.height = targetHeight + 'px';
+  }
+
+  function activateAboutBody(body) {
+    if (!body) return;
+    if (body.__aboutHideHandler) {
+      body.removeEventListener('transitionend', body.__aboutHideHandler);
+      body.__aboutHideHandler = null;
+    }
+    body.classList.add('is-visible');
+    requestAnimationFrame(function () {
+      body.classList.add('is-active');
+      if (aboutModal && aboutModal.style.display !== 'none') {
+        setAboutBodyStackHeight(body);
+      }
+    });
+  }
+
+  function deactivateAboutBody(body) {
+    return new Promise(function (resolve) {
+      if (!body) {
+        resolve();
+        return;
+      }
+
+      const isCurrentlyActive = body.classList.contains('is-active');
+      if (!isCurrentlyActive) {
+        body.classList.remove('is-visible');
+        resolve();
+        return;
+      }
+
+      function finalize() {
+        body.classList.remove('is-visible');
+        body.removeEventListener('transitionend', handleTransitionEnd);
+        if (body.__aboutHideHandler === handleTransitionEnd) {
+          body.__aboutHideHandler = null;
+        }
+        clearTimeout(fallbackTimeout);
+        resolve();
+      }
+
+      function handleTransitionEnd(event) {
+        if (event.target !== body || event.propertyName !== 'opacity') return;
+        finalize();
+      }
+
+      const fallbackTimeout = setTimeout(finalize, 450);
+      body.__aboutHideHandler = handleTransitionEnd;
+      body.addEventListener('transitionend', handleTransitionEnd);
+      requestAnimationFrame(function () {
+        body.classList.remove('is-active');
+      });
+    });
+  }
+
+  function switchAboutBody(tabKey) {
+    if (!aboutModal) return;
+    const nextBody = aboutModal.querySelector(
+      '.about-modal-body[data-tab="' + tabKey + '"]',
+    );
+
+    if (!nextBody || nextBody === activeAboutBody) {
+      return;
+    }
+
+    const previousBody = activeAboutBody;
+
+    aboutBodyAnimation = aboutBodyAnimation
+      .then(function () {
+        return deactivateAboutBody(previousBody);
+      })
+      .then(function () {
+        activeAboutBody = nextBody;
+        activateAboutBody(nextBody);
+      });
+  }
+
+  function ensureAboutBodyStackMeasured() {
+    if (aboutModal && aboutModal.style.display !== 'none' && activeAboutBody) {
+      setAboutBodyStackHeight(activeAboutBody);
+    }
+  }
 
   function positionAboutNavSlider(animate) {
     if (!aboutNav || !aboutNavSlider) return;
@@ -255,13 +356,7 @@ document.addEventListener('DOMContentLoaded', function () {
         };
         const tabKey = tabMap[tabName];
         if (tabKey) {
-          const allBodies = aboutModal.querySelectorAll(
-            '.about-modal-body[data-tab]',
-          );
-          allBodies.forEach(function (body) {
-            body.style.display =
-              body.getAttribute('data-tab') === tabKey ? 'flex' : 'none';
-          });
+          switchAboutBody(tabKey);
         }
       });
     });
@@ -270,6 +365,7 @@ document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('resize', function () {
       if (aboutModal && aboutModal.style.display !== 'none') {
         positionAboutNavSlider(false);
+        ensureAboutBodyStackMeasured();
       }
     });
   }
@@ -281,6 +377,7 @@ document.addEventListener('DOMContentLoaded', function () {
     window.skyRenderer?.pause('aboutModal');
 
     aboutModal.style.display = 'flex';
+    ensureAboutBodyStackMeasured();
     document.body.style.overflow = 'hidden';
     document.documentElement.style.overflow = 'hidden';
 
@@ -292,6 +389,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Position the nav slider without animation on open (needs a frame for layout)
     requestAnimationFrame(function () {
       positionAboutNavSlider(false);
+      ensureAboutBodyStackMeasured();
     });
 
     // Trigger animation replay for desktop
