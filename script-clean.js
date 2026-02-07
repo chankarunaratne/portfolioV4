@@ -194,6 +194,65 @@ document.addEventListener('DOMContentLoaded', function () {
     ? aboutModal.querySelector('.case-study-modal-container')
     : null;
 
+  // --- About Nav Tab Interaction ---
+  const aboutNav = aboutModal
+    ? aboutModal.querySelector('.about-modal-nav')
+    : null;
+  const aboutNavSlider = aboutNav
+    ? aboutNav.querySelector('.about-nav-slider')
+    : null;
+  const aboutNavItems = aboutNav
+    ? aboutNav.querySelectorAll('.about-modal-nav-item')
+    : [];
+
+  function positionAboutNavSlider(animate) {
+    if (!aboutNav || !aboutNavSlider) return;
+    const activeItem = aboutNav.querySelector('.about-modal-nav-item.is-active');
+    if (!activeItem) return;
+
+    const navRect = aboutNav.getBoundingClientRect();
+    const itemRect = activeItem.getBoundingClientRect();
+    const offsetLeft = itemRect.left - navRect.left - 4; // subtract nav padding
+
+    if (!animate) {
+      aboutNavSlider.style.transition = 'none';
+    }
+    aboutNavSlider.style.width = itemRect.width + 'px';
+    aboutNavSlider.style.transform = 'translateX(' + offsetLeft + 'px)';
+
+    if (!animate) {
+      // Force reflow then re-enable transitions
+      void aboutNavSlider.offsetWidth;
+      aboutNavSlider.style.transition = '';
+    }
+  }
+
+  if (aboutNavItems.length) {
+    aboutNavItems.forEach(function (item) {
+      item.addEventListener('click', function () {
+        if (item.classList.contains('is-active')) return;
+
+        // Move active state
+        aboutNavItems.forEach(function (btn) {
+          btn.classList.remove('is-active');
+          btn.removeAttribute('aria-current');
+        });
+        item.classList.add('is-active');
+        item.setAttribute('aria-current', 'page');
+
+        // Animate slider
+        positionAboutNavSlider(true);
+      });
+    });
+
+    // Reposition slider on resize so it stays aligned
+    window.addEventListener('resize', function () {
+      if (aboutModal && aboutModal.style.display !== 'none') {
+        positionAboutNavSlider(false);
+      }
+    });
+  }
+
   function openAboutModal() {
     if (!aboutModal) return;
 
@@ -208,6 +267,11 @@ document.addEventListener('DOMContentLoaded', function () {
     if (aboutModalContainer) {
       aboutModalContainer.scrollTop = 0;
     }
+
+    // Position the nav slider without animation on open (needs a frame for layout)
+    requestAnimationFrame(function () {
+      positionAboutNavSlider(false);
+    });
 
     // Trigger animation replay for desktop
     if (window.innerWidth >= 768) {
