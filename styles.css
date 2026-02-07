@@ -535,6 +535,7 @@ body {
   background: var(--bg-normal);
   flex-wrap: wrap;
   position: relative;
+  isolation: isolate;
 }
 
 /* Sliding indicator behind the active tab */
@@ -552,7 +553,7 @@ body {
   transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
               width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   pointer-events: none;
-  z-index: 0;
+  z-index: -1;
   will-change: transform, width;
 }
 
