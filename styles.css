@@ -3778,7 +3778,8 @@ img.card-logo {
   }
 
   #about-modal .about-modal-nav-item.is-active {
-    color: var(--text-primary);
+    color: var(--text-muted);
+    font-weight: 600;
   }
 
   /* Force clean rendering - prevent blur artifacts */
