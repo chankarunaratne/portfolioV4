@@ -3799,4 +3799,10 @@ img.card-logo {
     -webkit-backface-visibility: hidden !important;
     backface-visibility: hidden !important;
   }
+
+  /* Restore desktop tilt on about image (force-clean above resets it) */
+  #about-modal .about-modal-photo {
+    transform: rotate(-4deg) !important;
+    -webkit-transform: rotate(-4deg) !important;
+  }
 }
