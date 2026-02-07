@@ -758,6 +758,8 @@ document.addEventListener('DOMContentLoaded', function () {
           <li>Launched the product to multiple practices in the UK for initial testing. Eventual public launch.</li>
           <li>Pilot estimations showed a reduced new-clinic setup from 25 minutes (manual forms) to 12 minutes. Saving admins around 2.5 hours/week.</li>
           <li>Built and maintained a new design system that cut significant design and UI dev hours</li>
+          <li>80%+ practitioner activation rate within first 2 weeks of onboarding</li>
+          <li>Reduced daily tool switching from 4–5 tools to a single interface, based on practitioner interviews</li>
         </ul>
       `,
       solutionText:
