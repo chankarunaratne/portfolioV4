@@ -207,7 +207,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function positionAboutNavSlider(animate) {
     if (!aboutNav || !aboutNavSlider) return;
-    const activeItem = aboutNav.querySelector('.about-modal-nav-item.is-active');
+    const activeItem = aboutNav.querySelector(
+      '.about-modal-nav-item.is-active',
+    );
     if (!activeItem) return;
 
     const navRect = aboutNav.getBoundingClientRect();
@@ -242,6 +244,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Animate slider
         positionAboutNavSlider(true);
+
+        // Switch content based on tab
+        const tabName = item.textContent.toLowerCase().trim();
+        const tabMap = {
+          intro: 'intro',
+          philosophy: 'philosophy',
+          photography: 'photography',
+          letterboxd: 'letterboxd',
+        };
+        const tabKey = tabMap[tabName];
+        if (tabKey) {
+          const allBodies = aboutModal.querySelectorAll(
+            '.about-modal-body[data-tab]',
+          );
+          allBodies.forEach(function (body) {
+            body.style.display =
+              body.getAttribute('data-tab') === tabKey ? 'flex' : 'none';
+          });
+        }
       });
     });
 

@@ -227,7 +227,7 @@ body {
 /* Design System Variables */
 :root {
   --text-primary: #303030;
-  --text-muted: #4A5565;
+  --text-muted: #4a5565;
   --text-subdued: #818898;
   --text-normal: #666d80;
   --bg-normal: #f6f8fa;
@@ -459,7 +459,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 32px;
   width: 100%;
 }
@@ -491,7 +491,7 @@ body {
 }
 
 #about-modal .about-modal-caption {
-  margin: 16px 0 0;
+  margin: 20px 0 0;
   width: min(277px, 100%);
   text-align: center;
   font-family:
@@ -550,8 +550,9 @@ body {
   box-shadow:
     0px 1px 3px rgba(0, 0, 0, 0.08),
     0px 1px 2px rgba(0, 0, 0, 0.04);
-  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-              width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  transition:
+    transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   pointer-events: none;
   z-index: -1;
   will-change: transform, width;
@@ -581,7 +582,9 @@ body {
   padding-bottom: 1px; /* visually matches Figma's "pb-px" */
   position: relative;
   z-index: 1;
-  transition: color 0.2s ease, font-weight 0.2s ease;
+  transition:
+    color 0.2s ease,
+    font-weight 0.2s ease;
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -622,6 +625,24 @@ body {
 
 #about-modal .about-modal-reachout:hover {
   text-decoration: underline;
+}
+
+#about-modal .about-modal-section-heading {
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 26px;
+  color: var(--text-muted);
+  letter-spacing: 0.08px;
+  margin: 0;
 }
 
 /* Stack wrapper for hero + video intro + case studies */
@@ -3352,7 +3373,9 @@ img.card-logo {
 
   /* About modal: center the Figma layout in the viewport */
   #about-modal.case-study-modal {
-    align-items: center;
+    align-items: flex-start;
+    padding-top: 80px;
+    padding-bottom: 80px;
   }
 
   #about-modal .case-study-modal-content {
@@ -3368,6 +3391,7 @@ img.card-logo {
 
   #about-modal .about-modal-inner {
     flex-direction: row;
+    align-items: flex-start;
     gap: 64px;
     width: min(1032px, calc(100vw - 96px));
   }
