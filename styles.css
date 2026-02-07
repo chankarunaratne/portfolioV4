@@ -3777,8 +3777,12 @@ img.card-logo {
     padding: 0 20px;
   }
 
+  #about-modal .about-modal-nav-item.is-active {
+    color: var(--text-primary);
+  }
+
   /* Force clean rendering - prevent blur artifacts */
-  .case-study-modal *:not(.about-nav-slider),
+  .case-study-modal *:not(.about-nav-slider):not(.about-modal-nav-item),
   .case-study-modal img,
   .case-study-modal .case-study-intro,
   .case-study-modal .case-study-title,
@@ -3801,6 +3805,13 @@ img.card-logo {
     -webkit-filter: none !important;
     -webkit-backface-visibility: hidden !important;
     backface-visibility: hidden !important;
+  }
+
+  /* Restore proper z-index stacking for about nav pill menu */
+  #about-modal .about-modal-nav {
+    -webkit-backface-visibility: visible !important;
+    backface-visibility: visible !important;
+    isolation: isolate;
   }
 
   /* Restore desktop tilt on about image (force-clean above resets it) */
