@@ -3778,7 +3778,7 @@ img.card-logo {
   }
 
   /* Force clean rendering - prevent blur artifacts */
-  .case-study-modal *,
+  .case-study-modal *:not(.about-nav-slider),
   .case-study-modal img,
   .case-study-modal .case-study-intro,
   .case-study-modal .case-study-title,
