@@ -227,7 +227,7 @@ body {
 /* Design System Variables */
 :root {
   --text-primary: #303030;
-  --text-muted: #36394a;
+  --text-muted: #4A5565;
   --text-subdued: #818898;
   --text-normal: #666d80;
   --bg-normal: #f6f8fa;
@@ -3737,6 +3737,17 @@ img.card-logo {
 
   #about-modal .about-modal-body {
     font-size: 16px;
+  }
+
+  /* About popup mobile: content below close icon, heading centered */
+  #about-modal .case-study-modal-container {
+    padding-top: calc(64px + env(safe-area-inset-top, 0px)) !important;
+  }
+  #about-modal .about-title {
+    text-align: center;
+  }
+  #about-modal .about-modal-right {
+    align-items: center;
   }
 
   /* About nav: horizontal scroll instead of wrapping on mobile */
