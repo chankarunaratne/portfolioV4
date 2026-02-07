@@ -3743,6 +3743,9 @@ img.card-logo {
   #about-modal .case-study-modal-container {
     padding-top: calc(64px + env(safe-area-inset-top, 0px)) !important;
   }
+  #about-modal .about-modal-inner {
+    gap: 48px;
+  }
   #about-modal .about-title {
     text-align: center;
   }
