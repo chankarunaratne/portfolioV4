@@ -651,11 +651,11 @@ body {
   width: min(654px, 100%);
 }
 
-/* Non-intro tabs: 16px spacing within sections, 20px between sections */
+/* Non-intro tabs: 12px spacing within sections, 20px between sections */
 #about-modal
   .about-modal-body:not([data-tab='intro'])
   .about-modal-section-heading {
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 #about-modal
