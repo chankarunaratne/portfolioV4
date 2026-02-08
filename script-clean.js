@@ -217,7 +217,6 @@ document.addEventListener('DOMContentLoaded', function () {
     activeAboutBody = aboutBodies[0];
     activeAboutBody.classList.add('is-visible', 'is-active');
   }
-  let aboutBodyAnimation = Promise.resolve();
 
   function setAboutBodyStackHeight(body) {
     if (!aboutBodyStack || !body) return;
@@ -225,15 +224,43 @@ document.addEventListener('DOMContentLoaded', function () {
     aboutBodyStack.style.height = targetHeight + 'px';
   }
 
+  function clearAboutBodyAnimation(body, phase) {
+    if (!body) return;
+    const handlerKey = phase === 'enter' ? '__aboutEnterHandler' : '__aboutExitHandler';
+    const timeoutKey = phase === 'enter' ? '__aboutEnterTimeout' : '__aboutExitTimeout';
+    const handler = body[handlerKey];
+    if (handler) {
+      body.removeEventListener('animationend', handler);
+      body[handlerKey] = null;
+    }
+    const timeoutId = body[timeoutKey];
+    if (timeoutId !== undefined && timeoutId !== null) {
+      clearTimeout(timeoutId);
+      body[timeoutKey] = null;
+    }
+  }
+
   function activateAboutBody(body) {
     if (!body) return;
-    if (body.__aboutHideHandler) {
-      body.removeEventListener('transitionend', body.__aboutHideHandler);
-      body.__aboutHideHandler = null;
-    }
+    clearAboutBodyAnimation(body, 'exit');
+    clearAboutBodyAnimation(body, 'enter');
+    body.classList.remove('is-leaving');
     body.classList.add('is-visible');
     requestAnimationFrame(function () {
       body.classList.add('is-active');
+      body.classList.add('is-entering');
+      const handleEnterEnd = function (event) {
+        if (event.target !== body || event.animationName !== 'aboutModalBodyFadeIn') {
+          return;
+        }
+        body.classList.remove('is-entering');
+        if (body.__aboutEnterHandler === handleEnterEnd) {
+          body.__aboutEnterHandler = null;
+        }
+        body.removeEventListener('animationend', handleEnterEnd);
+      };
+      body.__aboutEnterHandler = handleEnterEnd;
+      body.addEventListener('animationend', handleEnterEnd);
       if (aboutModal && aboutModal.style.display !== 'none') {
         setAboutBodyStackHeight(body);
       }
@@ -241,40 +268,42 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function deactivateAboutBody(body) {
-    return new Promise(function (resolve) {
-      if (!body) {
-        resolve();
+    if (!body) {
+      return;
+    }
+
+    clearAboutBodyAnimation(body, 'enter');
+
+    const isCurrentlyActive = body.classList.contains('is-active');
+    if (!isCurrentlyActive) {
+      body.classList.remove('is-visible');
+      return;
+    }
+
+    body.classList.remove('is-entering');
+    clearAboutBodyAnimation(body, 'exit');
+    body.classList.add('is-leaving');
+
+    function finalize() {
+      clearAboutBodyAnimation(body, 'exit');
+      body.classList.remove('is-leaving');
+      body.classList.remove('is-visible');
+    }
+
+    const handleExitEnd = function (event) {
+      if (event.target !== body || event.animationName !== 'aboutModalBodyFadeOut') {
         return;
       }
+      finalize();
+    };
+    body.__aboutExitHandler = handleExitEnd;
+    body.addEventListener('animationend', handleExitEnd);
 
-      const isCurrentlyActive = body.classList.contains('is-active');
-      if (!isCurrentlyActive) {
-        body.classList.remove('is-visible');
-        resolve();
-        return;
-      }
+    const fallbackTimeout = setTimeout(finalize, 800);
+    body.__aboutExitTimeout = fallbackTimeout;
 
-      function finalize() {
-        body.classList.remove('is-visible');
-        body.removeEventListener('transitionend', handleTransitionEnd);
-        if (body.__aboutHideHandler === handleTransitionEnd) {
-          body.__aboutHideHandler = null;
-        }
-        clearTimeout(fallbackTimeout);
-        resolve();
-      }
-
-      function handleTransitionEnd(event) {
-        if (event.target !== body || event.propertyName !== 'opacity') return;
-        finalize();
-      }
-
-      const fallbackTimeout = setTimeout(finalize, 450);
-      body.__aboutHideHandler = handleTransitionEnd;
-      body.addEventListener('transitionend', handleTransitionEnd);
-      requestAnimationFrame(function () {
-        body.classList.remove('is-active');
-      });
+    requestAnimationFrame(function () {
+      body.classList.remove('is-active');
     });
   }
 
@@ -289,15 +318,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     const previousBody = activeAboutBody;
-
-    aboutBodyAnimation = aboutBodyAnimation
-      .then(function () {
-        return deactivateAboutBody(previousBody);
-      })
-      .then(function () {
-        activeAboutBody = nextBody;
-        activateAboutBody(nextBody);
-      });
+    activeAboutBody = nextBody;
+    activateAboutBody(nextBody);
+    deactivateAboutBody(previousBody);
   }
 
   function ensureAboutBodyStackMeasured() {
