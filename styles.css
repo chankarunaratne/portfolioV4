@@ -614,7 +614,7 @@ body {
   inset: 0;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 0;
   font-size: 14px;
   font-weight: 400;
   line-height: 26px;
@@ -628,6 +628,11 @@ body {
   will-change: opacity, transform;
   pointer-events: none;
   visibility: hidden;
+}
+
+/* Intro tab keeps 20px gap between paragraphs */
+#about-modal .about-modal-body[data-tab='intro'] {
+  gap: 20px;
 }
 
 #about-modal .about-modal-body.is-visible {
@@ -644,6 +649,27 @@ body {
 #about-modal .about-modal-body p {
   margin: 0;
   width: min(654px, 100%);
+}
+
+/* Non-intro tabs: 16px spacing within sections, 20px between sections */
+#about-modal
+  .about-modal-body:not([data-tab='intro'])
+  .about-modal-section-heading {
+  margin-bottom: 16px;
+}
+
+#about-modal
+  .about-modal-body:not([data-tab='intro'])
+  .about-modal-section-heading:not(:first-child) {
+  margin-top: 20px;
+}
+
+#about-modal .about-modal-body:not([data-tab='intro']) p {
+  margin-bottom: 12px;
+}
+
+#about-modal .about-modal-body:not([data-tab='intro']) > *:last-child {
+  margin-bottom: 0;
 }
 
 #about-modal .about-modal-reachout {
@@ -672,6 +698,7 @@ body {
   color: var(--text-muted);
   letter-spacing: 0.08px;
   margin: 0;
+  margin-top: 0;
 }
 
 /* Stack wrapper for hero + video intro + case studies */
