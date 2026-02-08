@@ -352,7 +352,7 @@ document.addEventListener('DOMContentLoaded', function () {
           intro: 'intro',
           philosophy: 'philosophy',
           photography: 'photography',
-          letterboxd: 'letterboxd',
+          'movie log': 'movie-log',
         };
         const tabKey = tabMap[tabName];
         if (tabKey) {
