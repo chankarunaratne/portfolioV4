@@ -684,6 +684,9 @@ body {
     forwards;
   z-index: 1;
   pointer-events: none;
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0px);
 }
 
 #about-modal .about-modal-body p {
@@ -3539,7 +3542,7 @@ img.card-logo {
   .case-study-sections > *,
   .case-study-description > *,
   .about-title,
-  .about-body,
+  .about-body:not(.about-modal-body),
   /* About modal extra elements (left image + menu) */
   .about-modal-left,
   .about-modal-nav {
@@ -3557,7 +3560,7 @@ img.card-logo {
   .case-study-modal.animation-complete .case-study-sections > *,
   .case-study-modal.animation-complete .case-study-description > *,
   .case-study-modal.animation-complete .about-title,
-  .case-study-modal.animation-complete .about-body,
+  .case-study-modal.animation-complete .about-body:not(.about-modal-body),
   .case-study-modal.animation-complete .about-modal-left,
   .case-study-modal.animation-complete .about-modal-nav,
   .about-panel.animation-complete .about-title,
@@ -3619,7 +3622,7 @@ img.card-logo {
     animation-delay: 0.18s;
   }
 
-  #about-modal.opening .about-body {
+  #about-modal.opening .about-body:not(.about-modal-body) {
     animation: fadeBlurUpEntry 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
     animation-delay: 0.2s;
   }
@@ -3641,7 +3644,7 @@ img.card-logo {
   /* 2. Header (Title/Subheading) & About Body */
   .case-study-title,
   .case-study-subheading,
-  .about-body,
+  .about-body:not(.about-modal-body),
   #about-modal .about-modal-nav {
     animation-delay: 0.35s;
   }
