@@ -3820,7 +3820,14 @@ img.card-logo {
 @media (max-width: 768px) {
   .footer-section {
     margin-top: 80px;
-    padding-bottom: 60px;
+    padding-bottom: 32px;
+    padding-left: 20px;
+    padding-right: 20px;
+    box-sizing: border-box;
+  }
+
+  .footer-copyright {
+    white-space: normal;
   }
 
   .footer-links {
