@@ -338,7 +338,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const navRect = aboutNav.getBoundingClientRect();
     const itemRect = activeItem.getBoundingClientRect();
-    const offsetLeft = itemRect.left - navRect.left - 4; // subtract nav padding
+    const offsetLeft = itemRect.left - navRect.left + aboutNav.scrollLeft - 4; // subtract nav padding, add scrollLeft for horizontal scroll
 
     if (!animate) {
       aboutNavSlider.style.transition = 'none';
