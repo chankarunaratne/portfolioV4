@@ -226,8 +226,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function clearAboutBodyAnimation(body, phase) {
     if (!body) return;
-    const handlerKey = phase === 'enter' ? '__aboutEnterHandler' : '__aboutExitHandler';
-    const timeoutKey = phase === 'enter' ? '__aboutEnterTimeout' : '__aboutExitTimeout';
+    const handlerKey =
+      phase === 'enter' ? '__aboutEnterHandler' : '__aboutExitHandler';
+    const timeoutKey =
+      phase === 'enter' ? '__aboutEnterTimeout' : '__aboutExitTimeout';
     const handler = body[handlerKey];
     if (handler) {
       body.removeEventListener('animationend', handler);
@@ -250,7 +252,10 @@ document.addEventListener('DOMContentLoaded', function () {
       body.classList.add('is-active');
       body.classList.add('is-entering');
       const handleEnterEnd = function (event) {
-        if (event.target !== body || event.animationName !== 'aboutModalBodyFadeIn') {
+        if (
+          event.target !== body ||
+          event.animationName !== 'aboutModalBodyFadeIn'
+        ) {
           return;
         }
         body.classList.remove('is-entering');
@@ -291,7 +296,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     const handleExitEnd = function (event) {
-      if (event.target !== body || event.animationName !== 'aboutModalBodyFadeOut') {
+      if (
+        event.target !== body ||
+        event.animationName !== 'aboutModalBodyFadeOut'
+      ) {
         return;
       }
       finalize();

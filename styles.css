@@ -3844,7 +3844,7 @@ img.card-logo {
   .case-study-modal .case-study-sections,
   .case-study-modal .case-study-description,
   .case-study-modal .about-title,
-  .case-study-modal .about-body,
+  .case-study-modal .about-modal-body-stack,
   .case-study-modal .about-modal-left,
   .case-study-modal .about-modal-nav {
     opacity: 0;
@@ -3882,7 +3882,7 @@ img.card-logo {
   }
 
   .case-study-modal .case-study-description,
-  .case-study-modal .about-body {
+  .case-study-modal .about-modal-body-stack {
     animation-delay: 0.4s; /* Last - description at bottom */
   }
 
@@ -3934,7 +3934,8 @@ img.card-logo {
   }
 
   /* Force clean rendering - prevent blur artifacts */
-  .case-study-modal *:not(.about-nav-slider):not(.about-modal-nav-item),
+  .case-study-modal
+    *:not(.about-nav-slider):not(.about-modal-nav-item):not(.about-modal-body),
   .case-study-modal img,
   .case-study-modal .case-study-intro,
   .case-study-modal .case-study-title,
@@ -3947,7 +3948,6 @@ img.card-logo {
   .case-study-modal .case-study-description > *,
   .case-study-modal .case-study-image,
   .case-study-modal .about-title,
-  .case-study-modal .about-body,
   .case-study-modal .about-modal-left,
   .case-study-modal .about-modal-nav {
     will-change: auto !important;
