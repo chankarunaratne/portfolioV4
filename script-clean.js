@@ -886,6 +886,11 @@ document.addEventListener('DOMContentLoaded', function () {
       logo: 'assets/docswell-case-study/product-logo.png',
       company: 'Docswell',
       role: 'Product Designer',
+      achievements: [
+        { number: '4 months', label: 'Idea to MVP' },
+        { number: '28%', label: 'Task time reduction' },
+        { number: '80%+', label: 'Practitioner activation' },
+      ],
       title:
         'Leading design at Docswell to help them go from MVP to public launch',
       subheading:
@@ -1082,6 +1087,22 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     } else {
       featuredImageContainer.innerHTML = '';
+    }
+
+    // Populate achievement cards
+    const achievementsContainer = document.getElementById(
+      'case-study-achievements',
+    );
+    if (data.achievements && data.achievements.length === 3) {
+      achievementsContainer.style.display = 'flex';
+      data.achievements.forEach((item, i) => {
+        document.getElementById(`achievement-number-${i + 1}`).textContent =
+          item.number;
+        document.getElementById(`achievement-label-${i + 1}`).textContent =
+          item.label;
+      });
+    } else {
+      achievementsContainer.style.display = 'none';
     }
 
     if (data.background) {

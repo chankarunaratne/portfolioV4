@@ -1682,6 +1682,68 @@ body {
   opacity: 0.9;
 }
 
+/* Achievement Cards */
+.case-study-achievements {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  width: 100%;
+}
+
+.achievement-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 0px;
+  padding: 20px 20px 20px;
+  text-align: left;
+  background: #f6f6f7;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 12px;
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.8),
+    0 1px 3px 0 rgba(0, 0, 0, 0.04),
+    0 1px 2px 0 rgba(0, 0, 0, 0.02);
+}
+
+.achievement-number {
+  display: block;
+  font-family:
+    'Geist',
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 34px;
+  color: var(--text-muted);
+  letter-spacing: -0.02em;
+}
+
+.achievement-label {
+  display: block;
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 18px;
+  color: var(--text-subdued);
+}
+
 .case-study-sections {
   display: flex;
   flex-direction: column;
@@ -3219,11 +3281,16 @@ img.card-logo {
   .case-study-intro,
   .case-study-header,
   .case-study-featured-image,
+  .case-study-achievements,
   .case-study-section {
     opacity: 0;
     transform: translateY(20px);
     filter: blur(8px);
     animation: fadeBlurUpEntry 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  .case-study-achievements {
+    animation-delay: 0.55s !important;
   }
 
   .case-study-intro {
@@ -3279,6 +3346,16 @@ img.card-logo {
     line-height: 28px !important;
   }
 
+  .case-study-achievements {
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+
+  .achievement-number {
+    font-size: 24px !important;
+    line-height: 30px !important;
+  }
+
   .case-study-featured-image {
     /* Base margin for featured image at top */
     margin: 0 0 20px 0 !important;
@@ -3332,6 +3409,7 @@ img.card-logo {
   .case-study-modal.closing .case-study-intro,
   .case-study-modal.closing .case-study-header,
   .case-study-modal.closing .case-study-featured-image,
+  .case-study-modal.closing .case-study-achievements,
   .case-study-modal.closing .case-study-section {
     animation: fadeBlurDownExit 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards !important;
     pointer-events: none !important;
@@ -3542,6 +3620,7 @@ img.card-logo {
   .case-study-title,
   .case-study-subheading,
   .case-study-text-container > .case-study-featured-image,
+  .case-study-achievements,
   .case-study-sections > *,
   .case-study-description > *,
   .about-title,
@@ -3560,6 +3639,7 @@ img.card-logo {
   .case-study-modal.animation-complete
     .case-study-text-container
     > .case-study-featured-image,
+  .case-study-modal.animation-complete .case-study-achievements,
   .case-study-modal.animation-complete .case-study-sections > *,
   .case-study-modal.animation-complete .case-study-description > *,
   .case-study-modal.animation-complete .about-title,
@@ -3598,14 +3678,19 @@ img.card-logo {
     animation-delay: 0.25s;
   }
 
-  .case-study-modal.opening .case-study-description > * {
+  .case-study-modal.opening .case-study-achievements {
     animation: fadeBlurUpEntry 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
     animation-delay: 0.3s;
   }
 
-  .case-study-modal.opening .case-study-sections > * {
+  .case-study-modal.opening .case-study-description > * {
     animation: fadeBlurUpEntry 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
     animation-delay: 0.35s;
+  }
+
+  .case-study-modal.opening .case-study-sections > * {
+    animation: fadeBlurUpEntry 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    animation-delay: 0.4s;
   }
 
   /* About modal delays */
@@ -3657,14 +3742,19 @@ img.card-logo {
     animation-delay: 0.4s;
   }
 
+  /* 3.5. Achievement Cards */
+  .case-study-achievements {
+    animation-delay: 0.45s;
+  }
+
   /* 4. Sections (Background, Role, etc.) */
   .case-study-sections {
-    animation-delay: 0.45s;
+    animation-delay: 0.5s;
   }
 
   /* 5. Footer Description */
   .case-study-description {
-    animation-delay: 0.5s;
+    animation-delay: 0.55s;
   }
 
   /* Constrain text elements to 640px and center them within the 832px container */
@@ -3673,6 +3763,7 @@ img.card-logo {
   /* Target title/subheading directly instead of via header */
   .case-study-title,
   .case-study-subheading,
+  .case-study-achievements,
   .case-study-section-text,
   .case-study-body-heading,
   .case-study-divider,
@@ -3854,6 +3945,7 @@ img.card-logo {
   .case-study-modal .case-study-title,
   .case-study-modal .case-study-subheading,
   .case-study-modal .case-study-text-container > .case-study-featured-image,
+  .case-study-modal .case-study-achievements,
   .case-study-modal .case-study-sections,
   .case-study-modal .case-study-description,
   .case-study-modal .about-title,
@@ -3888,6 +3980,10 @@ img.card-logo {
 
   .case-study-modal .case-study-text-container > .case-study-featured-image {
     animation-delay: 0.24s; /* Fourth - main image */
+  }
+
+  .case-study-modal .case-study-achievements {
+    animation-delay: 0.28s; /* Fourth-b - achievement cards */
   }
 
   .case-study-modal .case-study-sections {
@@ -3954,6 +4050,7 @@ img.card-logo {
   .case-study-modal .case-study-title,
   .case-study-modal .case-study-subheading,
   .case-study-modal .case-study-text-container > .case-study-featured-image,
+  .case-study-modal .case-study-achievements,
   .case-study-modal .case-study-sections,
   .case-study-modal .case-study-sections > *,
   .case-study-modal .case-study-section,
