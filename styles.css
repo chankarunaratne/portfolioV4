@@ -3357,8 +3357,8 @@ img.card-logo {
   }
 
   .case-study-featured-image {
-    /* Base margin for featured image at top */
-    margin: 0 0 20px 0 !important;
+    /* No bottom margin - flex gap provides spacing to achievements/sections */
+    margin: 0 !important;
   }
 
   /* Body images inside sections get 12px top margin */
