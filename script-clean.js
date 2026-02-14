@@ -880,6 +880,8 @@ document.addEventListener('DOMContentLoaded', function () {
     ? caseStudyModal.querySelector('.case-study-modal-container')
     : null;
 
+  const FEATURE_ACHIEVEMENTS = false;
+
   // Case study data for each card
   const caseStudyData = {
     docswell: {
@@ -1093,7 +1095,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const achievementsContainer = document.getElementById(
       'case-study-achievements',
     );
-    if (data.achievements && data.achievements.length === 3) {
+    if (FEATURE_ACHIEVEMENTS && data.achievements && data.achievements.length === 3) {
       achievementsContainer.style.display = 'flex';
       data.achievements.forEach((item, i) => {
         document.getElementById(`achievement-number-${i + 1}`).textContent =
