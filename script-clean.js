@@ -899,7 +899,7 @@ document.addEventListener('DOMContentLoaded', function () {
         'Docswell is a UK-based medtech company that helps medical practices completely digitise their workflow.',
       background: `
         <p style="margin-bottom: 16px;">At the time, UK medical practitioners relied on multiple disconnected tools for appointments, records, and communication, creating time-consuming workflows that pulled focus away from patient care.</p>
-        <p style="margin-bottom: 16px;">When I joined, there was already an early MVP, but as the company shifted its focus to therapist-led practices, we redesigned both the practitioner and patient portals to better support new needs and prepare the platform for its first public release.</p>
+        <p style="margin-bottom: 16px;">When I joined, there was already an early MVP, but as the company shifted its focus to therapist-led practices, I redesigned both the practitioner and patient portals to better support new needs and prepare the platform for its first public release.</p>
       `,
       roleText: `
         <p style="margin-bottom: 16px;">I was the sole designer on the team and wore multiple hats. I led user research, design system, and end-to-end UI design. I also played a pivotal role in product decisions while collaborating closely with the Founder and COO.</p>
@@ -911,12 +911,11 @@ document.addEventListener('DOMContentLoaded', function () {
       `,
       outcome: `
         <ul>
-          <li>Led the design to launch the MVP in 4 months</li>
-          <li>Launched the product to multiple practices in the UK for initial testing. Eventual public launch.</li>
-          <li>Pilot estimations showed a reduced new-clinic setup from 25 minutes (manual forms) to 12 minutes. Saving admins around 2.5 hours/week.</li>
-          <li>Built and maintained a new design system that cut significant design and UI dev hours</li>
-          <li>80%+ practitioner activation rate within first 2 weeks of onboarding</li>
-          <li>Reduced daily tool switching from 4–5 tools to a single interface, based on practitioner interviews</li>
+          <li>Redesigned practice and client portals, to streamline complex clinical workflows, resulting in a 28% reduction in task completion time for practitioners.</li>
+          <li>Conducted user interviews with clinicians to validate workflows and surface real-world pain points, identifying 3 critical usability issues that prioritised the MVP backlog.</li>
+          <li>Created a scalable design system to ensure consistency across patient-facing and internal tools, reducing design-to-development cycle time by 3 days per feature.</li>
+          <li>Collaborated with the co-founders and engineering team using Linear and continuous design handoff practices to accelerate MVP development, going from concept to MVP launch in 4 months.</li>
+          <li>Designed a mobile-responsive, customer-facing portal, reducing support tickets related to mobile access by 20%.</li>
         </ul>
       `,
       solutionText:
@@ -1095,7 +1094,11 @@ document.addEventListener('DOMContentLoaded', function () {
     const achievementsContainer = document.getElementById(
       'case-study-achievements',
     );
-    if (FEATURE_ACHIEVEMENTS && data.achievements && data.achievements.length === 3) {
+    if (
+      FEATURE_ACHIEVEMENTS &&
+      data.achievements &&
+      data.achievements.length === 3
+    ) {
       achievementsContainer.style.display = 'flex';
       data.achievements.forEach((item, i) => {
         document.getElementById(`achievement-number-${i + 1}`).textContent =
