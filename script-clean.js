@@ -911,11 +911,11 @@ document.addEventListener('DOMContentLoaded', function () {
       `,
       outcome: `
         <ul>
-          <li>Redesigned practice and client portals, to streamline complex clinical workflows, resulting in a 28% reduction in task completion time for practitioners.</li>
-          <li>Conducted user interviews with clinicians to validate workflows and surface real-world pain points, identifying 3 critical usability issues that prioritised the MVP backlog.</li>
-          <li>Created a scalable design system to ensure consistency across patient-facing and internal tools, reducing design-to-development cycle time by 3 days per feature.</li>
-          <li>Collaborated with the co-founders and engineering team using Linear and continuous design handoff practices to accelerate MVP development, going from concept to MVP launch in 4 months.</li>
-          <li>Designed a mobile-responsive, customer-facing portal, reducing support tickets related to mobile access by 20%.</li>
+            <li>Redesigned practice and client portals, to streamline complex clinical workflows, resulting in a <span class="case-study-emphasis">28% reduction in task completion time</span> for practitioners.</li>
+            <li>Conducted user interviews with clinicians to validate workflows and surface real-world pain points, <span class="case-study-emphasis">identifying 3 critical usability issues</span> that prioritised the MVP backlog.</li>
+            <li>Created a scalable design system to ensure consistency across patient-facing and internal tools, <span class="case-study-emphasis">reducing design-to-development cycle time by 3 days per feature</span>.</li>
+            <li>Collaborated with the co-founders and engineering team using Linear and continuous design handoff practices to accelerate MVP development, going from <span class="case-study-emphasis">concept to MVP launch in 4 months</span>.</li>
+            <li>Designed a mobile-responsive, customer-facing portal, <span class="case-study-emphasis">reducing support tickets related to mobile access by 20%</span>.</li>
         </ul>
       `,
       solutionText:
