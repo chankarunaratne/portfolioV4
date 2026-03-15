@@ -1634,6 +1634,65 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
+  // Case study card hover preview (desktop only)
+  const hoverPreviewImages = {
+    docswell: 'assets/docswell-case-study/docswell-export-dashboard.png',
+    rememberly: 'assets/rememberly-case-study/rememberly-featured.png',
+    jiffyhive: 'assets/jiffy-case-study/jiffy-featured.png',
+  };
+
+  const hoverDimOverlay = document.querySelector('.hover-dim-overlay');
+  const hoverPreview = document.querySelector('.case-study-hover-preview');
+  const hoverPreviewImg = hoverPreview
+    ? hoverPreview.querySelector('img')
+    : null;
+
+  const isDesktop = () => window.matchMedia('(min-width: 769px)').matches;
+
+  if (hoverDimOverlay && hoverPreview && hoverPreviewImg) {
+    const cardsContainer = document.querySelector('.cards-container');
+
+    function positionPreviewAboveCards() {
+      if (!cardsContainer) return;
+      const cardsRect = cardsContainer.getBoundingClientRect();
+      const previewHeight = hoverPreview.offsetHeight || 300;
+      const gap = 20;
+      const topPos = Math.max(8, cardsRect.top - previewHeight - gap);
+      const centerX = cardsRect.left + cardsRect.width / 2;
+      hoverPreview.style.top = topPos + 'px';
+      hoverPreview.style.left = centerX + 'px';
+    }
+
+    caseCards.forEach((card) => {
+      card.addEventListener('mouseenter', function () {
+        if (!isDesktop()) return;
+        const caseStudyType = card.getAttribute('data-case-study');
+        const imgSrc = hoverPreviewImages[caseStudyType];
+        if (!imgSrc) return;
+
+        hoverPreviewImg.src = imgSrc;
+        hoverPreviewImg.alt = caseStudyType + ' preview';
+
+        hoverPreviewImg.onload = function () {
+          positionPreviewAboveCards();
+        };
+        positionPreviewAboveCards();
+
+        hoverDimOverlay.classList.add('active');
+        hoverPreview.classList.add('active');
+        card.classList.add('card-hovered');
+        document.body.classList.add('case-hover-active');
+      });
+
+      card.addEventListener('mouseleave', function () {
+        hoverDimOverlay.classList.remove('active');
+        hoverPreview.classList.remove('active');
+        card.classList.remove('card-hovered');
+        document.body.classList.remove('case-hover-active');
+      });
+    });
+  }
+
   // Close case study modal event listeners
   if (caseStudyModalClose) {
     caseStudyModalClose.addEventListener('click', closeCaseStudyModal);

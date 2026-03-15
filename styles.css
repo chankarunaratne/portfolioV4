@@ -3521,6 +3521,75 @@ img.card-logo {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
+/* ── Case Study Hover Preview (desktop only) ── */
+@media (min-width: 769px) {
+  .hover-dim-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9000;
+    background: rgba(0, 0, 0, 0.25);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .hover-dim-overlay.active {
+    opacity: 1;
+  }
+
+  .case-study-hover-preview {
+    position: fixed;
+    z-index: 9002;
+    opacity: 0;
+    pointer-events: none;
+    transition:
+      opacity 0.3s ease,
+      transform 0.3s ease;
+    width: 476px;
+    max-width: 60%;
+    transform: translateX(-50%) translateY(8px);
+  }
+
+  .case-study-hover-preview.active {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .case-study-hover-preview img {
+    width: 100%;
+    height: auto;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+    display: block;
+  }
+
+  body.case-hover-active .intro-stack {
+    z-index: 9001;
+  }
+
+  body.case-hover-active .hero,
+  body.case-hover-active .video-intro {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  body.case-hover-active .case-card {
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease,
+      opacity 0.3s ease;
+  }
+
+  body.case-hover-active .case-card:not(.card-hovered) {
+    opacity: 0.25;
+  }
+
+  .case-card.card-hovered {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+}
+
 /* Enhanced button animations */
 
 /* Desktop Full-Screen Popup Overrides (Added 2026-01-15) */
