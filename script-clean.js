@@ -337,6 +337,16 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
+  function setModalHash(hash) {
+    if (!hash || window.location.hash === hash) return;
+
+    history.pushState(
+      '',
+      document.title,
+      window.location.pathname + window.location.search + hash,
+    );
+  }
+
   function positionAboutNavSlider(animate) {
     if (!aboutNav || !aboutNavSlider) return;
     const activeItem = aboutNav.querySelector(
@@ -403,6 +413,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function openAboutModal() {
     if (!aboutModal) return;
+
+    setModalHash('#about');
 
     // Reduce Chrome scroll/compositing jank by pausing the animated sky while a modal is open.
     window.skyRenderer?.pause('aboutModal');
@@ -596,7 +608,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Remove hash from URL when closing
     if (window.location.hash === '#about') {
-      history.pushState(
+      history.replaceState(
         '',
         document.title,
         window.location.pathname + window.location.search,
@@ -1030,6 +1042,13 @@ document.addEventListener('DOMContentLoaded', function () {
     // Pause early to avoid competing with modal DOM work + Chrome compositing while scrolling.
     window.skyRenderer?.pause('caseStudyModal');
     const data = caseStudyData[caseStudyType] || caseStudyData['docswell']; // Fallback to docswell if type not found
+    const caseStudyHashMap = {
+      docswell: '#docswell',
+      rememberly: '#rememberly',
+      jiffyhive: '#jiffyhive',
+    };
+
+    setModalHash(caseStudyHashMap[caseStudyType] || '#docswell');
 
     // Hide body headings only for sections below the divider when viewing Docswell
     const shouldHideLowerHeadings = caseStudyType === 'docswell';
@@ -1556,7 +1575,7 @@ document.addEventListener('DOMContentLoaded', function () {
       currentHash === '#rememberly' ||
       currentHash === '#jiffyhive'
     ) {
-      history.pushState(
+      history.replaceState(
         '',
         document.title,
         window.location.pathname + window.location.search,
