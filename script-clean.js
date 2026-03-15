@@ -15,13 +15,16 @@ document.addEventListener('DOMContentLoaded', function () {
   updateNavbarHeightVar();
   window.addEventListener('resize', updateNavbarHeightVar);
 
+  // Feature flag: Set to true to enable video intro section, false to hide it entirely
+  const VIDEO_INTRO_ENABLED = false;
+
   // Sequential spring blur animation system
   const elementsToAnimate = [
     { selector: '.navbar', delay: 300 },
     // About page: animate the panel with the same system (no effect on home)
     { selector: '.about-panel', delay: 500 },
     { selector: '.hero', delay: 500 },
-    { selector: '.video-intro', delay: 700 },
+    ...(VIDEO_INTRO_ENABLED ? [{ selector: '.video-intro', delay: 700 }] : []),
     { selector: '.case-studies', delay: 900 },
     { selector: '.my-products-section', delay: 1100 },
     { selector: '.work-experience-section', delay: 1300 },
@@ -707,9 +710,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  // Feature flag: Set to true to enable video intro button, false to disable
-  const VIDEO_INTRO_ENABLED = false;
-
   // Video interaction handlers
   const watchBtn = document.querySelector('.watch-btn');
   const videoThumbnail = document.querySelector('.video-thumbnail');
@@ -773,28 +773,11 @@ document.addEventListener('DOMContentLoaded', function () {
   // Initialize video thumbnail based on device type
   const isMobile = initializeMobileVideoThumbnail();
 
-  // Apply feature flag: disable interactions if flag is off
+  // Apply feature flag: hide section entirely if flag is off
   if (!VIDEO_INTRO_ENABLED) {
-    // Disable watch button
-    if (watchBtn) {
-      watchBtn.style.pointerEvents = 'none';
-      watchBtn.setAttribute('disabled', 'true');
-      watchBtn.setAttribute('aria-disabled', 'true');
-    }
-
-    // Disable video thumbnail
-    if (videoThumbnail) {
-      videoThumbnail.style.pointerEvents = 'none';
-      videoThumbnail.setAttribute('tabindex', '-1');
-      videoThumbnail.setAttribute('aria-disabled', 'true');
-    }
-
-    // Disable entire video-intro section on mobile
     const videoIntroSection = document.querySelector('.video-intro');
     if (videoIntroSection) {
-      videoIntroSection.style.pointerEvents = 'none';
-      videoIntroSection.setAttribute('tabindex', '-1');
-      videoIntroSection.setAttribute('aria-disabled', 'true');
+      videoIntroSection.style.display = 'none';
     }
   } else {
     // Feature is enabled - add event handlers as normal
