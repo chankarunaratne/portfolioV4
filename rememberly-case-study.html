@@ -297,6 +297,7 @@
                     id="case-study-solution-section"
                     style="display: none"
                   >
+                    <h3 class="case-study-body-heading">Product Highlights</h3>
                     <p
                       class="case-study-section-text"
                       id="case-study-solution-text"
@@ -472,6 +473,66 @@
     <script>
       document.addEventListener('DOMContentLoaded', function () {
         var modal = document.getElementById('case-study-modal');
+        var modalContainer = modal
+          ? modal.querySelector('.case-study-modal-container')
+          : null;
+
+        // Forward wheel scrolling to the modal content even when pointer is on side gutters.
+        // On desktop the scroll container is the outer `.case-study-modal`, while on mobile
+        // the scroll container is `.case-study-modal-container`. We mirror the homepage logic.
+        if (modal && modalContainer) {
+          var isEventFromScrollableContainer = function (e) {
+            if (!modalContainer) return false;
+            var target = e.target;
+            while (target && target !== document.body) {
+              if (target === modalContainer || modalContainer.contains(target)) {
+                return true;
+              }
+              target = target.parentElement;
+            }
+            return false;
+          };
+
+          var forwardScrollToPopupWheel = function (e) {
+            if (modal.style.display !== 'flex') return;
+            if (!modalContainer) return;
+
+            // If the event started inside the main content column, let native scrolling handle it.
+            if (isEventFromScrollableContainer(e)) return;
+
+            var scrollTarget =
+              window.innerWidth >= 768 ? modal : modalContainer;
+            if (!scrollTarget) return;
+
+            e.preventDefault();
+            e.stopPropagation();
+
+            var delta = e.deltaY;
+            if (e.deltaMode === 1) delta *= 16;
+            if (e.deltaMode === 2) delta *= window.innerHeight;
+
+            var currentScroll = scrollTarget.scrollTop;
+            var maxScroll =
+              scrollTarget.scrollHeight - scrollTarget.clientHeight;
+            var isAtTop = currentScroll === 0;
+            var isAtBottom = currentScroll >= maxScroll - 1;
+
+            // If we're at the bounds, allow the event to fall through for natural momentum.
+            if ((isAtTop && delta < 0) || (isAtBottom && delta > 0)) {
+              return;
+            }
+
+            var newScroll = Math.max(
+              0,
+              Math.min(maxScroll, currentScroll + delta),
+            );
+            scrollTarget.scrollTop = newScroll;
+          };
+
+          document.addEventListener('wheel', forwardScrollToPopupWheel, {
+            passive: false,
+          });
+        }
 
         // Trigger opening animation (mirrors openCaseStudyModal logic)
         if (window.innerWidth >= 768) {

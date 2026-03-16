@@ -15,16 +15,13 @@ document.addEventListener('DOMContentLoaded', function () {
   updateNavbarHeightVar();
   window.addEventListener('resize', updateNavbarHeightVar);
 
-  // Feature flag: Set to true to enable video intro section, false to hide it entirely
-  const VIDEO_INTRO_ENABLED = false;
-
   // Sequential spring blur animation system
   const elementsToAnimate = [
     { selector: '.navbar', delay: 300 },
     // About page: animate the panel with the same system (no effect on home)
     { selector: '.about-panel', delay: 500 },
     { selector: '.hero', delay: 500 },
-    ...(VIDEO_INTRO_ENABLED ? [{ selector: '.video-intro', delay: 700 }] : []),
+    { selector: '.video-intro', delay: 700 },
     { selector: '.case-studies', delay: 900 },
     { selector: '.my-products-section', delay: 1100 },
     { selector: '.work-experience-section', delay: 1300 },
@@ -710,6 +707,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
+  // Feature flag: Set to true to enable video intro button, false to disable
+  const VIDEO_INTRO_ENABLED = false;
+
   // Video interaction handlers
   const watchBtn = document.querySelector('.watch-btn');
   const videoThumbnail = document.querySelector('.video-thumbnail');
@@ -773,11 +773,28 @@ document.addEventListener('DOMContentLoaded', function () {
   // Initialize video thumbnail based on device type
   const isMobile = initializeMobileVideoThumbnail();
 
-  // Apply feature flag: hide section entirely if flag is off
+  // Apply feature flag: disable interactions if flag is off
   if (!VIDEO_INTRO_ENABLED) {
+    // Disable watch button
+    if (watchBtn) {
+      watchBtn.style.pointerEvents = 'none';
+      watchBtn.setAttribute('disabled', 'true');
+      watchBtn.setAttribute('aria-disabled', 'true');
+    }
+
+    // Disable video thumbnail
+    if (videoThumbnail) {
+      videoThumbnail.style.pointerEvents = 'none';
+      videoThumbnail.setAttribute('tabindex', '-1');
+      videoThumbnail.setAttribute('aria-disabled', 'true');
+    }
+
+    // Disable entire video-intro section on mobile
     const videoIntroSection = document.querySelector('.video-intro');
     if (videoIntroSection) {
-      videoIntroSection.style.display = 'none';
+      videoIntroSection.style.pointerEvents = 'none';
+      videoIntroSection.setAttribute('tabindex', '-1');
+      videoIntroSection.setAttribute('aria-disabled', 'true');
     }
   } else {
     // Feature is enabled - add event handlers as normal
@@ -1396,9 +1413,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Modal elements are already referenced in the outer scope
 
-    // Mobile-only: scroll forwarding + scroll boundary handling.
-    // IMPORTANT: Keep these off desktop Chrome to avoid main-thread wheel scrolling.
-    if (window.innerWidth < 768) {
+    // Scroll forwarding: wheel should scroll the case-study content even when
+    // the pointer is outside the scroll container (for example, on side gutters).
+    {
       const isEventFromScrollableContainer = function (e) {
         if (!caseStudyModalContainer) return false;
         let target = e.target;
@@ -1416,20 +1433,31 @@ document.addEventListener('DOMContentLoaded', function () {
       };
 
       const forwardScrollToPopupWheel = function (e) {
+        if (!caseStudyModal) return;
+
+        // If the event originated inside the main content column, let the native
+        // scrolling behavior run so things feel normal.
         if (isEventFromScrollableContainer(e)) return;
-        if (!caseStudyModalContainer) return;
+
+        // Decide which element is actually scrollable:
+        // - On desktop, `.case-study-modal` is the scroll container (wrapper).
+        // - On mobile, `.case-study-modal-container` is scrollable.
+        const scrollTarget =
+          window.innerWidth >= 768 ? caseStudyModal : caseStudyModalContainer;
+        if (!scrollTarget) return;
 
         e.preventDefault();
         e.stopPropagation();
 
         const scrollAmount = e.deltaY;
-        const currentScroll = caseStudyModalContainer.scrollTop;
+        const currentScroll = scrollTarget.scrollTop;
         const maxScroll =
-          caseStudyModalContainer.scrollHeight -
-          caseStudyModalContainer.clientHeight;
+          scrollTarget.scrollHeight - scrollTarget.clientHeight;
         const isAtTop = currentScroll === 0;
         const isAtBottom = currentScroll >= maxScroll - 1;
 
+        // If we're already at the bounds, allow the event to fall through so
+        // momentum scrolling / rubber-banding feels natural.
         if ((isAtTop && scrollAmount < 0) || (isAtBottom && scrollAmount > 0)) {
           return;
         }
@@ -1438,7 +1466,7 @@ document.addEventListener('DOMContentLoaded', function () {
           0,
           Math.min(maxScroll, currentScroll + scrollAmount),
         );
-        caseStudyModalContainer.scrollTop = newScroll;
+        scrollTarget.scrollTop = newScroll;
       };
 
       let touchStartY = 0;
@@ -1492,7 +1520,6 @@ document.addEventListener('DOMContentLoaded', function () {
       let touchStartY = 0;
 
       const handleWheel = function (e) {
-        if (window.innerWidth >= 768) return;
         const container = e.currentTarget;
         const isAtTop = container.scrollTop === 0;
         const isAtBottom =
@@ -1633,65 +1660,6 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
   });
-
-  // Case study card hover preview (desktop only)
-  const hoverPreviewImages = {
-    docswell: 'assets/docswell-case-study/docswell-export-dashboard.png',
-    rememberly: 'assets/rememberly-case-study/rememberly-featured.png',
-    jiffyhive: 'assets/jiffy-case-study/jiffy-featured.png',
-  };
-
-  const hoverDimOverlay = document.querySelector('.hover-dim-overlay');
-  const hoverPreview = document.querySelector('.case-study-hover-preview');
-  const hoverPreviewImg = hoverPreview
-    ? hoverPreview.querySelector('img')
-    : null;
-
-  const isDesktop = () => window.matchMedia('(min-width: 769px)').matches;
-
-  if (hoverDimOverlay && hoverPreview && hoverPreviewImg) {
-    const cardsContainer = document.querySelector('.cards-container');
-
-    function positionPreviewAboveCards() {
-      if (!cardsContainer) return;
-      const cardsRect = cardsContainer.getBoundingClientRect();
-      const previewHeight = hoverPreview.offsetHeight || 300;
-      const gap = 20;
-      const topPos = Math.max(8, cardsRect.top - previewHeight - gap);
-      const centerX = cardsRect.left + cardsRect.width / 2;
-      hoverPreview.style.top = topPos + 'px';
-      hoverPreview.style.left = centerX + 'px';
-    }
-
-    caseCards.forEach((card) => {
-      card.addEventListener('mouseenter', function () {
-        if (!isDesktop()) return;
-        const caseStudyType = card.getAttribute('data-case-study');
-        const imgSrc = hoverPreviewImages[caseStudyType];
-        if (!imgSrc) return;
-
-        hoverPreviewImg.src = imgSrc;
-        hoverPreviewImg.alt = caseStudyType + ' preview';
-
-        hoverPreviewImg.onload = function () {
-          positionPreviewAboveCards();
-        };
-        positionPreviewAboveCards();
-
-        hoverDimOverlay.classList.add('active');
-        hoverPreview.classList.add('active');
-        card.classList.add('card-hovered');
-        document.body.classList.add('case-hover-active');
-      });
-
-      card.addEventListener('mouseleave', function () {
-        hoverDimOverlay.classList.remove('active');
-        hoverPreview.classList.remove('active');
-        card.classList.remove('card-hovered');
-        document.body.classList.remove('case-hover-active');
-      });
-    });
-  }
 
   // Close case study modal event listeners
   if (caseStudyModalClose) {
