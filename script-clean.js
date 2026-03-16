@@ -1041,6 +1041,7 @@ document.addEventListener('DOMContentLoaded', function () {
   function openCaseStudyModal(caseStudyType) {
     // Pause early to avoid competing with modal DOM work + Chrome compositing while scrolling.
     window.skyRenderer?.pause('caseStudyModal');
+    caseStudyModal.setAttribute('data-case-study', caseStudyType || 'docswell');
     const data = caseStudyData[caseStudyType] || caseStudyData['docswell']; // Fallback to docswell if type not found
     const caseStudyHashMap = {
       docswell: '#docswell',
