@@ -930,29 +930,38 @@ document.addEventListener('DOMContentLoaded', function () {
             <li>Designed a mobile-responsive, customer-facing portal, <span class="case-study-emphasis">reducing support tickets related to mobile access by 20%</span>.</li>
         </ul>
       `,
-      solutionText:
-        'The centralised Inbox helps manage all patient interactions, including assigning patients, messaging, and appointment management. This reduced tool switching, streamlined day-to-day workflows, and enabled faster responses to patients.',
+      solutionText: `
+        <span class="case-study-subsection-heading">Inbox</span>
+        The centralised Inbox helps manage all patient interactions, including assigning patients, messaging, and appointment management. This reduced tool switching, streamlined day-to-day workflows, and enabled faster responses to patients.
+      `,
       solutionImage: 'assets/docswell-case-study/inbox-general.png',
-      solutionTextAfterImage:
-        'Message templates allow practitioners to quickly send recurring messages with pre-attached documents, forms, and images, reducing repetitive actions and saving time.',
+      solutionTextAfterImage: `
+        Message templates allow practitioners to quickly send recurring messages with pre-attached documents, forms, and images, reducing repetitive actions and saving time.
+      `,
       solutionImageAfterText:
         'assets/docswell-case-study/inbox-message-template.png',
-      calendarText:
-        'A centralised calendar to manage all appointments and practitioner schedules across the practice.',
+      calendarText: `
+        <span class="case-study-subsection-heading">Calendar</span>
+        A centralised calendar to manage all appointments and practitioner schedules across the practice.
+      `,
       calendarImages: [
         'assets/docswell-case-study/calendar-general.png',
         'assets/docswell-case-study/calendar-modal.png',
         'assets/docswell-case-study/calendar-event.png',
       ],
-      profileText:
-        'A comprehensive profile section for the patient inludes all details related to them that will help the practitioner in aiding him easily.',
+      profileText: `
+        <span class="case-study-subsection-heading">Patient profile</span>
+        A comprehensive profile section for the patient inludes all details related to them that will help the practitioner in aiding him easily.
+      `,
       profileImages: [
         'assets/docswell-case-study/profile.png',
         'assets/docswell-case-study/notes.png',
         'assets/docswell-case-study/note-create.png',
       ],
-      settingsText:
-        'The settings experience was restructured into a clear, well-organised system, making complex practice configuration easier to understand and manage.',
+      settingsText: `
+        <span class="case-study-subsection-heading">Settings</span>
+        The settings experience was restructured into a clear, well-organised system, making complex practice configuration easier to understand and manage.
+      `,
       settingsImage: 'assets/docswell-case-study/settings-general.png',
     },
     rememberly: {
@@ -1258,7 +1267,8 @@ document.addEventListener('DOMContentLoaded', function () {
         solutionTextEl.textContent = '';
         solutionTextEl.style.display = 'none';
       } else if (data.solutionText && String(data.solutionText).trim()) {
-        solutionTextEl.textContent = data.solutionText;
+        // Allow rich HTML (for subsection headings) in solution text
+        solutionTextEl.innerHTML = data.solutionText;
         solutionTextEl.style.display = '';
       } else {
         // Fallback placeholders (but avoid showing placeholders when section is image-only)
@@ -1290,7 +1300,8 @@ document.addEventListener('DOMContentLoaded', function () {
       'case-study-solution-text-after',
     );
     if (data.solutionTextAfterImage) {
-      solutionTextAfterContainer.textContent = data.solutionTextAfterImage;
+      // Allow rich HTML (for subsection headings) in text after solution image
+      solutionTextAfterContainer.innerHTML = data.solutionTextAfterImage;
       solutionTextAfterContainer.style.display = 'block';
     } else {
       solutionTextAfterContainer.style.display = 'none';
@@ -1315,7 +1326,7 @@ document.addEventListener('DOMContentLoaded', function () {
     );
     if (data.calendarText) {
       calendarSection.style.display = 'flex';
-      document.getElementById('case-study-calendar-text').textContent =
+      document.getElementById('case-study-calendar-text').innerHTML =
         data.calendarText;
 
       const calendarImagesContainer = document.getElementById(
@@ -1341,7 +1352,7 @@ document.addEventListener('DOMContentLoaded', function () {
     );
     if (data.profileText) {
       profileSection.style.display = 'flex';
-      document.getElementById('case-study-profile-text').textContent =
+      document.getElementById('case-study-profile-text').innerHTML =
         data.profileText;
 
       const profileImagesContainer = document.getElementById(
@@ -1367,7 +1378,7 @@ document.addEventListener('DOMContentLoaded', function () {
     );
     if (data.settingsText) {
       settingsSection.style.display = 'flex';
-      document.getElementById('case-study-settings-text').textContent =
+      document.getElementById('case-study-settings-text').innerHTML =
         data.settingsText;
 
       const settingsImageContainer = document.getElementById(

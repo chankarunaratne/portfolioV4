@@ -133,7 +133,12 @@
     <!-- page-root wrapper enables page-transition.js fade in/out -->
     <div class="page-root">
       <!-- Case Study Modal: pre-populated and open by default -->
-      <div id="case-study-modal" class="case-study-modal" data-case-study="docswell" style="display: flex">
+      <div
+        id="case-study-modal"
+        class="case-study-modal"
+        data-case-study="docswell"
+        style="display: flex"
+      >
         <div class="case-study-modal-overlay"></div>
         <button class="case-study-modal-close" aria-label="Close case study">
           <img src="assets/close-button.svg" alt="Close" />
@@ -327,13 +332,19 @@
                   <div
                     class="case-study-section"
                     id="case-study-solution-section"
-                    style="display: flex"
+                    style="display: flex; margin-bottom: 32px"
                   >
-                    <h3 class="case-study-body-heading">Product Highlights</h3>
+                    <h3
+                      class="case-study-body-heading"
+                      style="margin-bottom: 16px"
+                    >
+                      Product Highlights
+                    </h3>
                     <p
                       class="case-study-section-text"
                       id="case-study-solution-text"
                     >
+                      <span class="case-study-subsection-heading">Inbox</span>
                       The centralised Inbox helps manage all patient
                       interactions, including assigning patients, messaging, and
                       appointment management. This reduced tool switching,
@@ -375,12 +386,13 @@
                   <div
                     class="case-study-section"
                     id="case-study-calendar-section"
-                    style="display: flex"
+                    style="display: flex; margin-bottom: 32px"
                   >
                     <p
                       class="case-study-section-text"
                       id="case-study-calendar-text"
                     >
+                      <span class="case-study-subsection-heading">Calendar</span>
                       A centralised calendar to manage all appointments and
                       practitioner schedules across the practice.
                     </p>
@@ -413,12 +425,13 @@
                   <div
                     class="case-study-section"
                     id="case-study-profile-section"
-                    style="display: flex"
+                    style="display: flex; margin-bottom: 32px"
                   >
                     <p
                       class="case-study-section-text"
                       id="case-study-profile-text"
                     >
+                      <span class="case-study-subsection-heading">Patient profile</span>
                       A comprehensive profile section for the patient inludes
                       all details related to them that will help the
                       practitioner in aiding him easily.
@@ -452,12 +465,13 @@
                   <div
                     class="case-study-section"
                     id="case-study-settings-section"
-                    style="display: flex"
+                    style="display: flex; margin-bottom: 32px"
                   >
                     <p
                       class="case-study-section-text"
                       id="case-study-settings-text"
                     >
+                      <span class="case-study-subsection-heading">Settings</span>
                       The settings experience was restructured into a clear,
                       well-organised system, making complex practice
                       configuration easier to understand and manage.
@@ -507,7 +521,10 @@
             if (!modalContainer) return false;
             var target = e.target;
             while (target && target !== document.body) {
-              if (target === modalContainer || modalContainer.contains(target)) {
+              if (
+                target === modalContainer ||
+                modalContainer.contains(target)
+              ) {
                 return true;
               }
               target = target.parentElement;

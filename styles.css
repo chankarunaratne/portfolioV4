@@ -1762,6 +1762,32 @@ body {
   gap: 32px;
 }
 
+/* Extra breathing room between linked solution sections (text + images blocks) */
+#case-study-solution-section,
+#case-study-calendar-section,
+#case-study-profile-section,
+#case-study-settings-section {
+  margin-bottom: 32px;
+}
+
+.case-study-subsection-heading {
+  display: block;
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 22px;
+  color: var(--text-subdued);
+  margin: 0 0 4px 0;
+}
+
 .case-study-section {
   display: flex;
   flex-direction: column;
@@ -1834,7 +1860,6 @@ body {
   );
   margin: 0;
 }
-
 
 .case-study-description {
   font-family:
@@ -3892,7 +3917,6 @@ img.card-logo {
     margin-right: auto;
     box-sizing: border-box;
   }
-
 
   /* Ensure the intro block maintains its internal left-alignment within the 640px centered box */
   .case-study-intro {
