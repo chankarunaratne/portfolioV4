@@ -1463,8 +1463,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const scrollAmount = e.deltaY;
         const currentScroll = scrollTarget.scrollTop;
-        const maxScroll =
-          scrollTarget.scrollHeight - scrollTarget.clientHeight;
+        const maxScroll = scrollTarget.scrollHeight - scrollTarget.clientHeight;
         const isAtTop = currentScroll === 0;
         const isAtBottom = currentScroll >= maxScroll - 1;
 
