@@ -932,14 +932,9 @@ document.addEventListener('DOMContentLoaded', function () {
       `,
       solutionText: `
         <span class="case-study-subsection-heading">Inbox</span>
-        The centralised Inbox helps manage all patient interactions, including assigning patients, messaging, and appointment management. This reduced tool switching, streamlined day-to-day workflows, and enabled faster responses to patients.
+        The Inbox helps manage all patient interactions, including assigning patients, messaging, and appointment management. This reduced tool switching, streamlined day-to-day workflows, and enabled faster responses to patients.
       `,
       solutionImage: 'assets/docswell-case-study/inbox-general.png',
-      solutionTextAfterImage: `
-        Message templates allow practitioners to quickly send recurring messages with pre-attached documents, forms, and images, reducing repetitive actions and saving time.
-      `,
-      solutionImageAfterText:
-        'assets/docswell-case-study/inbox-message-template.png',
       calendarText: `
         <span class="case-study-subsection-heading">Calendar</span>
         A centralised calendar to manage all appointments and practitioner schedules across the practice.
