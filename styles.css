@@ -250,6 +250,24 @@ body {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.section-heading {
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1;
+  color: #1a1a1e;
+  margin: 0;
+  margin-top: 12px;
+}
+
 /* Design System Variables */
 :root {
   --text-primary: #303030;
@@ -2158,7 +2176,7 @@ img.card-logo {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 18px;
+  gap: 0;
 }
 
 .my-products-icon {
@@ -2177,7 +2195,7 @@ img.card-logo {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 0;
   text-align: center;
 }
 
@@ -2192,11 +2210,12 @@ img.card-logo {
     Arial,
     sans-serif;
   font-size: 14px;
-  line-height: 20px;
+  line-height: 1.4;
   font-weight: 400;
   color: #818898;
   text-align: left;
   margin: 0;
+  margin-top: 12px;
   width: 486px;
   max-width: 100%;
 }
@@ -2204,24 +2223,31 @@ img.card-logo {
 .products-cards-container {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 0;
   width: 100%;
   max-width: 720px;
-  margin-top: 8px;
+  margin-top: 20px;
   margin-left: 0;
   margin-right: auto;
-}
-
-.product-card {
   background-color: #f6f8fa;
   border: 1px solid #eceff3;
   border-radius: 14px;
-  padding: 8px;
+  overflow: hidden;
+}
+
+.product-card {
+  background-color: transparent;
+  border-bottom: 1px solid #eceff3;
+  padding: 12px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
   width: 100%;
+}
+
+.product-card:last-child {
+  border-bottom: none;
 }
 
 @media (min-width: 769px) {
@@ -2405,13 +2431,13 @@ img.card-logo {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 40px;
+  gap: 0;
 }
 
 .work-experience-header {
   display: flex;
   flex-direction: column;
-  gap: 19px;
+  gap: 0;
   align-items: flex-start;
 }
 
@@ -2429,18 +2455,24 @@ img.card-logo {
 .work-experience-title {
   font-family: 'Inter', sans-serif;
   font-size: 14px;
-  line-height: 20px;
+  line-height: 1.4;
   font-weight: 400;
   color: #666d80;
   margin: 0;
+  margin-top: 12px;
   text-align: left;
 }
 
 .experience-list {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 0;
   width: 100%;
+  margin-top: 20px;
+  background-color: #f6f8fa;
+  border: 1px solid #eceff3;
+  border-radius: 14px;
+  overflow: hidden;
 }
 
 .experience-item {
@@ -2448,6 +2480,13 @@ img.card-logo {
   flex-direction: column;
   gap: 12px;
   width: 100%;
+  background-color: transparent;
+  border-bottom: 1px solid #eceff3;
+  padding: 24px;
+}
+
+.experience-item:last-child {
+  border-bottom: none;
 }
 
 .experience-header {
@@ -2529,13 +2568,13 @@ img.card-logo {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 32px;
+  gap: 0;
 }
 
 .testimonials-header {
   display: flex;
   flex-direction: column;
-  gap: 19px;
+  gap: 0;
   align-items: flex-start;
 }
 
@@ -2553,18 +2592,24 @@ img.card-logo {
 .testimonials-subtitle {
   font-family: 'Inter', sans-serif;
   font-size: 14px;
-  line-height: 20px;
+  line-height: 1.4;
   font-weight: 400;
   color: #666d80;
   margin: 0;
+  margin-top: 12px;
   text-align: left;
 }
 
 .testimonials-list {
   display: flex;
   flex-direction: column;
-  gap: 48px;
+  gap: 0;
   width: 100%;
+  margin-top: 20px;
+  background-color: #f6f8fa;
+  border: 1px solid #eceff3;
+  border-radius: 14px;
+  overflow: hidden;
 }
 
 .testimonial-item {
@@ -2572,6 +2617,13 @@ img.card-logo {
   flex-direction: column;
   gap: 16px;
   width: 100%;
+  background-color: transparent;
+  border-bottom: 1px solid #eceff3;
+  padding: 24px;
+}
+
+.testimonial-item:last-child {
+  border-bottom: none;
 }
 
 .testimonial-profile {
@@ -3028,16 +3080,8 @@ img.card-logo {
     max-width: none !important;
   }
 
-  .products-cards-container {
-    width: 100vw;
-    max-width: none;
-    margin-left: calc(50% - 50vw);
-    padding: 0 5%;
-    box-sizing: border-box;
-  }
-
   .product-card {
-    padding: 8px;
+    padding: 12px;
   }
 
   .product-card-content {
