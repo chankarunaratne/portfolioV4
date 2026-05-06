@@ -15,18 +15,29 @@ document.addEventListener('DOMContentLoaded', function () {
   updateNavbarHeightVar();
   window.addEventListener('resize', updateNavbarHeightVar);
 
+  // Feature flag: set to false to hide the video intro section entirely
+  const SHOW_VIDEO_INTRO = false;
+
+  // Hide video intro section immediately if feature flag is off
+  if (!SHOW_VIDEO_INTRO) {
+    const videoIntroEl = document.querySelector('.video-intro');
+    if (videoIntroEl) {
+      videoIntroEl.style.display = 'none';
+    }
+  }
+
   // Sequential spring blur animation system
   const elementsToAnimate = [
     { selector: '.navbar', delay: 300 },
     // About page: animate the panel with the same system (no effect on home)
     { selector: '.about-panel', delay: 500 },
     { selector: '.hero', delay: 500 },
-    { selector: '.video-intro', delay: 700 },
-    { selector: '.case-studies', delay: 900 },
-    { selector: '.my-products-section', delay: 1100 },
-    { selector: '.work-experience-section', delay: 1300 },
-    { selector: '.testimonials-section', delay: 1500 },
-    { selector: '.footer-section', delay: 1700 },
+    ...(SHOW_VIDEO_INTRO ? [{ selector: '.video-intro', delay: 700 }] : []),
+    { selector: '.case-studies', delay: SHOW_VIDEO_INTRO ? 900 : 700 },
+    { selector: '.my-products-section', delay: SHOW_VIDEO_INTRO ? 1100 : 900 },
+    { selector: '.work-experience-section', delay: SHOW_VIDEO_INTRO ? 1300 : 1100 },
+    { selector: '.testimonials-section', delay: SHOW_VIDEO_INTRO ? 1500 : 1300 },
+    { selector: '.footer-section', delay: SHOW_VIDEO_INTRO ? 1700 : 1500 },
   ];
 
   // Start sequential animations
@@ -708,7 +719,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   // Feature flag: Set to true to enable video intro button, false to disable
-  const VIDEO_INTRO_ENABLED = false;
+  const VIDEO_INTRO_ENABLED = SHOW_VIDEO_INTRO;
 
   // Video interaction handlers
   const watchBtn = document.querySelector('.watch-btn');
