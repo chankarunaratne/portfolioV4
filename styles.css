@@ -2528,6 +2528,7 @@ img.card-logo {
   font-weight: 500;
   color: #36394a;
   margin: 0;
+  white-space: nowrap;
 }
 
 .experience-role {
@@ -2536,6 +2537,7 @@ img.card-logo {
   font-weight: 400;
   color: #666d80;
   margin: 0;
+  white-space: nowrap;
 }
 
 .experience-location {
@@ -3086,6 +3088,10 @@ img.card-logo {
   .testimonial-text p {
     width: 100% !important;
     max-width: none !important;
+  }
+
+  .experience-location {
+    text-align: right;
   }
 
   .product-card {
