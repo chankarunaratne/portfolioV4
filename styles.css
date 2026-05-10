@@ -1711,6 +1711,17 @@ body {
   .case-study-app-card .product-button-secondary {
     align-self: flex-end;
   }
+
+  .case-study-app-card .product-button-text {
+    font-size: 0;
+    line-height: 0;
+  }
+
+  .case-study-app-card .product-button-text::after {
+    content: 'View';
+    font-size: 14px;
+    line-height: 20px;
+  }
 }
 
 .case-study-featured-image {
@@ -3167,6 +3178,17 @@ img.card-logo {
   @media (max-width: 420px) {
     .case-study-app-card .product-button-secondary {
       align-self: flex-end;
+    }
+
+    .case-study-app-card .product-button-text {
+      font-size: 0;
+      line-height: 0;
+    }
+
+    .case-study-app-card .product-button-text::after {
+      content: 'View';
+      font-size: 14px;
+      line-height: 20px;
     }
   }
 
