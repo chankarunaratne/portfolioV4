@@ -979,6 +979,7 @@ document.addEventListener('DOMContentLoaded', function () {
         'Founding Rememberly: An iPhone app to Save highlights from physical books',
       subheading:
         'Worked on the full cycle from concept to development as Im working on launching my first iPhone app with the help of AI tools like Cursor.',
+      appStoreUrl: 'https://apple.co/4uzIlRn',
       background: `
         <p style="margin-bottom: 16px;">A problem I had while reading physical books is not being able to save highlights easily. Physically using a highlighter on the books was a no-go for many reasons.</p>
         <p style="margin-bottom: 16px;">I wanted to solve this for myself and I'm sure there's many who face the same issue. So I'm building Rememberly, basically Kindle highlights but for your physical books.</p>
@@ -1094,6 +1095,33 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('case-study-title').textContent = data.title;
     document.getElementById('case-study-subheading').textContent =
       data.subheading || '';
+
+    const appCard = document.getElementById('case-study-app-card');
+    if (appCard) {
+      if (caseStudyType === 'rememberly' && data.appStoreUrl) {
+        appCard.innerHTML = `
+          <div class="product-card">
+            <div class="product-card-content">
+              <div class="product-logo-wrapper">
+                <img src="assets/rememberly-product-logo.png" alt="Rememberly logo" class="product-logo" />
+              </div>
+              <div class="product-details">
+                <p class="product-name">Rememberly</p>
+                <p class="product-description">iPhone app</p>
+              </div>
+            </div>
+            <a href="${data.appStoreUrl}" class="product-button-secondary" target="_blank" rel="noopener noreferrer">
+              <span class="product-button-text">View on the Appstore</span>
+              <img src="assets/arrow-up-right.svg" alt="" class="product-button-icon" />
+            </a>
+          </div>
+        `;
+        appCard.style.display = '';
+      } else {
+        appCard.innerHTML = '';
+        appCard.style.display = 'none';
+      }
+    }
 
     // Extract paragraphs for Background and Role sections
     const tempDiv = document.createElement('div');

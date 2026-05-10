@@ -1689,6 +1689,30 @@ body {
   margin: 0;
 }
 
+.case-study-app-card {
+  width: 100%;
+  background-color: #f6f8fa;
+  border: 1px solid #eceff3;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.case-study-app-card .product-card {
+  border-bottom: none;
+  padding: 14px;
+}
+
+@media (max-width: 420px) {
+  .case-study-app-card .product-card {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .case-study-app-card .product-button-secondary {
+    align-self: flex-end;
+  }
+}
+
 .case-study-featured-image {
   width: 100%;
   margin: 0;
@@ -3132,6 +3156,20 @@ img.card-logo {
     height: 20px;
   }
 
+  .case-study-app-card .product-card {
+    align-items: flex-start;
+  }
+
+  .case-study-app-card .product-button-secondary {
+    align-self: center;
+  }
+
+  @media (max-width: 420px) {
+    .case-study-app-card .product-button-secondary {
+      align-self: flex-end;
+    }
+  }
+
   .writing-section {
     margin-bottom: 32px;
   }
@@ -3409,6 +3447,7 @@ img.card-logo {
   /* Staggered animations for modal children on mobile */
   .case-study-intro,
   .case-study-header,
+  .case-study-app-card,
   .case-study-featured-image,
   .case-study-achievements,
   .case-study-section {
@@ -3428,6 +3467,10 @@ img.card-logo {
 
   .case-study-header {
     animation-delay: 0.35s !important;
+  }
+
+  .case-study-app-card {
+    animation-delay: 0.43s !important;
   }
 
   .case-study-featured-image:first-of-type {
@@ -3817,6 +3860,7 @@ img.card-logo {
   .case-study-intro,
   .case-study-title,
   .case-study-subheading,
+  .case-study-app-card,
   .case-study-text-container > .case-study-featured-image,
   .case-study-achievements,
   .case-study-sections > *,
@@ -3834,6 +3878,7 @@ img.card-logo {
   .case-study-modal.animation-complete .case-study-intro,
   .case-study-modal.animation-complete .case-study-title,
   .case-study-modal.animation-complete .case-study-subheading,
+  .case-study-modal.animation-complete .case-study-app-card,
   .case-study-modal.animation-complete
     .case-study-text-container
     > .case-study-featured-image,
@@ -3867,6 +3912,11 @@ img.card-logo {
   .case-study-modal.opening .case-study-subheading {
     animation: fadeBlurUpEntry 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
     animation-delay: 0.2s;
+  }
+
+  .case-study-modal.opening .case-study-app-card {
+    animation: fadeBlurUpEntry 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    animation-delay: 0.23s;
   }
 
   .case-study-modal.opening
@@ -3961,6 +4011,7 @@ img.card-logo {
   /* Target title/subheading directly instead of via header */
   .case-study-title,
   .case-study-subheading,
+  .case-study-app-card,
   .case-study-achievements,
   .case-study-section-text,
   .case-study-body-heading,
