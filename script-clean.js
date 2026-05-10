@@ -978,7 +978,7 @@ document.addEventListener('DOMContentLoaded', function () {
       title:
         'Founding Rememberly: An iPhone app to Save highlights from physical books',
       subheading:
-        'Worked on the full cycle from concept to development as Im working on launching my first iPhone app with the help of AI tools like Cursor.',
+        'Worked on the full cycle from concept to development as I launched my first iPhone app with the help of AI tools like Cursor and Codex.',
       appStoreUrl: 'https://apple.co/4uzIlRn',
       background: `
         <p style="margin-bottom: 16px;">A problem I had while reading physical books is not being able to save highlights easily. Physically using a highlighter on the books was a no-go for many reasons.</p>
